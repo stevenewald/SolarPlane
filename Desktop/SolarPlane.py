@@ -37,8 +37,6 @@ while(True):
 
 	baro.calculatePressureAndTemperature()
 
-	print "Temperature(C): %.6f" % (baro.TEMP), "Pressure(millibar): %.6f" % (baro.PRES)
-
 	ChangeInPres = (InitPressure - baro.PRES)
 	KelvinTemp = 273.15 + baro.TEMP
 	ChangeInHeight = (ChangeInPres*KelvinTemp)/baro.PRES
