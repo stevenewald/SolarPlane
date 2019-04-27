@@ -9,8 +9,8 @@ baro = navio.ms5611.MS5611()
 baro.initialize()
 
 baro.refreshPressure()
-	time.sleep(0.01) # Waiting for pressure data ready 10ms
-	baro.readPressure()
+time.sleep(0.01) # Waiting for pressure data ready 10ms
+baro.readPressure()
 
 print "initializing"
 baro.refreshPressure()
