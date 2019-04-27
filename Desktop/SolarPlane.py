@@ -22,7 +22,7 @@ GravAcc = 9.807
 MolarMassEarthAir = 0.02896
 UniversalGasConstant = 8.3143
 
-time.Sleep(5)
+time.sleep(5)
 
 InitPressure = baro.PRES
 
