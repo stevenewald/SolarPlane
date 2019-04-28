@@ -30,6 +30,12 @@ baro.calculatePressureAndTemperature()
 
 InitPressure = MillibarToMg(baro.PRES)
 
+def HypsometricFormula(pres, temp):
+	PressureInitOverCurrentPres = 1012.5/pres
+	TempinKelvin = 273.15+temp
+	return ((PressureInitOverCurrentPres**(1/5.257)-1)*TempinKelvin)/.0065
+	
+
 while(True):
 	baro.refreshPressure()
 	time.sleep(0.01) # Waiting for pressure data ready 10ms
@@ -41,10 +47,8 @@ while(True):
 
 	baro.calculatePressureAndTemperature()
 
-	ChangeInPres = (InitPressure - MillibarToMg(baro.PRES))
-	KelvinTemp = 273.15 + baro.TEMP
-	ChangeInHeight = (ChangeInPres*KelvinTemp)/MillibarToMg(baro.PRES)
-	print "BAROPRES:"
-	print ChangeInHeight
+
+
+	
 
 	time.sleep(1)
