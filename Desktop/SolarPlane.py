@@ -34,6 +34,9 @@ def HypsometricFormula(pres, temp):
 	PressureInitOverCurrentPres = 1012.5/pres
 	TempinKelvin = 273.15+temp
 	return ((PressureInitOverCurrentPres**(1/5.257)-1)*TempinKelvin)/.0065
+
+def MetersToFeet(meters):
+	return meters*3.28084
 	
 i=0
 while(i<60):
@@ -48,9 +51,8 @@ while(i<60):
 	baro.calculatePressureAndTemperature()
 
 	print "ALTITUDE: "
-	print baro.PRES
-	#print HypsometricFormula(baro.PRES, baro.TEMP)	
+	print MetersToFeet(HypsometricFormula(baro.PRES, baro.TEMP))
 
 	time.sleep(1)
-
+	
 	i=i+1
