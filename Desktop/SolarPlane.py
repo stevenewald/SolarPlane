@@ -8,9 +8,6 @@ navio.util.check_apm()
 baro = navio.ms5611.MS5611()
 baro.initialize()
 
-def MillibarToMg(millibar):
-	return millibar*0.02953
-
 print "initializing"
 
 print "PUT BAROMETER IN SAFE ISOLATED PLACE"
@@ -50,7 +47,7 @@ while(i<60):
 
 	print "ALTITUDE: "
 	#print MetersToFeet(HypsometricFormula(baro.PRES, baro.TEMP))
-	print deltaAltitude
+	print deltaAltitude()
 
 	time.sleep(1)
 	
