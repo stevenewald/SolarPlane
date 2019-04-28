@@ -47,6 +47,6 @@ while(True):
 
 	baro.calculatePressureAndTemperature()
 
-	print "ALTITUDE: " + HyposometricFormula(baro.PRES, baro.TEMP)	
+	print "ALTITUDE: " + HypsometricFormula(baro.PRES, baro.TEMP)	
 
 	time.sleep(1)
