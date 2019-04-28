@@ -61,7 +61,7 @@ while(i<60):
 	print MetersToFeet(HypsometricFormula(baro.PRES, baro.TEMP))
 	#print deltaAltitude()
 
-	LEDAboveBelow(deltaAltitude)
+	LEDAboveBelow(deltaAltitude())
 
 	time.sleep(1)
 	
