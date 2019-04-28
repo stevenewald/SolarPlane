@@ -28,8 +28,6 @@ time.sleep(0.01) # Waiting for pressure data ready 10ms
 baro.readPressure()
 baro.calculatePressureAndTemperature()
 
-InitPressure = MillibarToMg(baro.PRES)
-
 def HypsometricFormula(pres, temp):
 	PressureInitOverCurrentPres = 1012.5/pres
 	TempinKelvin = 273.15+temp
@@ -37,6 +35,11 @@ def HypsometricFormula(pres, temp):
 
 def MetersToFeet(meters):
 	return meters*3.28084
+
+def deltaAltitude():
+	MetersToFeet(HypsometricFormula(baro.PRES, baro.TEMP)) - Offset
+
+Offset = MetersToFeet(HypsometricFormula(baro.PRES, baro.TEMP))
 	
 i=0
 while(i<60):
@@ -51,7 +54,7 @@ while(i<60):
 	baro.calculatePressureAndTemperature()
 
 	print "ALTITUDE: "
-	print MetersToFeet(HypsometricFormula(baro.PRES, baro.TEMP))
+	#print MetersToFeet(HypsometricFormula(baro.PRES, baro.TEMP))
 
 	time.sleep(1)
 	
