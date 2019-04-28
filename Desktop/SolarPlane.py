@@ -35,8 +35,8 @@ def HypsometricFormula(pres, temp):
 	TempinKelvin = 273.15+temp
 	return ((PressureInitOverCurrentPres**(1/5.257)-1)*TempinKelvin)/.0065
 	
-
-while(True):
+i=0
+while(i<60):
 	baro.refreshPressure()
 	time.sleep(0.01) # Waiting for pressure data ready 10ms
 	baro.readPressure()
@@ -48,6 +48,9 @@ while(True):
 	baro.calculatePressureAndTemperature()
 
 	print "ALTITUDE: "
-	print HypsometricFormula(baro.PRES, baro.TEMP)	
+	print baro.PRES
+	#print HypsometricFormula(baro.PRES, baro.TEMP)	
 
 	time.sleep(1)
+
+	i=i+1
