@@ -19,7 +19,7 @@ MolarMassEarthAir = 0.02896
 UniversalGasConstant = 8.3143
 
 print "PUT BAROMETER IN SAFE ISOLATED PLACE"
-time.sleep(15)
+time.sleep(10)
 
 print "getting initial baro reading"
 
@@ -47,6 +47,7 @@ while(True):
 
 	baro.calculatePressureAndTemperature()
 
-	print "ALTITUDE: " + HypsometricFormula(baro.PRES, baro.TEMP)	
+	print "ALTITUDE: "
+	print HypsometricFormula(baro.PRES, baro.TEMP)	
 
 	time.sleep(1)
