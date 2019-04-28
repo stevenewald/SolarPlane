@@ -8,23 +8,27 @@ navio.util.check_apm()
 baro = navio.ms5611.MS5611()
 baro.initialize()
 
-baro.refreshPressure()
-time.sleep(0.01) # Waiting for pressure data ready 10ms
-baro.readPressure()
+def MillibarToMg(millibar):
+	return millibar*0.02953
 
 print "initializing"
-baro.refreshPressure()
-time.sleep(0.01) # Waiting for pressure data ready 10ms
-baro.readPressure()
 
 
 GravAcc = 9.807
 MolarMassEarthAir = 0.02896
 UniversalGasConstant = 8.3143
 
-time.sleep(5)
+print "PUT BAROMETER IN SAFE ISOLATED PLACE"
+time.sleep(15)
 
-InitPressure = baro.PRES
+print "getting initial baro reading"
+
+baro.refreshPressure()
+time.sleep(0.01) # Waiting for pressure data ready 10ms
+baro.readPressure()
+baro.calculatePressureAndTemperature()
+
+InitPressure = MillibarToMg(baro.PRES)
 
 while(True):
 	baro.refreshPressure()
@@ -37,9 +41,9 @@ while(True):
 
 	baro.calculatePressureAndTemperature()
 
-	ChangeInPres = (InitPressure - baro.PRES)
+	ChangeInPres = (InitPressure - MillibarToMg(baro.PRES))
 	KelvinTemp = 273.15 + baro.TEMP
-	ChangeInHeight = (ChangeInPres*KelvinTemp)/baro.PRES
+	ChangeInHeight = (ChangeInPres*KelvinTemp)/MillibarToMg(baro.PRES)
 	print "BAROPRES:"
 	print ChangeInHeight
 
