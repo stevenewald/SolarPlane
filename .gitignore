@@ -1,0 +1,20 @@
+### VisualStudioCode ###
+!.Desktop/navio/__init__.py
+!.Desktop/navio/adc.py
+!.Desktop/navio/leds.py
+!.Desktop/navio/lsm9ds1.py
+!.Desktop/navio/mpu9250.py
+!.Desktop/navio/ms5611.py
+!.Desktop/navio/pwm.py
+!.Desktop/navio/rcinput.py
+!.Desktop/navio/ublox.py
+!.Desktop/navio/util.py
+!.Desktop/navio2.py
+!.Desktop/requirements.txt
+!.Desktop/README.md
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+
+# End of https://www.gitignore.io/api/visualstudiocode
