@@ -55,6 +55,7 @@ while(i<60):
 
 	print "ALTITUDE: "
 	#print MetersToFeet(HypsometricFormula(baro.PRES, baro.TEMP))
+	print deltaAltitude
 
 	time.sleep(1)
 	
