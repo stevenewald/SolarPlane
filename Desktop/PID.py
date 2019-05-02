@@ -5,6 +5,7 @@ import navio.util
 import argparse 
 import navio.mpu9250
 import math
+import navio.pwm
 import datetime
 import os
 
@@ -12,6 +13,10 @@ import os
 navio.util.check_apm()
 
 imu = navio.mpu9250.MPU9250()
+
+PWM_OUTPUT = 0
+SERVO_MIN = 1.250 #ms
+SERVO_MAX = 1.750 #ms
 
 if imu.testConnection():
     print("Connection established: True")
@@ -533,9 +538,18 @@ class PID:
 ######	Example	#########
 #
 p=PID(1.0,0.01,0.01)
-p.setPoint(1.0)
+p.setPoint(0)
 while True:
     x, y, z = EulerAngles()
     pid = p.update(x)
     print(pid)
-    time.sleep(0.03)
+    with navio.pwm.PWM(PWM_OUTPUT) as pwm:
+        pwm.set_period(50)
+        pwm.enable()
+    
+        
+        pwm.set_duty_cycle(SERVO_MIN)
+        time.sleep(1)
+        pwm.set_duty_cycle(SERVO_MAX)
+        time.sleep(0.9)
+    time.sleep(0.01)
