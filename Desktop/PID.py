@@ -504,7 +504,7 @@ class PID:
 p=PID(1.0,0.01,0.01)
 p.setPoint(1.0)
 while True:
-    x, y, z = Eulerangles()
+    x, y, z = EulerAngles()
     pid = p.update(x)
     print(pid)
     time.sleep(0.03)
