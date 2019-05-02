@@ -169,6 +169,7 @@ oldXAccRawValue = 0
 oldYAccRawValue = 0
 oldZAccRawValue = 0
 
+global a
 a = datetime.datetime.now()
 
 
