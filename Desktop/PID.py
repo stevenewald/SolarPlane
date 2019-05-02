@@ -544,7 +544,7 @@ while True:
     pid = p.update(x)
     print(pid)
 
-    with navio.pwm.PWM(PWM_OUTPUT) as pwm:
+    with navio.pwm.PWM(PWM_OUTPUT, 3) as pwm:
         pwm.set_period(50)
         pwm.enable()
         # initialize ESC: set initial duty_cicle for 3 sec
