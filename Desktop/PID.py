@@ -534,7 +534,7 @@ class PID:
 
 	def getDerivator(self):
 		return self.Derivator
-
+ESC_INIT =  1.100 #ms
 ######	Example	#########
 #
 p=PID(1.0,0.01,0.01)
@@ -543,13 +543,16 @@ while True:
     x, y, z = EulerAngles()
     pid = p.update(x)
     print(pid)
+
     with navio.pwm.PWM(PWM_OUTPUT) as pwm:
         pwm.set_period(50)
         pwm.enable()
-    
-        
-        pwm.set_duty_cycle(SERVO_MIN)
-        time.sleep(1)
-        pwm.set_duty_cycle(SERVO_MAX)
-        time.sleep(0.9)
+        # initialize ESC: set initial duty_cicle for 3 sec
+        for i in range(30):
+            pwm.set_duty_cycle(ESC_INIT)
+            time.sleep(0.1)
+
+        while (True):
+            pwm.set_duty_cycle(SERVO_MIN)
+            time.sleep(0.1)
     time.sleep(0.01)
