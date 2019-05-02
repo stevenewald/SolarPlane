@@ -169,7 +169,6 @@ oldXAccRawValue = 0
 oldYAccRawValue = 0
 oldZAccRawValue = 0
 
-global a 
 a = datetime.datetime.now()
 
 
@@ -203,6 +202,35 @@ def EulerAngles():
     MAGx = m9m[0]
     MAGy = m9m[1]
     MAGz = m9m[2]
+    
+    global acc_medianTable1X
+    global acc_medianTable1Y
+    global acc_medianTable1Z
+    global acc_medianTable2X
+    global acc_medianTable2Y
+    global acc_medianTable2Z
+    global mag_medianTable1X
+    global mag_medianTable1Y
+    global mag_medianTable1Z
+    global mag_medianTable2X
+    global mag_medianTable2Y
+    global mag_medianTable2Z
+
+    global gyroXangle
+    global gyroYangle
+    global gyroZangle
+    global CFangleX
+    global CFangleY
+    global CFangleXFiltered
+    global CFangleYFilteredglobal 
+    global kalmanXglobal 
+    global kalmanYglobal 
+    global oldXMagRawValue
+    global oldYMagRawValue
+    global oldZMagRawValue
+    global oldXAccRawValue
+    global oldYAccRawValue
+    global oldZAccRawValue
 
 
     #Apply compass calibration    
