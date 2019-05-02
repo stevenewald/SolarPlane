@@ -392,7 +392,7 @@ def EulerAngles():
     time.sleep(0.03)
 
 
-baro = ms5611.MS5611()
+baro = navio.ms5611.MS5611()
 baro.initialize()
 
 def HypsometricFormula(pres, temp):
