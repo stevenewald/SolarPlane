@@ -152,45 +152,46 @@ def kalmanFilterX ( accAngle, gyroRate, DT):
 	
 	return KFangleX
 
+
+gyroXangle = 0.0
+gyroYangle = 0.0
+gyroZangle = 0.0
+CFangleX = 0.0
+CFangleY = 0.0
+CFangleXFiltered = 0.0
+CFangleYFiltered = 0.0
+kalmanX = 0.0
+kalmanY = 0.0
+oldXMagRawValue = 0
+oldYMagRawValue = 0
+oldZMagRawValue = 0
+oldXAccRawValue = 0
+oldYAccRawValue = 0
+oldZAccRawValue = 0
+
+global a 
+a = datetime.datetime.now()
+
+
+
+#Setup the tables for the mdeian filter. Fill them all with '1' soe we dont get devide by zero error 
+acc_medianTable1X = [1] * ACC_MEDIANTABLESIZE
+acc_medianTable1Y = [1] * ACC_MEDIANTABLESIZE
+acc_medianTable1Z = [1] * ACC_MEDIANTABLESIZE
+acc_medianTable2X = [1] * ACC_MEDIANTABLESIZE
+acc_medianTable2Y = [1] * ACC_MEDIANTABLESIZE
+acc_medianTable2Z = [1] * ACC_MEDIANTABLESIZE
+mag_medianTable1X = [1] * MAG_MEDIANTABLESIZE
+mag_medianTable1Y = [1] * MAG_MEDIANTABLESIZE
+mag_medianTable1Z = [1] * MAG_MEDIANTABLESIZE
+mag_medianTable2X = [1] * MAG_MEDIANTABLESIZE
+mag_medianTable2Y = [1] * MAG_MEDIANTABLESIZE
+mag_medianTable2Z = [1] * MAG_MEDIANTABLESIZE
+
+
+
+
 def EulerAngles():
-    gyroXangle = 0.0
-    gyroYangle = 0.0
-    gyroZangle = 0.0
-    CFangleX = 0.0
-    CFangleY = 0.0
-    CFangleXFiltered = 0.0
-    CFangleYFiltered = 0.0
-    kalmanX = 0.0
-    kalmanY = 0.0
-    oldXMagRawValue = 0
-    oldYMagRawValue = 0
-    oldZMagRawValue = 0
-    oldXAccRawValue = 0
-    oldYAccRawValue = 0
-    oldZAccRawValue = 0
-
-    a = datetime.datetime.now()
-
-
-
-    #Setup the tables for the mdeian filter. Fill them all with '1' soe we dont get devide by zero error 
-    acc_medianTable1X = [1] * ACC_MEDIANTABLESIZE
-    acc_medianTable1Y = [1] * ACC_MEDIANTABLESIZE
-    acc_medianTable1Z = [1] * ACC_MEDIANTABLESIZE
-    acc_medianTable2X = [1] * ACC_MEDIANTABLESIZE
-    acc_medianTable2Y = [1] * ACC_MEDIANTABLESIZE
-    acc_medianTable2Z = [1] * ACC_MEDIANTABLESIZE
-    mag_medianTable1X = [1] * MAG_MEDIANTABLESIZE
-    mag_medianTable1Y = [1] * MAG_MEDIANTABLESIZE
-    mag_medianTable1Z = [1] * MAG_MEDIANTABLESIZE
-    mag_medianTable2X = [1] * MAG_MEDIANTABLESIZE
-    mag_medianTable2Y = [1] * MAG_MEDIANTABLESIZE
-    mag_medianTable2Z = [1] * MAG_MEDIANTABLESIZE
-
-
-
-
-
     m9a, m9g, m9m = imu.getMotion9()
     #Read the accelerometer,gyroscope and magnetometer values
     ACCx = m9a[0]
@@ -211,6 +212,8 @@ def EulerAngles():
  
 
     ##Calculate loop Period(LP). How long between Gyro Reads
+    global b
+    global a
     b = datetime.datetime.now() - a
     a = datetime.datetime.now()
     LP = b.microseconds/(1000000*1.0)
