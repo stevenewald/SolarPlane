@@ -168,28 +168,27 @@ oldZMagRawValue = 0
 oldXAccRawValue = 0
 oldYAccRawValue = 0
 oldZAccRawValue = 0
-
-global a
-a = datetime.datetime.now()
-
-
-
-#Setup the tables for the mdeian filter. Fill them all with '1' soe we dont get devide by zero error 
-acc_medianTable1X = [1] * ACC_MEDIANTABLESIZE
-acc_medianTable1Y = [1] * ACC_MEDIANTABLESIZE
-acc_medianTable1Z = [1] * ACC_MEDIANTABLESIZE
-acc_medianTable2X = [1] * ACC_MEDIANTABLESIZE
-acc_medianTable2Y = [1] * ACC_MEDIANTABLESIZE
-acc_medianTable2Z = [1] * ACC_MEDIANTABLESIZE
-mag_medianTable1X = [1] * MAG_MEDIANTABLESIZE
-mag_medianTable1Y = [1] * MAG_MEDIANTABLESIZE
-mag_medianTable1Z = [1] * MAG_MEDIANTABLESIZE
-mag_medianTable2X = [1] * MAG_MEDIANTABLESIZE
-mag_medianTable2Y = [1] * MAG_MEDIANTABLESIZE
-mag_medianTable2Z = [1] * MAG_MEDIANTABLESIZE
-
-
 def EulerAngles():
+    a = datetime.datetime.now()
+
+
+
+    #Setup the tables for the mdeian filter. Fill them all with '1' soe we dont get devide by zero error 
+    acc_medianTable1X = [1] * ACC_MEDIANTABLESIZE
+    acc_medianTable1Y = [1] * ACC_MEDIANTABLESIZE
+    acc_medianTable1Z = [1] * ACC_MEDIANTABLESIZE
+    acc_medianTable2X = [1] * ACC_MEDIANTABLESIZE
+    acc_medianTable2Y = [1] * ACC_MEDIANTABLESIZE
+    acc_medianTable2Z = [1] * ACC_MEDIANTABLESIZE
+    mag_medianTable1X = [1] * MAG_MEDIANTABLESIZE
+    mag_medianTable1Y = [1] * MAG_MEDIANTABLESIZE
+    mag_medianTable1Z = [1] * MAG_MEDIANTABLESIZE
+    mag_medianTable2X = [1] * MAG_MEDIANTABLESIZE
+    mag_medianTable2Y = [1] * MAG_MEDIANTABLESIZE
+    mag_medianTable2Z = [1] * MAG_MEDIANTABLESIZE
+
+
+
 
 
     m9a, m9g, m9m = imu.getMotion9()
