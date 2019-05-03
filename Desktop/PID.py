@@ -532,12 +532,11 @@ class PID:
 		return self.Derivator
 ######	Example	#########
 
-p=PID(1.0,0.01,0.01)
+p=PID(0.0055556,0.01,0.01)
 p.setPoint(0)
 
 
-PWM_OUTPUT = 0
-SERVO_MIN = 1.250 #ms
+SERVO_MIN = 2 #ms
 
 
 while True:
@@ -548,7 +547,8 @@ while True:
     with navio.pwm.PWM(1) as pwm:
         pwm.set_period(50)
         pwm.enable()
-
+        
+        global SERVO_MIN = pid
         pwm.set_duty_cycle(SERVO_MIN)
-        time.sleep(0.02)
+        time.sleep(0.05)
     time.sleep(0.01)
