@@ -14,10 +14,6 @@ navio.util.check_apm()
 
 imu = navio.mpu9250.MPU9250()
 
-PWM_OUTPUT = 0
-SERVO_MIN = 1.250 #ms
-SERVO_MAX = 1.750 #ms
-
 if imu.testConnection():
     print("Connection established: True")
 else:
@@ -534,25 +530,25 @@ class PID:
 
 	def getDerivator(self):
 		return self.Derivator
-ESC_INIT =  1.100 #ms
 ######	Example	#########
-#
+
 p=PID(1.0,0.01,0.01)
 p.setPoint(0)
+
+
+PWM_OUTPUT = 0
+SERVO_MIN = 1.250 #ms
+
+
 while True:
     x, y, z = EulerAngles()
     pid = p.update(x)
     print(pid)
 
-    with navio.pwm.PWM(3) as pwm:
+    with navio.pwm.PWM(1) as pwm:
         pwm.set_period(50)
         pwm.enable()
-        # initialize ESC: set initial duty_cicle for 3 sec
-        for i in range(30):
-            pwm.set_duty_cycle(ESC_INIT)
-            time.sleep(0.1)
 
-        while (True):
-            pwm.set_duty_cycle(SERVO_MIN)
-            time.sleep(0.1)
+        pwm.set_duty_cycle(SERVO_MIN)
+        time.sleep(0.02)
     time.sleep(0.01)
