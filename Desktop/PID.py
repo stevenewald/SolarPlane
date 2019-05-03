@@ -548,6 +548,8 @@ with navio.pwm.PWM(1) as pwm:
 
         SERVO_MIN = (x/90)*2
         print SERVO_MIN
-        pwm.set_duty_cycle(x)
+        #pwm.set_duty_cycle(x)
+        myinputx = input()
+        pwm.set_duty_cycle(myinputx)
         print "worked"
         time.sleep(.02)
