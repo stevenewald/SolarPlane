@@ -549,7 +549,7 @@ while True:
         pwm.enable()
 
         
-        SERVO_MIN = (x/90)*2
+        SERVO_MIN = (x/90)*20
         print SERVO_MIN
         pwm.set_duty_cycle(abs(SERVO_MIN))
         time.sleep(0.05)
