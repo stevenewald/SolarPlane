@@ -547,6 +547,7 @@ while True:
     #print(pid)
 
     with navio.pwm.PWM(1) as pwm:
+        global pwm
         SERVO_MIN = (x/90)*2
         print SERVO_MIN
         pwm.set_duty_cycle(abs(x))
