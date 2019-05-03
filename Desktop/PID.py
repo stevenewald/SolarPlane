@@ -538,7 +538,7 @@ p.setPoint(0)
 
 SERVO_MIN = 2 #ms
 
-with navio.pwm.PWM(1) as pwm:
+with navio.pwm.PWM(2) as pwm:
     pwm.set_period(50)
     pwm.enable()
     while True:
@@ -546,7 +546,7 @@ with navio.pwm.PWM(1) as pwm:
         #pid = p.update(x)
         #print(pid)
 
-        SERVO_MIN = 1+(x/90)
+        SERVO_MIN = 1.5+(0.5-(x/90))
         print SERVO_MIN
         pwm.set_duty_cycle(SERVO_MIN)
         print "worked"
