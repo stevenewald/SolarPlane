@@ -538,19 +538,17 @@ p.setPoint(0)
 
 SERVO_MIN = 2 #ms
 
-pwm.set_period(50)
-pwm.enable()
+with navio.pwm.PWM(1) as pwm:
+    pwm.set_period(50)
+    pwm.enable()
+    while True:
+        x, y, z = EulerAngles()
+        #pid = p.update(x)
+        #print(pid)
 
-while True:
-    x, y, z = EulerAngles()
-    #pid = p.update(x)
-    #print(pid)
-
-    with navio.pwm.PWM(1) as pwm:
         global pwm
         SERVO_MIN = (x/90)*2
         print SERVO_MIN
         pwm.set_duty_cycle(abs(x))
         print "worked"
         time.sleep(1)
-    time.sleep(1)
