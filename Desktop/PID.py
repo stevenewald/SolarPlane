@@ -547,8 +547,9 @@ while True:
     with navio.pwm.PWM(1) as pwm:
         pwm.set_period(50)
         pwm.enable()
-        
-        global SERVO_MIN = pid
+
+        global SERVO_MIN
+        SERVO_MIN = pid
         pwm.set_duty_cycle(SERVO_MIN)
         time.sleep(0.05)
     time.sleep(0.01)
