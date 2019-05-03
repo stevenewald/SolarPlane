@@ -550,6 +550,7 @@ while True:
 
         global SERVO_MIN
         SERVO_MIN = pid
-        pwm.set_duty_cycle(int(SERVO_MIN))
+        print SERVO_MIN
+        pwm.set_duty_cycle(abs(SERVO_MIN))
         time.sleep(0.05)
     time.sleep(0.01)
