@@ -577,8 +577,8 @@ with navio.pwm.PWM(2) as elevator:
             
 
             ################## RCINPUT ###################################
-            elevatorAngle = 1.5+(0.5-3*(x/90)) #add in min and max on top of (3*x/90) so it doesnt go below 1 and doesnt go higher than 2
-            print elevatorperiod
+            adjustment = elevatorperiod-1503
+            elevatorAngle = 1.5+(0.5-3*((x + adjustment)/90)) #add in min and max on top of (3*x/90) so it doesnt go below 1 and doesnt go higher than 2
             ###############################################
 
             if ((tick % 5) == 0): #only every 5 ticks
@@ -593,3 +593,4 @@ with navio.pwm.PWM(2) as elevator:
 
             
             elevator.set_duty_cycle(elevatorAngle) #SET DUTY CYCLE IS IN BETWEEN 1 AND 2 ALWAYS - 1 is min and 2 is max for the servo
+            time.sleep(0.05)
