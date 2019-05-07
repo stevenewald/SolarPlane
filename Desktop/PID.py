@@ -556,6 +556,7 @@ GettingReadyForHeadingToFirstCoord = False
 
 ###################### PREPARING - FIRST STEP ##################
 while Preparing:
+    print("placeholder")
     ############Placeholder#################
     #will have "wait until switch is flipped" or something
 
