@@ -578,7 +578,7 @@ with navio.pwm.PWM(2) as elevator:
 
             ################## RCINPUT ###################################
             elevatorAngle = 1.5+(0.5-3*(x/90)) #add in min and max on top of (3*x/90) so it doesnt go below 1 and doesnt go higher than 2
-            elevatorAngle = elevatorAngle + elevatorperiod
+            elevatorAngle = elevatorAngle + float(elevatorperiod)
             ###############################################
 
             if ((tick % 5) == 0): #only every 5 ticks
