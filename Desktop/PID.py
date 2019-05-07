@@ -545,6 +545,8 @@ with navio.pwm.PWM(2) as elevator:
         rudder.set_period(50)
         rudder.enable()
 
+        rcin = navio.rcinput.RCInput()
+
 
         tick = 0 #number of times loop repeats
 
