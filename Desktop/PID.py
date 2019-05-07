@@ -4,6 +4,7 @@ import navio.ms5611
 import navio.util
 import argparse 
 import navio.mpu9250
+import navio.rcinput
 import math
 import navio.pwm
 import datetime
@@ -421,9 +422,10 @@ def EulerAngles():
     return kalmanX, kalmanY, tiltCompensatedHeading
 
     #slow program down a bit, makes the output more readable
-    time.sleep(0.03)
+    #time.sleep(0.03)
 
 
+########### BAROMETER FORMULA - IDEAL GAS LAW TO CALCULATE ALTITUDE ##############################3
 baro = navio.ms5611.MS5611()
 baro.initialize()
 
@@ -532,20 +534,62 @@ class PID:
 		return self.Derivator
 ######	Example	#########
 
-p=PID(0.0055556,0.01,0.01)
+p=PID(0.0055556,0.01,0.001)
 p.setPoint(0)
 
+##################### SERVO SETUP ###########################
+elevator = navio.pwm.PWM(2)
+rudder = navio.pwm.PWM(3)
 
-SERVO_MIN = 2 #ms
+elevator.set_period(50)
+elevator.enable()
+rudder.set_period(50)
+rudder.enable()
+tick = 0 #number of times loop repeats
 
-with navio.pwm.PWM(2) as pwm:
-    pwm.set_period(50)
-    pwm.enable()
-    while True:
-        x, y, z = EulerAngles()
-        #pid = p.update(x)
-        #print(pid)
+########################## Event Variables #####################
+#change as project goes along
+Preparing = False #will be true once step is done
+Takeoff = False #will be false once step is done
+GettingReadyForHeadingToFirstCoord = False
 
-        SERVO_MIN = 1.5+(0.5-3*(x/90))
-        print SERVO_MIN
-        pwm.set_duty_cycle(SERVO_MIN)
+
+###################### PREPARING - FIRST STEP ##################
+while Preparing:
+    ############Placeholder#################
+    #will have "wait until switch is flipped" or something
+
+    
+
+
+
+
+#################### TAKEOFF - SECOND STEP #####################
+while (Takeoff): #first step is taking off
+    #todo:
+    #1. set throttle to 1 (full)
+    #2. set elevator setpoint to 20 degrees (plane angle)
+    #3. wait until altitude > 50 feet, then switch to GettingReadyForHeadingToFirstCoord step
+
+    tick = tick + 1
+    x, y, z = EulerAngles()
+    elevatorperiod = rcin.read(2)
+    
+
+    ################## RCINPUT ###################################
+    elevatorAngle = 1.5+(0.5-3*(x/90)) #add in min and max on top of (3*x/90) so it doesnt go below 1 and doesnt go higher than 2
+    elevatorAngle = elevatorAngle + elevatorperiod
+    ###############################################
+
+    if ((tick % 5) = 0): #only every 5 ticks
+        print("X Axis Angle: " + str(x))
+        print("Y Axis Angle: " + str(y))
+        print("Heading: " + str(z))
+        print("Period of Adjustment:" + str(elevatorperiod))
+
+
+    #pid = p.update(x)
+    #print(pid)
+
+    
+    elevator.set_duty_cycle(elevatorAngle) #SET DUTY CYCLE IS IN BETWEEN 1 AND 2 ALWAYS - 1 is min and 2 is max for the servo
