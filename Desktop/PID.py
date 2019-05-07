@@ -578,7 +578,7 @@ while (Takeoff):
     elevatorAngle = elevatorAngle + elevatorperiod
     ###############################################
 
-    if ((tick % 5) = 0): #only every 5 ticks
+    if ((tick % 5) == 0): #only every 5 ticks
         print("X Axis Angle: " + str(x))
         print("Y Axis Angle: " + str(y))
         print("Heading: " + str(z))
