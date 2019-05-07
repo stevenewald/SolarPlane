@@ -541,10 +541,11 @@ p.setPoint(0)
 elevator = navio.pwm.PWM(2)
 rudder = navio.pwm.PWM(3)
 
-elevator.set_period(50)
 elevator.enable()
-rudder.set_period(50)
+elevator.set_period(50)
 rudder.enable()
+rudder.set_period(50)
+
 tick = 0 #number of times loop repeats
 
 ########################## Event Variables #####################
