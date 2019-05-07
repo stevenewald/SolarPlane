@@ -550,7 +550,7 @@ tick = 0 #number of times loop repeats
 ########################## Event Variables #####################
 #change as project goes along
 Preparing = False #will be true once step is done
-Takeoff = False #will be false once step is done
+Takeoff = True #will be false once step is done
 GettingReadyForHeadingToFirstCoord = False
 
 
@@ -565,7 +565,8 @@ while Preparing:
 
 
 #################### TAKEOFF - SECOND STEP #####################
-while (Takeoff): #first step is taking off
+while (Takeoff): 
+    #first step is taking off
     #todo:
     #1. set throttle to 1 (full)
     #2. set elevator setpoint to 20 degrees (plane angle)
