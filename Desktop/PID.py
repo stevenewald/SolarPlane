@@ -559,11 +559,6 @@ while Preparing:
     ############Placeholder#################
     #will have "wait until switch is flipped" or something
 
-    
-
-
-
-
 #################### TAKEOFF - SECOND STEP #####################
 while (Takeoff): 
     #first step is taking off
