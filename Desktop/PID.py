@@ -577,7 +577,7 @@ with navio.pwm.PWM(2) as elevator:
             
 
             ################## RCINPUT ###################################
-            adjustment = elevatorperiod-1503
+            adjustment = int(elevatorperiod)-1503
             elevatorAngle = 1.5+(0.5-3*((x + adjustment)/90)) #add in min and max on top of (3*x/90) so it doesnt go below 1 and doesnt go higher than 2
             ###############################################
 
