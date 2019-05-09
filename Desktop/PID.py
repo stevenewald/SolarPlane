@@ -583,7 +583,7 @@ with navio.pwm.PWM(1) as throttle:
                     manualoverride = (int(rcin.read(3)))/100
 
                     override = False
-                    if (manualoverride > 1.7): #meaning switch for manual override is flipped
+                    if (manualoverride > 17): #meaning switch for manual override is flipped
                         override = True
                     
 
@@ -592,9 +592,9 @@ with navio.pwm.PWM(1) as throttle:
                         elevatorAngle = (1.5+(0.5-3*(x/90)))
                         rudderAngle = 1 #add in min and max on top of (3*x/90) so it doesnt go below 1 and doesnt go higher than 2
                     else:
-                        elevatorAngle = elevatorperiod
-                        rudderAngle = rudderperiod
-                        spoilerAmount = spoilerperiod
+                        elevatorAngle = elevatorperiod/10
+                        rudderAngle = rudderperiod/10
+                        spoilerAmount = spoilerperiod/10
                     ###############################################
 
                     if ((tick % 5) == 0): #only every 5 ticks
