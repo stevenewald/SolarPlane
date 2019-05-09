@@ -592,7 +592,6 @@ with navio.pwm.PWM(1) as throttle:
                         elevatorAngle = (1.5+(0.5-3*(x/90)))
                         rudderAngle = 1 #add in min and max on top of (3*x/90) so it doesnt go below 1 and doesnt go higher than 2
                     else:
-                        throttleAmount = throttleperiod
                         elevatorAngle = elevatorperiod
                         rudderAngle = rudderperiod
                         spoilerAmount = spoilerperiod
