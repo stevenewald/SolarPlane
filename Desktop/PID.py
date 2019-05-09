@@ -583,7 +583,7 @@ with navio.pwm.PWM(1) as throttle:
                     spoilerperiod = (int(rcin.read(5)))/100
                     manualoverride = (int(rcin.read(4)))/100
 
-                    override = false
+                    override = False
                     if (manualoverride > 1.7): #meaning switch for manual override is flipped
                         override = True
                     
