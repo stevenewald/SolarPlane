@@ -419,7 +419,7 @@ def EulerAngles():
 
     ############################ END ##################################
 
-    return kalmanX, kalmanY, tiltCompensatedHeading
+    return kalmanX, kalmanY, heading
 
     #slow program down a bit, makes the output more readable
     #time.sleep(0.03)
@@ -538,59 +538,77 @@ p=PID(0.0055556,0.01,0.001)
 p.setPoint(0)
 
 ##################### SERVO SETUP ###########################
-with navio.pwm.PWM(2) as elevator:
-    with navio.pwm.PWM(3) as rudder:
-        elevator.set_period(50)
-        elevator.enable()
-        rudder.set_period(50)
-        rudder.enable()
+with navio.pwm.PWM(1) as throttle:
+    with navio.pwm.PWM(2) as elevator:
+        with navio.pwm.PWM(3) as rudder:
+            with navio.pwm.PWM(4) as spoiler:
 
-        rcin = navio.rcinput.RCInput()
+                elevator.set_period(50)
+                elevator.enable()
+                rudder.set_period(50)
+                rudder.enable()
 
+                rcin = navio.rcinput.RCInput() #RC Inputs
 
-        tick = 0 #number of times loop repeats
+                tick = 0 #number of times loop repeats
 
-        ########################## Event Variables #####################
-        #change as project goes along
-        Preparing = False #will be true once step is done
-        Takeoff = True #will be false once step is done
-        GettingReadyForHeadingToFirstCoord = False
-
-
-        ###################### PREPARING - FIRST STEP ##################
-        while Preparing:
-            print("placeholder")
-            ############Placeholder#################
-            #will have "wait until switch is flipped" or something
-
-        #################### TAKEOFF - SECOND STEP #####################
-        while (Takeoff): 
-            #first step is taking off
-            #todo:
-            #1. set throttle to 1 (full)
-            #2. set elevator setpoint to 20 degrees (plane angle)
-            #3. wait until altitude > 50 feet, then switch to GettingReadyForHeadingToFirstCoord step
-
-            tick = tick + 1
-            x, y, z = EulerAngles()
-            elevatorperiod = rcin.read(2)
-            
-
-            ################## RCINPUT ###################################
-            adjustment = (int(elevatorperiod))/1500
-            elevatorAngle = (1.5+(0.5-3*(x/90)))+adjustment #add in min and max on top of (3*x/90) so it doesnt go below 1 and doesnt go higher than 2
-            ###############################################
-
-            if ((tick % 5) == 0): #only every 5 ticks
-                print("X Axis Angle: " + str(x))
-                print("Y Axis Angle: " + str(y))
-                print("Heading: " + str(z))
-                print("Period of Adjustment:" + str(elevatorperiod))
+                ########################## Event Variables #####################
+                #change as project goes along
+                Preparing = False #will be true once step is done
+                Takeoff = True #will be false once step is done
+                GettingReadyForHeadingToFirstCoord = False
 
 
-            #pid = p.update(x)
-            #print(pid)
+                ###################### PREPARING - FIRST STEP ##################
+                while Preparing:
+                    print("placeholder")
+                    ############Placeholder#################
+                    #will have "wait until switch is flipped" or something
 
-            
-            elevator.set_duty_cycle(elevatorAngle) #SET DUTY CYCLE IS IN BETWEEN 1 AND 2 ALWAYS - 1 is min and 2 is max for the servo
-            time.sleep(0.05)
+                #################### TAKEOFF - SECOND STEP #####################
+                while (Takeoff): 
+                    #first step is taking off
+                    #todo:
+                    #1. set throttle to 1 (full)
+                    #2. set elevator setpoint to 20 degrees (plane angle)
+                    #3. wait until altitude > 50 feet, then switch to GettingReadyForHeadingToFirstCoord step
+
+                    tick = tick + 1
+                    x, y, z = EulerAngles()
+
+                    #RC Inputs - divided by 100 because they come in in with the decimal moved two places to the right
+                    throttleperiod = (int(rcin.read(1)))/100
+                    elevatorperiod = (int(rcin.read(2)))/100
+                    rudderperiod = (int(rcin.read(3)))/100
+                    spoilerperiod = (int(rcin.read(5)))/100
+                    manualoverride = (int(rcin.read(4)))/100
+
+                    override = false
+                    if (manualoverride > 1.7): #meaning switch for manual override is flipped
+                        override = True
+                    
+
+                    ################## RCINPUT ###################################
+                    if not(override):
+                        elevatorAngle = (1.5+(0.5-3*(x/90))) #add in min and max on top of (3*x/90) so it doesnt go below 1 and doesnt go higher than 2
+                    else:
+                        throttleAmount = throttleperiod
+                        elevatorAngle = elevatorperiod
+                        rudderAngle = rudderperiod
+                        spoilerAmount = spoilerperiod
+                    ###############################################
+
+                    if ((tick % 5) == 0): #only every 5 ticks
+                        print("X Axis Angle: " + str(x))
+                        print("Y Axis Angle: " + str(y))
+                        print("Heading: " + str(z))
+                        print("Period of Adjustment:" + str(elevatorperiod))
+                        print("Manualoverride?" + str(manualoverride))
+
+
+                    #pid = p.update(x)
+                    #print(pid)
+
+                    
+                    elevator.set_duty_cycle(elevatorAngle) #SET DUTY CYCLE IS IN BETWEEN 1 AND 2 ALWAYS - 1 is min and 2 is max for the servo
+                    time.sleep(0.08)
