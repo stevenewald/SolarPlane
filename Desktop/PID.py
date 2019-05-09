@@ -613,4 +613,3 @@ with navio.pwm.PWM(1) as throttle:
                     
                     elevator.set_duty_cycle(elevatorAngle)
                     rudder.set_duty_cycle(rudderAngle) #SET DUTY CYCLE IS IN BETWEEN 1 AND 2 ALWAYS - 1 is min and 2 is max for the servo
-                    time.sleep(0.08)
