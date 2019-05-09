@@ -577,10 +577,10 @@ with navio.pwm.PWM(1) as throttle:
                     x, y, z = EulerAngles()
 
                     #RC Inputs - divided by 100 because they come in in with the decimal moved two places to the right
-                    rudderperiod = (int(rcin.read(1)))/1000
-                    elevatorperiod = (int(rcin.read(2)))/1000
-                    spoilerperiod = (int(rcin.read(5)))/1000
-                    manualoverride = (int(rcin.read(3)))/1000
+                    rudderperiod = (int(rcin.read(1)))/100
+                    elevatorperiod = (int(rcin.read(2)))/100
+                    spoilerperiod = (int(rcin.read(5)))/100
+                    manualoverride = (int(rcin.read(3)))/100
 
                     override = False
                     if (manualoverride > 1.7): #meaning switch for manual override is flipped
