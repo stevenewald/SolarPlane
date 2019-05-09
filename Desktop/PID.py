@@ -577,11 +577,10 @@ with navio.pwm.PWM(1) as throttle:
                     x, y, z = EulerAngles()
 
                     #RC Inputs - divided by 100 because they come in in with the decimal moved two places to the right
-                    throttleperiod = (int(rcin.read(1)))/100
-                    elevatorperiod = (int(rcin.read(2)))/100
-                    rudderperiod = (int(rcin.read(3)))/100
-                    spoilerperiod = (int(rcin.read(5)))/100
-                    manualoverride = (int(rcin.read(4)))/100
+                    rudderperiod = (int(rcin.read(1)))/1000
+                    elevatorperiod = (int(rcin.read(2)))/1000
+                    spoilerperiod = (int(rcin.read(5)))/1000
+                    manualoverride = (int(rcin.read(3)))/1000
 
                     override = False
                     if (manualoverride > 1.7): #meaning switch for manual override is flipped
@@ -590,7 +589,8 @@ with navio.pwm.PWM(1) as throttle:
 
                     ################## RCINPUT ###################################
                     if not(override):
-                        elevatorAngle = (1.5+(0.5-3*(x/90))) #add in min and max on top of (3*x/90) so it doesnt go below 1 and doesnt go higher than 2
+                        elevatorAngle = (1.5+(0.5-3*(x/90)))
+                        rudderAngle = 1 #add in min and max on top of (3*x/90) so it doesnt go below 1 and doesnt go higher than 2
                     else:
                         throttleAmount = throttleperiod
                         elevatorAngle = elevatorperiod
@@ -613,5 +613,6 @@ with navio.pwm.PWM(1) as throttle:
                     #print(pid)
 
                     
-                    elevator.set_duty_cycle(elevatorAngle) #SET DUTY CYCLE IS IN BETWEEN 1 AND 2 ALWAYS - 1 is min and 2 is max for the servo
+                    elevator.set_duty_cycle(elevatorAngle)
+                    rudder.set_duty_cycle(rudderAngle) #SET DUTY CYCLE IS IN BETWEEN 1 AND 2 ALWAYS - 1 is min and 2 is max for the servo
                     time.sleep(0.08)
