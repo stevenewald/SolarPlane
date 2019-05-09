@@ -604,6 +604,9 @@ with navio.pwm.PWM(1) as throttle:
                         print("Heading: " + str(z))
                         print("Period of Adjustment:" + str(elevatorperiod))
                         print("Manualoverride?" + str(manualoverride))
+                        print("ruder?" + str(rudderperiod))
+                        print("spoiler?" + str(spoilerperiod))
+                        print("thrott?" + str(throttleperiod))
 
 
                     #pid = p.update(x)
