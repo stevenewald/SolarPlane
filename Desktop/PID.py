@@ -592,9 +592,9 @@ with navio.pwm.PWM(1) as throttle:
                         elevatorAngle = (1.5+(0.5-3*(x/90)))
                         rudderAngle = 1 #add in min and max on top of (3*x/90) so it doesnt go below 1 and doesnt go higher than 2
                     else:
-                        elevatorAngle = elevatorperiod/10
-                        rudderAngle = rudderperiod/10
-                        spoilerAmount = spoilerperiod/10
+                        elevatorAngle = float(elevatorperiod)/10
+                        rudderAngle = float(rudderperiod)/10
+                        spoilerAmount = float(spoilerperiod)/10
                     ###############################################
 
                     if ((tick % 5) == 0): #only every 5 ticks
