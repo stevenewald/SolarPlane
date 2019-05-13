@@ -592,7 +592,7 @@ with navio.pwm.PWM(1) as throttle:
 
                     ################## RCINPUT ###################################
                     if not(override):
-                        adjustment = (abs(x)**1.5)/853
+                        adjustment = (abs(x-90)**1.5)/853
                         if x < 0:
                             adjustment = adjustment*(-1)
                         elevatorAngle = max(1, min(1+adjustment, 2))
