@@ -597,13 +597,13 @@ with navio.pwm.PWM(1) as throttle:
                         spoilerAmount = float(spoilerperiod)/10
                     ###############################################
 
-                    if ((tick % 5) == 0): #only every 5 ticks
+                    if ((tick % 10) == 0): #only every 10 ticks
                         print("X Axis Angle: " + str(x))
                         print("Y Axis Angle: " + str(y))
                         print("Heading: " + str(z))
                         print("Period of Adjustment:" + str(elevatorperiod))
                         print("Manualoverride?" + str(manualoverride))
-                        print("ruder?" + str(rudderperiod))
+                        print("rudder?" + str(rudderperiod))
                         print("spoiler?" + str(spoilerperiod))
 
 
