@@ -419,7 +419,7 @@ def EulerAngles():
 
     ############################ END ##################################
 
-    return m9g[1], m9m[1], m9m[2]
+    return kalmanX, kalmanY, heading
     #slow program down a bit, makes the output more readable
     #time.sleep(0.03)
 
