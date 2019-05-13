@@ -583,8 +583,8 @@ with navio.pwm.PWM(1) as throttle:
                     manualoverride = (int(rcin.read(3)))/100
 
                     override = False
-                    if (manualoverride > 17): #meaning switch for manual override is flipped
-                        override = True
+                    #if (manualoverride > 17): #meaning switch for manual override is flipped
+                    #    override = True
                     
 
                     ################## RCINPUT ###################################
