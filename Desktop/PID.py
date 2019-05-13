@@ -367,7 +367,6 @@ def EulerAngles():
     #Kalman filter used to combine the accelerometer and gyro values.
     kalmanY = kalmanFilterY(AccYangle, rate_gyr_y,LP)
     kalmanX = kalmanFilterX(AccXangle, rate_gyr_x,LP)
-    kalmanZ = kalmanFilterX(AccXangle, rate_gyr_z,LP)
 
     if IMU_UPSIDE_DOWN:
         MAGy = -MAGy      #If IMU is upside down, this is needed to get correct heading.
@@ -420,8 +419,7 @@ def EulerAngles():
 
     ############################ END ##################################
 
-    return kalmanX, kalmanY, kalmanZ
-
+    return m9g[1], m9m[1], m9m[2]
     #slow program down a bit, makes the output more readable
     #time.sleep(0.03)
 
