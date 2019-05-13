@@ -595,7 +595,7 @@ with navio.pwm.PWM(1) as throttle:
                         adjustment = (abs(x)**1.5)/853
                         if x < 0:
                             adjustment = adjustment*(-1)
-                        elevatorAngle = max(0, min((1.5+(-0.5-3*(adjustment))), 20))
+                        elevatorAngle = max(1, min((1.5+(-0.5-3*(adjustment))), 2))
                         rudderAngle = 1 #add in min and max on top of (3*x/90) so it doesnt go below 1 and doesnt go higher than 2
                     else:
                         elevatorAngle = float(elevatorperiod)/10
@@ -615,5 +615,5 @@ with navio.pwm.PWM(1) as throttle:
 
 
                     
-                    #elevator.set_duty_cycle(elevatorAngle)
+                    elevator.set_duty_cycle(elevatorAngle)
                     #rudder.set_duty_cycle(rudderAngle) #SET DUTY CYCLE IS IN BETWEEN 1 AND 2 ALWAYS - 1 is min and 2 is max for the servo
