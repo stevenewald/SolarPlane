@@ -592,7 +592,7 @@ with navio.pwm.PWM(1) as throttle:
                     if not(override):
                         #elevatorAngle = (1.5+(0.5-3*(x/90)))
                         
-                        elevatorAngle = (1.5+(0.5-p.update(x)))
+                        elevatorAngle = (1.5+(0.5-p.update((x/90)))
                         rudderAngle = 1 #add in min and max on top of (3*x/90) so it doesnt go below 1 and doesnt go higher than 2
                     else:
                         elevatorAngle = float(elevatorperiod)/10
