@@ -533,8 +533,10 @@ class PID:
 	def getDerivator(self):
 		return self.Derivator
 ######	Example	#########
-
-p=PID(1,0.01,0.001)
+p1 = input()
+p2 = input()
+p3 = input()
+p=PID(p1,p2,p3)
 p.setPoint(0)
 
 ##################### SERVO SETUP ###########################
