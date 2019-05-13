@@ -602,7 +602,7 @@ with navio.pwm.PWM(1) as throttle:
 
                     if ((tick % 10) == 0): #only every 10 ticks
                         print("X Axis Angle: " + str(x))
-                        print("PID Period: " + str(PID))
+                        print("PID Period: " + str(elevatorAngle))
                         print("Y Axis Angle: " + str(y))
                         print("Heading: " + str(z))
                         print("Period of Adjustment:" + str(elevatorperiod))
