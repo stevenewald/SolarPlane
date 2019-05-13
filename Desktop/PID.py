@@ -567,6 +567,7 @@ with navio.pwm.PWM(1) as throttle:
 
                 #################### TAKEOFF - SECOND STEP #####################
                 while (Takeoff): 
+                    global p
                     #first step is taking off
                     #todo:
                     #1. set throttle to 1 (full)
@@ -589,7 +590,9 @@ with navio.pwm.PWM(1) as throttle:
 
                     ################## RCINPUT ###################################
                     if not(override):
-                        elevatorAngle = (1.5+(0.5-3*(x/90)))
+                        #elevatorAngle = (1.5+(0.5-3*(x/90)))
+                        
+                        elevatorAngle = p.update(x)
                         rudderAngle = 1 #add in min and max on top of (3*x/90) so it doesnt go below 1 and doesnt go higher than 2
                     else:
                         elevatorAngle = float(elevatorperiod)/10
@@ -599,6 +602,7 @@ with navio.pwm.PWM(1) as throttle:
 
                     if ((tick % 10) == 0): #only every 10 ticks
                         print("X Axis Angle: " + str(x))
+                        print("PID Period: " + str(PID))
                         print("Y Axis Angle: " + str(y))
                         print("Heading: " + str(z))
                         print("Period of Adjustment:" + str(elevatorperiod))
@@ -607,9 +611,9 @@ with navio.pwm.PWM(1) as throttle:
                         print("spoiler?" + str(spoilerperiod))
 
 
-                    #pid = p.update(x)
-                    #print(pid)
+                    print("PID:")
+                    print(pid)
 
                     
-                    elevator.set_duty_cycle(elevatorAngle)
-                    rudder.set_duty_cycle(rudderAngle) #SET DUTY CYCLE IS IN BETWEEN 1 AND 2 ALWAYS - 1 is min and 2 is max for the servo
+                    #elevator.set_duty_cycle(elevatorAngle)
+                    #rudder.set_duty_cycle(rudderAngle) #SET DUTY CYCLE IS IN BETWEEN 1 AND 2 ALWAYS - 1 is min and 2 is max for the servo
