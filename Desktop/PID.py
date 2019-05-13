@@ -534,7 +534,7 @@ class PID:
 		return self.Derivator
 ######	Example	#########
 
-p=PID(0.0055556,0.01,0.001)
+p=PID(1,0.01,0.001)
 p.setPoint(0)
 
 ##################### SERVO SETUP ###########################
