@@ -533,11 +533,11 @@ class PID:
 	def getDerivator(self):
 		return self.Derivator
 ######	Example	#########
-p1 = input()
-p2 = input()
-p3 = input()
-p=PID(p1,p2,p3)
-p.setPoint(0)
+#p1 = input() #1
+#p2 = input()
+#p3 = input()
+#p=PID(p1,p2,p3)
+#p.setPoint(0)
 
 ##################### SERVO SETUP ###########################
 with navio.pwm.PWM(1) as throttle:
@@ -586,15 +586,16 @@ with navio.pwm.PWM(1) as throttle:
                     manualoverride = (int(rcin.read(3)))/100
 
                     override = False
-                    #if (manualoverride > 17): #meaning switch for manual override is flipped
-                    #    override = True
+                    if (manualoverride > 17): #meaning switch for manual override is flipped
+                        override = True
                     
 
                     ################## RCINPUT ###################################
                     if not(override):
-                        #elevatorAngle = (1.5+(0.5-3*(x/90)))
-                        
-                        elevatorAngle = (1.5+(0.5-p.update((x/90))))
+                        adjustment = (x*x)/8100
+                        if x < 0:
+                            adjustment = adjustment*(-1)
+                        elevatorAngle = max(1, min((1.5+(0.5-3*(adjustment))), 2))
                         rudderAngle = 1 #add in min and max on top of (3*x/90) so it doesnt go below 1 and doesnt go higher than 2
                     else:
                         elevatorAngle = float(elevatorperiod)/10
@@ -604,7 +605,6 @@ with navio.pwm.PWM(1) as throttle:
 
                     if ((tick % 10) == 0): #only every 10 ticks
                         print("X Axis Angle: " + str(x))
-                        print("PID Period: " + str(elevatorAngle))
                         print("Y Axis Angle: " + str(y))
                         print("Heading: " + str(z))
                         print("Period of Adjustment:" + str(elevatorperiod))
@@ -614,5 +614,5 @@ with navio.pwm.PWM(1) as throttle:
 
 
                     
-                    #elevator.set_duty_cycle(elevatorAngle)
+                    elevator.set_duty_cycle(elevatorAngle)
                     #rudder.set_duty_cycle(rudderAngle) #SET DUTY CYCLE IS IN BETWEEN 1 AND 2 ALWAYS - 1 is min and 2 is max for the servo
