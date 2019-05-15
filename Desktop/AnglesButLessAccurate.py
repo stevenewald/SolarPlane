@@ -369,9 +369,9 @@ while True:
     #The compass and accelerometer are orientated differently on the LSM9DS0 and LSM9DS1 and the Z axis on the compass
     #is also reversed. This needs to be taken into consideration when performing the calculations
     #if(IMU.LSM9DS0):
-    #magYcomp = MAGx*math.sin(roll)*math.sin(pitch)+MAGy*math.cos(roll)-MAGz*math.sin(roll)*math.cos(pitch)   #LSM9DS0
+    magYcomp = MAGx*math.sin(roll)*math.sin(pitch)+MAGy*math.cos(roll)-MAGz*math.sin(roll)*math.cos(pitch)   #LSM9DS0
     #else:
-    magYcomp = MAGx*math.sin(roll)*math.sin(pitch)+MAGy*math.cos(roll)+MAGz*math.sin(roll)*math.cos(pitch)   #LSM9DS1
+    #    magYcomp = MAGx*math.sin(roll)*math.sin(pitch)+MAGy*math.cos(roll)+MAGz*math.sin(roll)*math.cos(pitch)   #LSM9DS1
 
 
 
@@ -384,28 +384,10 @@ while True:
 
     ############################ END ##################################
 
-
-    if 0:			#Change to '0' to stop showing the angles from the accelerometer
-        print ("# ACCX Angle %5.2f ACCY Angle %5.2f #  " % (AccXangle, AccYangle)),
-
-    if 0:			#Change to '0' to stop  showing the angles from the gyro
-        print ("\t# GRYX Angle %5.2f  GYRY Angle %5.2f  GYRZ Angle %5.2f # " % (gyroXangle,gyroYangle,gyroZangle)),
-
-    if 1:			#Change to '0' to stop  showing the angles from the complementary filter
-	print("")
-        print ("\t# CFangleX Angle %5.2f   CFangleY Angle %5.2f #" % (CFangleX,CFangleY)),
-        
-    if 1:			#Change to '0' to stop  showing the heading
-	print("")
-        print ("\t# HEADING %5.2f  tiltCompensatedHeading %5.2f #" % (heading,tiltCompensatedHeading)),
-        
-    if 1:			#Change to '0' to stop  showing the angles from the Kalman filter
-	print("")
-        print ("# kalmanX %5.2f   kalmanY %5.2f #" % (kalmanX,kalmanY)),
+    return kalmanX, kalmanY, tiltCompensatedHeading
 
     #print a new line
     print("")  
 
 
     #slow program down a bit, makes the output more readable
-    time.sleep(0.03)
