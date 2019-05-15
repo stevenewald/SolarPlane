@@ -384,7 +384,9 @@ while True:
 
     ############################ END ##################################
 
-    return kalmanX, kalmanY, tiltCompensatedHeading
+    print(kalmanX)
+    print(kalmanY)
+    print(tiltCompensatedHeading)
 
     #print a new line
     print("")  
