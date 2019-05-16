@@ -53,12 +53,15 @@ pitch=roll=yaw = 0
 #dt = deltatime
 
 def invSqrt(x):
-    halfx = 0.5*x
-    y=x
-    i = (y)
-    i = 0x5f3759df - (bin(i)>>1)
-    y=i
-    y = y * (1.5 - (halfx * y * y))
+    #halfx = 0.5*x
+    #y=x
+    #i = (y)
+    #i = 0x5f3759df - (bin(i)>>1)
+    #y=i
+    #y = y * (1.5 - (halfx * y * y))
+    if x = 0:
+        return 0
+    y = x**(-0.5)
     return y
 
 
