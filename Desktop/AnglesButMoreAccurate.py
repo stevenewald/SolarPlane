@@ -328,14 +328,16 @@ def mainLoop():
 
     now = time.time()
     previoustime = currenttime
-    currenttime = now
-    dt = (currenttime - previoustime)
+    currenttime = 1000000 * now
+    dt = (currenttime - previoustime)/1000000
     if (dt < 1/1300):
-        time.sleep(1/1300-dt)
+        print("error")
+        time.sleep((1/1300-dt)*1000000)
         now = time.time()
         currenttime = now
         dt = (currenttime - previoustime)
     getEuler()
+    updateIMU(dt)
     Update(dt)
     print("PITCH, ROLL, YAW: " + str(pitch) + " " +  str(roll) + " " + str(yaw))
 setGyroOffset()
