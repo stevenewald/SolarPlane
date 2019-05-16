@@ -84,6 +84,7 @@ def Update(dt):
     #Use IMU algorithm if magnetometer measurement invalid
     if (((mx == 0.0) and (my == 0.0)) and (mz == 0.0)):
         updateIMU(dt)
+        print("magnetometer measurement invalid")
     #Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalisation)
 
     if not(((ax == 0.0) and (ay == 0.0)) and (az == 0.0)):
@@ -94,7 +95,7 @@ def Update(dt):
         az = az*recipNorm
 
         #normalise magnetometer measurement
-        recipNorm = (mx * mx + my * my + mz * mz)
+        recipNorm = invSqrt(mx * mx + my * my + mz * mz)
         mx = mx*recipNorm
         my = my*recipNorm
         mz = mz*recipNorm
@@ -118,8 +119,6 @@ def Update(dt):
         bz = 2 * (mx * (q1q3 - q0q2) + my * (q2q3 + q0q1) + mz * (0.5 - q1q1 - q2q2))
 
         #estimated direction of gravity and magnetic field
-        #what does this even mean anymore, im just trying to interpret this
-        #and i have no clue what im doing ffs
         halfvx = q1q3 - q0q2
         halfvy = q0q1 + q2q3
         halfvz = q0q0 - 0.5 + q3q3
@@ -206,7 +205,7 @@ def updateIMU(dt):
     #Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalisation)
     if not(((ax == 0) and (ay == 0)) and (az == 0)):
         #normalize accelerometer measurement
-        recipNorm = (ax*ax + ay*ay + az*az)
+        recipNorm = invSqrt(ax*ax + ay*ay + az*az)
         ax=ax*recipNorm
         ay=ay*recipNorm
         az=az*recipNorm
@@ -298,7 +297,7 @@ def setGyroOffset():
         offset[1] = offset[1] + gy*0.0175
         offset[2] = offset[2] + gz*0.0175
         i = i + 1
-        time.sleep(.001)
+        time.sleep(.01)
 
     offset[0] = offset[0]/100
     offset[1] = offset[1]/100
@@ -306,6 +305,8 @@ def setGyroOffset():
 
     print("offsets are: " + str(offset[0]) + " " + str(offset[1]) + " " + str(offset[2]))
 
+    time.sleep(1)
+    
     global gyroOffset
     gyroOffset[0] = offset[0]
     gyroOffset[1] = offset[1]
