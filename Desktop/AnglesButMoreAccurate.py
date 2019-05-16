@@ -60,6 +60,7 @@ def Update(dt):
     global hx, hy, bz, bz
     global halfvx, halfvy, halfvz, halfwx, halfwy, halfwz
     global halfex, halfey, halfez
+    global twoKi
     global qa, qb, qc
     global ax, ay, az
     global qx, qy, qz
@@ -87,7 +88,7 @@ def Update(dt):
 
     if not(((ax == 0.0) and (ay == 0.0)) and (az == 0.0)):
         #normalise accelerometer measurement
-        recipNorm = (ax * ax + ay * ay + az * az)**-.05 #inverse squareroot
+        recipNorm = invSqrt(ax * ax + ay * ay + az * az) #inverse squareroot
         ax = ax*recipNorm
         ay = ay*recipNorm
         az = az*recipNorm
@@ -162,7 +163,7 @@ def Update(dt):
     q3 = q3 + (qa * gz + qb * gy - qc * gx)
 
     #normalize quaternion
-    recipNorm = (q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3)**-0.5 #invsqrt
+    recipNorm = invSqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3) #invsqrt
     q0 = q0*recipNorm
     q1 = q1*recipNorm
     q2 = q2*recipNorm
