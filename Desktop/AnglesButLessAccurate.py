@@ -202,14 +202,14 @@ while True:
     m9a, m9g, m9m = imu.getMotion9()
     #Read the accelerometer,gyroscope and magnetometer values
     ACCx = m9a[0]
-    ACCy = m9a[2]
-    ACCz = m9a[1]
+    ACCy = m9a[1]
+    ACCz = m9a[2]
     GYRx = m9g[0]
-    GYRy = m9g[2]
-    GYRz = m9g[1]
+    GYRy = m9g[1]
+    GYRz = m9g[2]
     MAGx = m9m[0]
-    MAGy = m9m[2]
-    MAGz = m9m[1]
+    MAGy = m9m[1]
+    MAGz = m9m[2]
     if m9m[2] == 0:
         print("MAG ERROR!!!")
 
@@ -389,7 +389,7 @@ while True:
 
 
 	#Calculate tilt compensated heading
-    tiltCompensatedHeading = 180 * math.atan2(magYcomp,magXcomp)/M_PI
+    #tiltCompensatedHeading = 180 * math.atan2(magYcomp,magXcomp)/M_PI
     def wrap(angle):
         if angle > M_PI:
             angle -= (2*M_PI)
@@ -413,8 +413,8 @@ while True:
     inradiansy = m9m[2]*0.01745329
     inradiansz = m9m[1]*0.01745329
 
-    #tiltCompensatedHeading = mag2tiltcomp(inradiansx, inradiansy, inradiansz, pitch, roll)
-    #tiltCompensatedHeading = tiltCompensatedHeading*57.29578 #convert from radians to degrees
+    tiltCompensatedHeading = mag2tiltcomp(inradiansx, inradiansy, inradiansz, roll, pitch)
+    tiltCompensatedHeading = (3.14149+tiltCompensatedHeading)*57.29578 #convert from radians to degrees
 
     if tiltCompensatedHeading < 0:
                 tiltCompensatedHeading += 360
