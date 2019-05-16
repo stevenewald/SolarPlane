@@ -421,8 +421,8 @@ while True:
 
     ############################ END ##################################
 
-    print(kalmanX)
-    print(kalmanY)
+    print("Kalmanx: " + str(kalmanX))
+    print("Kalmany: " + str(kalmanY))
     print(tiltCompensatedHeading)
 
 
