@@ -39,15 +39,15 @@ q3 = 0
 twoKi = 0
 twoKp = 2
 recipNorm = 0
-q0q0, q0q1, q0q2, q0q3, q1q1, q1q2, q1q3, q2q2, q2q3, q3q3 = 0
-hx, hy, bx, bz = 0
-halfvx, halfvy, halfvz, halfwx, halfwy, halfwz = 0
-halfex, halfey, halfez = 0
-qa, qb, qc = 0
-ax, ay, az = 0
-gx, gy, gz = 0
-mx, my, mz = 0
-pitch, roll, yaw = 0
+q0q0=q0q1=q0q2=q0q3=q1q1=q1q2=q1q3=q2q2=q2q3=q3q3 = 0
+hx=hy=bx=bz = 0
+halfvx=halfvy=halfvz=halfwx=halfwy=halfwz = 0
+halfex=halfey=halfez = 0
+qa=qb=qc = 0
+ax=ay=az = 0
+gx=gy=gz = 0
+mx=my=mz = 0
+pitch=roll=yaw = 0
 
 #dt = deltatime
 
