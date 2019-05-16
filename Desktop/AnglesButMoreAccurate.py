@@ -40,7 +40,6 @@ q3 = 0
 twoKi = 0
 twoKp = 2
 recipNorm = 0
-q0=q1=q2=q3=0
 q0q0=q0q1=q0q2=q0q3=q1q1=q1q2=q1q3=q2q2=q2q3=q3q3 = 0
 hx=hy=bx=bz = 0
 halfvx=halfvy=halfvz=halfwx=halfwy=halfwz = 0
@@ -65,6 +64,7 @@ def Update(dt):
     global ax, ay, az
     global qx, qy, qz
     global mx, my, mz
+    global q0,q1,q2,q3
 
     ###### Establishing variables but grouping similarly used ones
     m9a, m9g, m9m = imu.getMotion9()
