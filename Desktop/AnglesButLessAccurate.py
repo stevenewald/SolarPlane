@@ -57,12 +57,18 @@ MAG_MEDIANTABLESIZE = 9    	# Median filter table size for magnetometer. Higher 
 #compass will result in a more accurate heading value.
 #TOD0:
 
-magXmin =  -3361
-magYmin =  -36
-magZmin =  -71
-magXmax =  55
-magYmax =  69
-magZmax =  29
+#magXmin =  -3361
+#magYmin =  -36
+#magZmin =  -71
+#magXmax =  55
+#magYmax =  69
+#magZmax =  29
+magXmin =  0
+magYmin =  0
+magZmin =  0
+magXmax =  0
+magYmax =  0
+magZmax =  0
 
 
 
