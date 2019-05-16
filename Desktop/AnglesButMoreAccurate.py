@@ -351,14 +351,13 @@ def mainLoop():
     getEuler()
     updateIMU(dt)
     Update(dt)
+    print("PITCH, ROLL, YAW: " + str(pitch) + " " +  str(roll) + " " + str(yaw))
 setGyroOffset()
 n = 0
-while n < 10000:
+while n < 1000:
     mainLoop()
     n = n + 1
-    if n % 30 == 0:
-        print("PITCH, ROLL, YAW: " + str(pitch) + " " +  str(roll) + " " + str(yaw))
-    
+    time.sleep(1)
 
 
 
