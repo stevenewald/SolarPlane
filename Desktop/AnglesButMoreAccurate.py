@@ -274,7 +274,7 @@ def getEuler():
 def setGyroOffset():
     offset = [0, 0, 0]
     global gx, gy, gz
-    gx, gy, gz = 0
+    gx=gy=gz = 0
 
     print("beginning gyro calibration")
     i = 0
