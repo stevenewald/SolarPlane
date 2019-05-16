@@ -378,13 +378,23 @@ while True:
 
 	#Calculate tilt compensated heading
     #tiltCompensatedHeading = 180 * math.atan2(magYcomp,magXcomp)/M_PI
+    def wrap(angle):
+        if angle > pi:
+            angle -= (2*pi)
+        if angle < -pi:
+            angle += (2*pi)
+        if angle < 0:
+            angle += 2*pi
+        return angle
+
+
     def mag2tiltcomp(bx, by, bz, phi, theta):
         #""" Takes in raw magnetometer values, pitch and roll and turns it into a tilt-compensated heading value ranging from -pi to pi (everything in this function should be in radians). """
         #variation = 4.528986*(pi/180) # magnetic variation for Corpus Christi, should match your bx/by/bz and where they were measured from (a lookup table is beyond the scope of this gist)
         variation = -0.254236 #for boston
         Xh = bx * math.cos(theta) + by * math.sin(phi) * math.sin(theta) + bz * math.cos(phi) * math.sin(theta)
         Yh = by * math.cos(phi) - bz * math.sin(phi)
-        return math.wrap((math.atan2(-Yh, Xh) + variation))
+        return wrap((math.atan2(-Yh, Xh) + variation))
     
     tiltCompensatedHeading = mag2tiltcomp(m9m[0], m9m[1], m9m[2], pitch, roll)
 
