@@ -407,9 +407,9 @@ while True:
 
     ############################ END ##################################
 
-    print("kalmanx: " + str(kalmanX))
-    print("kalmany: " + str(kalmanY))
-    print("heading: " + str(heading))
+    print("kalmanx: ")
+    print("kalmany: ")
+    print("heading: ")
 
 
     #slow program down a bit, makes the output more readable
