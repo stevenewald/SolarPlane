@@ -53,7 +53,14 @@ pitch=roll=yaw = 0
 #dt = deltatime
 
 def invSqrt(x):
-    return x**-0.5
+    halfx = 0.5*x
+    y=x
+    i = y
+    i = 0x5f3759df - (i>>1)
+    y=i
+    y = y * (1.5 - (halfx * y * y))
+    return y
+
 
 def Update(dt):
     global recipNorm, q0q0, q0q1, q0q2, q0q3, q1q1, q1q2, q1q3, q2q2, q2q3, q3q3
@@ -306,7 +313,7 @@ def setGyroOffset():
     print("offsets are: " + str(offset[0]) + " " + str(offset[1]) + " " + str(offset[2]))
 
     time.sleep(1)
-    
+
     global gyroOffset
     gyroOffset[0] = offset[0]
     gyroOffset[1] = offset[1]
