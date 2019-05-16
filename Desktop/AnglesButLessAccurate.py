@@ -37,7 +37,7 @@ time.sleep(1)
 # print "Magnetometer:  ", imu.magnetometer_data
 # time.sleep(0.1)
 
-# If the IMU is upside down (Skull logo facing up), change this value to 1
+# If the IMU is upside down change this value to 1
 IMU_UPSIDE_DOWN = 0
 
 
@@ -53,16 +53,16 @@ MAG_MEDIANTABLESIZE = 9    	# Median filter table size for magnetometer. Higher 
 
 
 ################# Compass Calibration values ############
-# Use calibrateBerryIMU.py to get calibration values 
-# Calibrating the compass isnt mandatory, however a calibrated 
-# compass will result in a more accurate heading value.
+#calibrating the compass isnt required, but a calibrated 
+#compass will result in a more accurate heading value.
+#TOD0:
 
-magXmin =  0
-magYmin =  0
-magZmin =  0
-magXmax =  0
-magYmax =  0
-magZmax =  0
+magXmin =  -3361
+magYmin =  2
+magZmin =  -5
+magXmax =  45
+magYmax =  61
+magZmax =  24
 
 
 
