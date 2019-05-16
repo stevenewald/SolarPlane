@@ -1,7 +1,7 @@
 import time
 import argparse 
 import sys
-import navio.LSM9DS1
+import navio.lsm9ds1
 import navio.util
 import math
 import datetime
