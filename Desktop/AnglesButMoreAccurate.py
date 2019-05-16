@@ -293,7 +293,7 @@ def setGyroOffset():
         offset[0] = offset[0] + gx*0.0175
         offset[1] = offset[1] + gy*0.0175
         offset[2] = offset[2] + gz*0.0175
-        print("yes")
+        i = i + 1
         time.sleep(.001)
 
     offset[0] = offset[0]/100
