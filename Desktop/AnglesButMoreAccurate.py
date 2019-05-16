@@ -340,7 +340,7 @@ def mainLoop():
     print("PITCH, ROLL, YAW: " + str(pitch) + " " +  str(roll) + " " + str(yaw))
 setGyroOffset()
 n = 0
-while n < 100:
+while n < 10000:
     mainLoop()
     n = n + 1
 
