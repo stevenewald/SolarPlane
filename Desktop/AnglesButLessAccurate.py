@@ -1,7 +1,7 @@
 import time
 import argparse 
 import sys
-import navio.mpu9250
+import navio.LSM9DS1
 import navio.util
 import math
 import datetime
@@ -9,7 +9,7 @@ import os
 
 navio.util.check_apm()
 
-imu = navio.mpu9250.MPU9250()
+imu = navio.lsm9ds1.LSM9DS1()
 
 if imu.testConnection():
     print("Connection established: True")
@@ -34,7 +34,7 @@ time.sleep(1)
 # time.sleep(0.1)
 
 # If the IMU is upside down (Skull logo facing up), change this value to 1
-IMU_UPSIDE_DOWN = 0	
+IMU_UPSIDE_DOWN = 0
 
 
 RAD_TO_DEG = 57.29578
@@ -371,32 +371,32 @@ while True:
     #if(IMU.LSM9DS0):
     #magYcomp = MAGx*math.sin(roll)*math.sin(pitch)+MAGy*math.cos(roll)-MAGz*math.sin(roll)*math.cos(pitch)   #LSM9DS0
     #else:
-    #magYcomp = MAGx*math.sin(roll)*math.sin(pitch)+MAGy*math.cos(roll)+MAGz*math.sin(roll)*math.cos(pitch)   #LSM9DS1
+    magYcomp = MAGx*math.sin(roll)*math.sin(pitch)+MAGy*math.cos(roll)+MAGz*math.sin(roll)*math.cos(pitch)   #LSM9DS1
 
 
 
 
 	#Calculate tilt compensated heading
-    #tiltCompensatedHeading = 180 * math.atan2(magYcomp,magXcomp)/M_PI
-    def wrap(angle):
-        if angle > M_PI:
-            angle -= (2*M_PI)
-        if angle < -M_PI:
-            angle += (2*M_PI)
-        if angle < 0:
-            angle += 2*M_PI
-        return angle
+    tiltCompensatedHeading = 180 * math.atan2(magYcomp,magXcomp)/M_PI
+    #def wrap(angle):
+    #    if angle > M_PI:
+    #        angle -= (2*M_PI)
+    #    if angle < -M_PI:
+    #        angle += (2*M_PI)
+    #    if angle < 0:
+    #        angle += 2*M_PI
+    #    return angle
 
 
-    def mag2tiltcomp(bx, by, bz, phi, theta):
-        #""" Takes in raw magnetometer values, pitch and roll and turns it into a tilt-compensated heading value ranging from -pi to pi (everything in this function should be in radians). """
-        #variation = 4.528986*(pi/180) # magnetic variation for Corpus Christi, should match your bx/by/bz and where they were measured from (a lookup table is beyond the scope of this gist)
-        variation = -0.254236 #for boston
-        Xh = bx * math.cos(theta) + by * math.sin(phi) * math.sin(theta) + bz * math.cos(phi) * math.sin(theta)
-        Yh = by * math.cos(phi) - bz * math.sin(phi)
-        return wrap((math.atan2(-Yh, Xh) + variation))
+    #def mag2tiltcomp(bx, by, bz, phi, theta):
+    #    #""" Takes in raw magnetometer values, pitch and roll and turns it into a tilt-compensated heading value ranging from -pi to pi (everything in this function should be in radians). """
+    #    #variation = 4.528986*(pi/180) # magnetic variation for Corpus Christi, should match your bx/by/bz and where they were measured from (a lookup table is beyond the scope of this gist)
+    #    variation = -0.254236 #for boston
+    #    Xh = bx * math.cos(theta) + by * math.sin(phi) * math.sin(theta) + bz * math.cos(phi) * math.sin(theta)
+    #    Yh = by * math.cos(phi) - bz * math.sin(phi)
+    #    return wrap((math.atan2(-Yh, Xh) + variation))
     
-    tiltCompensatedHeading = mag2tiltcomp(m9m[0], m9m[1], m9m[2], pitch, roll)
+    #tiltCompensatedHeading = mag2tiltcomp(m9m[0], m9m[1], m9m[2], pitch, roll)
 
     if tiltCompensatedHeading < 0:
                 tiltCompensatedHeading += 360
