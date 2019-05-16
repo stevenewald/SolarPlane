@@ -3,7 +3,7 @@ import sys
 import navio.ms5611
 import navio.util
 import argparse 
-import navio.mpu9250
+import navio.lsm9ds1
 import navio.rcinput
 import math
 import navio.pwm
@@ -13,7 +13,7 @@ import os
 
 navio.util.check_apm()
 
-imu = navio.mpu9250.MPU9250()
+imu = navio.lsm9ds1.LSM9DS1()
 
 if imu.testConnection():
     print("Connection established: True")
@@ -202,14 +202,14 @@ while True:
     m9a, m9g, m9m = imu.getMotion9()
     #Read the accelerometer,gyroscope and magnetometer values
     ACCx = m9a[0]
-    ACCy = m9a[1]
-    ACCz = m9a[2]
+    ACCy = m9a[2]
+    ACCz = m9a[1]
     GYRx = m9g[0]
-    GYRy = m9g[1]
-    GYRz = m9g[2]
+    GYRy = m9g[2]
+    GYRz = m9g[1]
     MAGx = m9m[0]
-    MAGy = m9m[1]
-    MAGz = m9m[2]
+    MAGy = m9m[2]
+    MAGz = m9m[1]
 
 
     #Apply compass calibration    
@@ -411,16 +411,16 @@ while True:
     inradiansy = m9m[2]*0.01745329
     inradiansz = m9m[1]*0.01745329
 
-    tiltCompensatedHeading = mag2tiltcomp(inradiansx, inradiansy, inradiansz, pitch, roll)
-    tiltCompensatedHeading = tiltCompensatedHeading*57.29578 #convert from radians to degrees
+    #tiltCompensatedHeading = mag2tiltcomp(inradiansx, inradiansy, inradiansz, pitch, roll)
+    #tiltCompensatedHeading = tiltCompensatedHeading*57.29578 #convert from radians to degrees
 
     if tiltCompensatedHeading < 0:
                 tiltCompensatedHeading += 360
 
     ############################ END ##################################
 
-    print(pitch)
-    print(roll)
+    print(kalmanX)
+    print(kalmanY)
     print(tiltCompensatedHeading)
 
 
