@@ -407,8 +407,8 @@ while True:
 
     ############################ END ##################################
 
-    print(kalmanx)
-    print(kalmany)
+    print(kalmanX)
+    print(kalmanY)
     print(heading)
 
 
