@@ -175,6 +175,7 @@ def updateIMU(dt):
     global qa, qb, qc
     global ax, ay, az
     global gx, gy, gz
+    global q0,q1,q2,q3
     global gyroOffset
     global twoKi
 
