@@ -406,7 +406,12 @@ while True:
         Yh = by * math.cos(phi) - bz * math.sin(phi)
         return wrap((math.atan2(-Yh, Xh) + variation))
     
-    tiltCompensatedHeading = mag2tiltcomp(m9m[0], m9m[1], m9m[2], pitch, roll)
+    #converting mag values to radians
+    inradiansx = m9m[0]*0.01745329
+    inradiansy = m9m[2]*0.01745329
+    inradiansz = m9m[1]*0.01745329
+
+    tiltCompensatedHeading = mag2tiltcomp(inradiansx, inradiansy, inradiansz, pitch, roll)
     tiltCompensatedHeading = tiltCompensatedHeading*57.29578 #convert from radians to degrees
 
     if tiltCompensatedHeading < 0:
@@ -414,9 +419,9 @@ while True:
 
     ############################ END ##################################
 
-    print(kalmanX)
-    print(kalmanY)
-    print(tiltCompensatedHeading)
+    print(pitch)
+    print(roll)
+    print(bz)
 
 
     #slow program down a bit, makes the output more readable
