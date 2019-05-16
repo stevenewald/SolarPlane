@@ -421,7 +421,7 @@ while True:
 
     print(pitch)
     print(roll)
-    print(bz)
+    print(tiltCompensatedHeading)
 
 
     #slow program down a bit, makes the output more readable
