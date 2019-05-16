@@ -410,7 +410,7 @@ while True:
 
     print(kalmanX)
     print(kalmanY)
-    print(heading)
+    print(tiltCompensatedHeading)
 
 
     #slow program down a bit, makes the output more readable
