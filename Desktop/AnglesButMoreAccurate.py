@@ -331,6 +331,9 @@ def mainLoop():
         now = time.time()
         currenttime = now
         dt = (currenttime - previoustime)
+    setGyroOffset()
+    getEuler()
+    Update(dt)
     print("PITCH, ROLL, YAW: " + str(pitch) + " " +  str(roll) + " " + str(yaw))
 
 n = 0
