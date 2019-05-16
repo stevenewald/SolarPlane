@@ -3,7 +3,7 @@ import sys
 import navio.ms5611
 import navio.util
 import argparse 
-import navio.lsm9ds1
+import navio.mpu9250
 import navio.rcinput
 import math
 import navio.pwm
@@ -13,7 +13,7 @@ import os
 
 navio.util.check_apm()
 
-imu = navio.lsm9ds1.LSM9DS1()
+imu = navio.mpu9250.MPU9250()
 
 if imu.testConnection():
     print("Connection established: True")
