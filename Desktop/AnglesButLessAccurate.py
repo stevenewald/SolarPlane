@@ -34,7 +34,7 @@ time.sleep(1)
 # time.sleep(0.1)
 
 # If the IMU is upside down (Skull logo facing up), change this value to 1
-IMU_UPSIDE_DOWN = 1
+IMU_UPSIDE_DOWN = 0
 
 
 RAD_TO_DEG = 57.29578
