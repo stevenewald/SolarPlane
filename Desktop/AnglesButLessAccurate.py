@@ -212,7 +212,6 @@ while True:
     MAGz = m9m[1]
     if m9m[2] == 0:
         print("MAG ERROR!!!")
-        return "MAG ERROR!!!"
 
 
     #Apply compass calibration    
