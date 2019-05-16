@@ -58,11 +58,11 @@ MAG_MEDIANTABLESIZE = 9    	# Median filter table size for magnetometer. Higher 
 #TOD0:
 
 magXmin =  -3361
-magYmin =  2
-magZmin =  -5
-magXmax =  45
-magYmax =  61
-magZmax =  24
+magYmin =  -36
+magZmin =  -71
+magXmax =  55
+magYmax =  69
+magZmax =  29
 
 
 
