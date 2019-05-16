@@ -379,12 +379,12 @@ while True:
 	#Calculate tilt compensated heading
     #tiltCompensatedHeading = 180 * math.atan2(magYcomp,magXcomp)/M_PI
     def wrap(angle):
-        if angle > pi:
-            angle -= (2*pi)
-        if angle < -pi:
-            angle += (2*pi)
+        if angle > M_PI:
+            angle -= (2*M_PI)
+        if angle < -M_PI:
+            angle += (2*M_PI)
         if angle < 0:
-            angle += 2*pi
+            angle += 2*M_PI
         return angle
 
 
