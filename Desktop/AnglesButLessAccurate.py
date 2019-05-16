@@ -384,7 +384,7 @@ while True:
         variation = -0.254236 #for boston
         Xh = bx * math.cos(theta) + by * math.sin(phi) * math.sin(theta) + bz * math.cos(phi) * math.sin(theta)
         Yh = by * math.cos(phi) - bz * math.sin(phi)
-        return wrap((math.atan2(-Yh, Xh) + variation))
+        return math.wrap((math.atan2(-Yh, Xh) + variation))
     
     tiltCompensatedHeading = mag2tiltcomp(m9m[0], m9m[1], m9m[2], pitch, roll)
 
