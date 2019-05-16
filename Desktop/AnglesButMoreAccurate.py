@@ -55,8 +55,8 @@ pitch=roll=yaw = 0
 def invSqrt(x):
     halfx = 0.5*x
     y=x
-    i = y
-    i = 0x5f3759df - ((i)>>1)
+    i = float(y)
+    i = 0x5f3759df - (i>>1)
     y=i
     y = y * (1.5 - (halfx * y * y))
     return y
