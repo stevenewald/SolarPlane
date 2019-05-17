@@ -418,8 +418,6 @@ while True:
 
     if tiltCompensatedHeading < 0:
                 tiltCompensatedHeading += 360
-    if tiltCompensatedHeading > 360:
-                tiltCompensatedHeading -= 360
 
     ############################ END ##################################
 
