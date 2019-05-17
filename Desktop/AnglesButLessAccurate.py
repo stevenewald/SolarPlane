@@ -179,6 +179,9 @@ oldZAccRawValue = 0
 
 a = datetime.datetime.now()
 
+minmag = 100 #DELETE LATER!!!
+maxmag = -100 #DELETE LATER!!!
+
 
 
 #Setup the tables for the mdeian filter. Fill them all with '1' soe we dont get devide by zero error 
@@ -413,11 +416,17 @@ while True:
     inradiansy = m9m[2]*0.01745329
     inradiansz = m9m[1]*0.01745329
 
-    tiltCompensatedHeading = mag2tiltcomp(inradiansx, inradiansy, inradiansz, pitch, roll)
+    tiltCompensatedHeading = mag2tiltcomp(inradiansx, inradiansy, inradiansz, roll, pitch)
     tiltCompensatedHeading = (tiltCompensatedHeading)*57.29578 #convert from radians to degrees
 
     if tiltCompensatedHeading < 0:
                 tiltCompensatedHeading += 360
+
+    if minmag > m9m[2]:
+        minmag = m9m[2]
+
+    if maxmag < m9m[2]:
+        maxmag = m9m[2]
 
     ############################ END ##################################
 
@@ -426,6 +435,8 @@ while True:
     print(m9m[2])
     print(pitch)
     print("roll: " + str(roll))
+    print("min mag: " + str(minmag))
+    print("max mag: " + str(maxmag))
 
 
     #slow program down a bit, makes the output more readable
