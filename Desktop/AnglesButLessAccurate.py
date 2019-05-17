@@ -207,15 +207,15 @@ while True:
 
     m9a, m9g, m9m = imu.getMotion9()
     #Read the accelerometer,gyroscope and magnetometer values
-    ACCx = m9a[2]
+    ACCx = m9a[0]
     ACCy = m9a[1]
-    ACCz = m9a[0]
-    GYRx = m9g[2]
+    ACCz = m9a[2]
+    GYRx = m9g[0]
     GYRy = m9g[1]
-    GYRz = m9g[0]
-    MAGx = m9m[2]
+    GYRz = m9g[2]
+    MAGx = m9m[0]
     MAGy = m9m[1]
-    MAGz = m9m[0]
+    MAGz = m9m[2]
     if m9m[2] == 0:
         print("MAG ERROR!!!")
 
