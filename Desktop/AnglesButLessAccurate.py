@@ -213,9 +213,9 @@ while True:
     GYRx = m9g[0]
     GYRy = m9g[1]
     GYRz = m9g[2]
-    MAGx = m9m[2]
-    MAGy = m9m[1]
-    MAGz = m9m[0]
+    MAGx = m9m[2]*0.13963
+    MAGy = m9m[1]*0.13963
+    MAGz = m9m[0]*0.13963
     if m9m[2] == 0:
         print("MAG ERROR!!!")
     if m9m[1] == 0:
@@ -446,9 +446,9 @@ while True:
     if (tick % 30) == 0:
         #print("Kalmanx: " + str(m9m[0]))
         #print("Kalmany: " + str(m9m[1]))
-        print("pitch: " + str(kalmanX))
-        print("roll: " + str(kalmanY))
-        print("heading adjusted: " + str(tiltCompensatedHeading))
+        print("pitch: " + str(magX))
+        print("roll: " + str(magY))
+        print("heading adjusted: " + str(magZ))
 
 
     tick = tick + 1
