@@ -22,7 +22,7 @@ else:
 
 imu.initialize()
 
-imu.calib_mag()
+#imu.calib_mag()
 
 time.sleep(1)
 
