@@ -213,8 +213,8 @@ while True:
     GYRx = m9g[0]
     GYRy = m9g[1]
     GYRz = m9g[2]
-    MAGx = m9m[1]
-    MAGy = m9m[2]
+    MAGx = m9m[2]
+    MAGy = m9m[1]
     MAGz = m9m[0]
     if m9m[2] == 0:
         print("MAG ERROR!!!")
