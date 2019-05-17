@@ -200,6 +200,7 @@ mag_medianTable2X = [1] * MAG_MEDIANTABLESIZE
 mag_medianTable2Y = [1] * MAG_MEDIANTABLESIZE
 mag_medianTable2Z = [1] * MAG_MEDIANTABLESIZE
 
+tick=0
 
 while True:
 
@@ -438,12 +439,13 @@ while True:
 
     ############################ END ##################################
 
-    print("Kalmanx: " + str(m9m[0]))
-    print("Kalmany: " + str(m9m[1]))
-    print("pitch: " + str(pitch))
-    print("roll: " + str(roll))
-    print("min mag: " + str(minmag))
-    print("max mag: " + str(maxmag))
+    if (tick % 30) == 0:
+        #print("Kalmanx: " + str(m9m[0]))
+        #print("Kalmany: " + str(m9m[1]))
+        print("pitch: " + str(pitch))
+        print("roll: " + str(roll))
+        print("heading adjusted: " + str(tiltCompensatedHeading))
 
 
+    tick = tick + 1
     #slow program down a bit, makes the output more readable
