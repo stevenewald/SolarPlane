@@ -3,7 +3,7 @@ import sys
 import navio.ms5611
 import navio.util
 import argparse 
-import navio.mpu9250
+import navio.lsm9ds1
 import navio.rcinput
 import math
 import navio.pwm
@@ -13,7 +13,7 @@ import os
 
 navio.util.check_apm()
 
-imu = navio.mpu9250.MPU9250()
+imu = navio.lsm9ds1.LSM9DS1()
 
 if imu.testConnection():
     print("Connection established: True")
@@ -207,15 +207,15 @@ while True:
 
     m9a, m9g, m9m = imu.getMotion9()
     #Read the accelerometer,gyroscope and magnetometer values
-    ACCx = m9a[0]
+    ACCx = m9a[2]
     ACCy = m9a[1]
-    ACCz = m9a[2]
-    GYRx = m9g[0]
+    ACCz = m9a[0]
+    GYRx = m9g[2]
     GYRy = m9g[1]
-    GYRz = m9g[2]
-    MAGx = m9m[0]
+    GYRz = m9g[0]
+    MAGx = m9m[2]
     MAGy = m9m[2]
-    MAGz = m9m[1]
+    MAGz = m9m[0]
     if m9m[2] == 0:
         print("MAG ERROR!!!")
 
@@ -395,7 +395,7 @@ while True:
 
 
 	#Calculate tilt compensated heading
-    #tiltCompensatedHeading = 180 * math.atan2(magYcomp,magXcomp)/M_PI
+    tiltCompensatedHeading = 180 * math.atan2(magYcomp,magXcomp)/M_PI
     def wrap(angle):
         if angle > M_PI:
             angle -= (2*M_PI)
@@ -415,12 +415,12 @@ while True:
         return wrap((math.atan2(-Yh, Xh) + variation))
     
     #converting mag values to radians
-    inradiansx = m9m[0]*0.13963
-    inradiansy = m9m[2]*0.13963
-    inradiansz = m9m[1]*0.13963
+    inradiansx = m9m[2]*0.13963
+    inradiansy = m9m[1]*0.13963
+    inradiansz = m9m[0]*0.13963
 
-    tiltCompensatedHeading = mag2tiltcomp(inradiansx, inradiansy, inradiansz, roll, pitch)
-    tiltCompensatedHeading = (tiltCompensatedHeading)*57.29578 #convert from radians to degrees
+    #tiltCompensatedHeading = mag2tiltcomp(inradiansx, inradiansy, inradiansz, roll, pitch)
+    #tiltCompensatedHeading = (tiltCompensatedHeading)*57.29578 #convert from radians to degrees
 
     if tiltCompensatedHeading < 0:
                 tiltCompensatedHeading += 360
@@ -428,11 +428,11 @@ while True:
     global minmag
     global maxmag
 
-    if minmag > m9m[1]:
-        minmag = m9m[1]
+    if minmag > m9m[0]:
+        minmag = m9m[0]
 
-    if maxmag < m9m[1]:
-        maxmag = m9m[1]
+    if maxmag < m9m[0]:
+        maxmag = m9m[0]
 
     if m9m[2] == 0:
         print("MAG ERROR!!!!")
@@ -442,8 +442,8 @@ while True:
     if (tick % 30) == 0:
         #print("Kalmanx: " + str(m9m[0]))
         #print("Kalmany: " + str(m9m[1]))
-        print("pitch: " + str(pitch))
-        print("roll: " + str(roll))
+        print("pitch: " + str(kalmanX))
+        print("roll: " + str(kalmanY))
         print("heading adjusted: " + str(tiltCompensatedHeading))
 
 
