@@ -446,9 +446,9 @@ while True:
     if (tick % 30) == 0:
         #print("Kalmanx: " + str(m9m[0]))
         #print("Kalmany: " + str(m9m[1]))
-        print("pitch: " + str(magX))
-        print("roll: " + str(magY))
-        print("heading adjusted: " + str(magZ))
+        print("pitch: " + str(MAGx))
+        print("roll: " + str(MAGy))
+        print("heading adjusted: " + str(MAGz))
 
 
     tick = tick + 1
