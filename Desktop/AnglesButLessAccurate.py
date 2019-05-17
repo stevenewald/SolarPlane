@@ -22,6 +22,8 @@ else:
 
 imu.initialize()
 
+imu.calib_mag()
+
 time.sleep(1)
 
 
@@ -211,8 +213,8 @@ while True:
     GYRy = m9g[1]
     GYRz = m9g[2]
     MAGx = m9m[0]
-    MAGy = m9m[1]
-    MAGz = m9m[2]
+    MAGy = m9m[2]
+    MAGz = m9m[1]
     if m9m[2] == 0:
         print("MAG ERROR!!!")
 
@@ -412,9 +414,9 @@ while True:
         return wrap((math.atan2(-Yh, Xh) + variation))
     
     #converting mag values to radians
-    inradiansx = m9m[0]*0.01745329
-    inradiansy = m9m[2]*0.01745329
-    inradiansz = m9m[1]*0.01745329
+    inradiansx = m9m[0]*0.13963
+    inradiansy = m9m[2]*0.13963
+    inradiansz = m9m[1]*0.13963
 
     tiltCompensatedHeading = mag2tiltcomp(inradiansx, inradiansy, inradiansz, roll, pitch)
     tiltCompensatedHeading = (tiltCompensatedHeading)*57.29578 #convert from radians to degrees
