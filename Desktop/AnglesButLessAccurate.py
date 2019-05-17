@@ -413,7 +413,7 @@ while True:
     inradiansy = m9m[2]*0.01745329
     inradiansz = m9m[1]*0.01745329
 
-    tiltCompensatedHeading = mag2tiltcomp(inradiansx, inradiansy, inradiansz, roll, pitch)
+    tiltCompensatedHeading = mag2tiltcomp(inradiansx, inradiansy, inradiansz, pitch, roll)
     tiltCompensatedHeading = (tiltCompensatedHeading)*57.29578 #convert from radians to degrees
 
     if tiltCompensatedHeading < 0:
