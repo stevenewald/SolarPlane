@@ -421,9 +421,11 @@ while True:
 
     ############################ END ##################################
 
-    print("Kalmanx: " + str(kalmanX))
-    print("Kalmany: " + str(kalmanY))
-    print(tiltCompensatedHeading)
+    print("Kalmanx: " + str(m9m[0]))
+    print("Kalmany: " + str(m9m[1]))
+    print(m9m[2])
+    print(pitch)
+    ptin("roll: " + str(roll))
 
 
     #slow program down a bit, makes the output more readable
