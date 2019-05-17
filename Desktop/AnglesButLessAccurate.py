@@ -422,6 +422,9 @@ while True:
     if tiltCompensatedHeading < 0:
                 tiltCompensatedHeading += 360
 
+    global minmag
+    global maxmag
+
     if minmag > m9m[2]:
         minmag = m9m[2]
 
