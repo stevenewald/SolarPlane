@@ -425,7 +425,7 @@ while True:
     print("Kalmany: " + str(m9m[1]))
     print(m9m[2])
     print(pitch)
-    ptin("roll: " + str(roll))
+    print("roll: " + str(roll))
 
 
     #slow program down a bit, makes the output more readable
