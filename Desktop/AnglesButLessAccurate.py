@@ -425,18 +425,20 @@ while True:
     global minmag
     global maxmag
 
-    if minmag > m9m[2]:
-        minmag = m9m[2]
+    if minmag > m9m[1]:
+        minmag = m9m[1]
 
-    if maxmag < m9m[2]:
-        maxmag = m9m[2]
+    if maxmag < m9m[1]:
+        maxmag = m9m[1]
+
+    if m9m[2] == 0:
+        print("MAG ERROR!!!!")
 
     ############################ END ##################################
 
     print("Kalmanx: " + str(m9m[0]))
     print("Kalmany: " + str(m9m[1]))
-    print(m9m[2])
-    print(pitch)
+    print("pitch: " + str(pitch))
     print("roll: " + str(roll))
     print("min mag: " + str(minmag))
     print("max mag: " + str(maxmag))
