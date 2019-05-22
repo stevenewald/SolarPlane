@@ -479,7 +479,7 @@ void imuLoop(AHRS* ahrs, Socket sock)
     }
     std::chrono::milliseconds timespan(300); // or whatever
 
-s   td::this_thread::sleep_for(timespan);
+    std::this_thread::sleep_for(timespan);
 }
 
 //=============================================================================
