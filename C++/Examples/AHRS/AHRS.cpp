@@ -438,7 +438,7 @@ void imuLoop(AHRS* ahrs, Socket sock)
 	previoustime = currenttime;
 	currenttime = 1000000 * tv.tv_sec + tv.tv_usec;
 	dt = (currenttime - previoustime) / 1000000.0;
-	if(dt < 1/1300.0) usleep((1/1300.0-dt)*000000);
+	if(dt < 1/1300.0) usleep((1/1300.0-dt)*1000000);
         gettimeofday(&tv,NULL);
         currenttime = 1000000 * tv.tv_sec + tv.tv_usec;
 	dt = (currenttime - previoustime) / 1000000.0;
@@ -522,4 +522,5 @@ int main(int argc, char *argv[])
     ahrs->setGyroOffset();
     while(1)
         imuLoop(ahrs.get(), sock);
+        usleep(20)
 }
