@@ -477,6 +477,8 @@ void imuLoop(AHRS* ahrs, Socket sock)
 
         dtsumm = 0;
     }
+    sleep(2000);
+    printf("repeatingloop");
 }
 
 //=============================================================================
