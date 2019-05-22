@@ -417,7 +417,7 @@ std::string get_sensor_name(int argc, char *argv[])
 }
 
 //============================== Main loop ====================================
-
+using namespace std;
 void imuLoop(AHRS* ahrs, Socket sock)
 {
     // Orientation data
