@@ -477,8 +477,7 @@ void imuLoop(AHRS* ahrs, Socket sock)
 
         dtsumm = 0;
     }
-    sleep(2000);
-    printf("repeatingloop");
+    sleep(.01);
 }
 
 //=============================================================================
@@ -524,6 +523,4 @@ int main(int argc, char *argv[])
     ahrs->setGyroOffset();
     while(1)
         imuLoop(ahrs.get(), sock);
-        printf("repeat \n");
-        sleep(2000);
 }
