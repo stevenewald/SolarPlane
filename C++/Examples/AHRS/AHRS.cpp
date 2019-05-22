@@ -358,7 +358,7 @@ private:
 
 std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name)
 {
-    if true {
+    if (true) {
         printf("Selected: MPU9250\n");
         auto ptr = std::unique_ptr <InertialSensor>{ new MPU9250() };
         return ptr;
