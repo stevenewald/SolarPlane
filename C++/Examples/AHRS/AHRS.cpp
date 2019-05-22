@@ -467,9 +467,10 @@ void imuLoop(AHRS* ahrs, Socket sock)
     if(dtsumm > 0.05)
     {
         // Console output
-        printf(pitch);
-        printf(roll);
-        printf(yaw * -1);
+        //printf("ROLL: %+05.2f PITCH: %+05.2f YAW: %+05.2f PERIOD %.4fs RATE %dHz \n", roll, pitch, yaw * -1, dt, int(1/dt));
+        printf("%+05.2f \n", pitch);
+        printf("%+05.2f \n", roll);
+        printf("%+05.2f \n", yaw * -1);
 
         // Network output
         sock.output( ahrs->getW(), ahrs->getX(), ahrs->getY(), ahrs->getZ(), int(1/dt));
