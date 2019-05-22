@@ -472,7 +472,7 @@ void imuLoop(AHRS* ahrs, Socket sock)
         print(roll);
         print(yaw * -1);
 
-        // Network output
+        // Network output#
 
         dtsumm = 0;
     }
