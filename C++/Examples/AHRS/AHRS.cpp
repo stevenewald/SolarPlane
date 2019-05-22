@@ -473,7 +473,7 @@ void imuLoop(AHRS* ahrs, Socket sock)
         printf("%f \n", yaw * -1);
 
         // Network output
-        sock.output( ahrs->getW(), ahrs->getX(), ahrs->getY(), ahrs->getZ(), int(1/dt));//#
+        //sock.output( ahrs->getW(), ahrs->getX(), ahrs->getY(), ahrs->getZ(), int(1/dt));//#
 
         dtsumm = 0;
     }
