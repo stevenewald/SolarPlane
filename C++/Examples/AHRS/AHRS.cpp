@@ -522,6 +522,6 @@ int main(int argc, char *argv[])
     ahrs->setGyroOffset();
     while(1)
         imuLoop(ahrs.get(), sock);
-        printf("repeat \n")
+        printf("repeat \n");
         sleep(2000);
 }
