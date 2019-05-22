@@ -30,6 +30,8 @@ chrt -f -p 99 PID
 #include <arpa/inet.h>
 #include <stdint.h>
 #include <unistd.h>
+#include <chrono>
+#include <thread>
 #include <sys/time.h>
 #include <Common/MPU9250.h>
 #include <Navio2/LSM9DS1.h>
@@ -477,9 +479,7 @@ void imuLoop(AHRS* ahrs, Socket sock)
 
         dtsumm = 0;
     }
-    std::chrono::milliseconds timespan(300); // or whatever
-
-    std::this_thread::sleep_for(timespan);
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
 }
 
 //=============================================================================
