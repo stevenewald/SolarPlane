@@ -477,7 +477,9 @@ void imuLoop(AHRS* ahrs, Socket sock)
 
         dtsumm = 0;
     }
-    Sleep(100);
+    std::chrono::milliseconds timespan(300); // or whatever
+
+s   td::this_thread::sleep_for(timespan);
 }
 
 //=============================================================================
