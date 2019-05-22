@@ -409,7 +409,7 @@ while True:
 
     print(kalmanX)
     print(kalmanY)
-    print(heading)
+    print(str(heading) + "\n")
 
 
     #slow program down a bit, makes the output more readable
