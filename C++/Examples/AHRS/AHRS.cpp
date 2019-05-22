@@ -470,16 +470,16 @@ void imuLoop(AHRS* ahrs, Socket sock)
     {
         // Console output
         //printf("ROLL: %+05.2f PITCH: %+05.2f YAW: %+05.2f PERIOD %.4fs RATE %dHz \n", roll, pitch, yaw * -1, dt, int(1/dt));
-        printf("%f \n", roll);
-        printf("%f \n", pitch);
-        printf("%f \n", yaw * -1);
+        cout << roll;
+        cout << pitch;
+        cout << (yaw * -1);
 
         // Network output
         //sock.output( ahrs->getW(), ahrs->getX(), ahrs->getY(), ahrs->getZ(), int(1/dt));//#
 
         dtsumm = 0;
     }
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    std::this_thread::sleep_for(std::chrono::milliseconds(20));
 }
 
 //=============================================================================
@@ -524,7 +524,6 @@ int main(int argc, char *argv[])
 
     ahrs->setGyroOffset();
     printf("sleeping now");
-    sleep(20);
     while(1)
         imuLoop(ahrs.get(), sock);
 }
