@@ -255,7 +255,7 @@ void AHRS::setGyroOffset()
 
     //-------------------------------------------------------------------------
 
-    printf("Beginning Gyro calibration...\n");
+    //printf("Beginning Gyro calibration...\n");
     for(int i = 0; i<100; i++)
     {
         sensor->update();
@@ -275,7 +275,7 @@ void AHRS::setGyroOffset()
     offset[1]/=100.0;
     offset[2]/=100.0;
 
-    printf("Offsets are: %f %f %f\n", offset[0], offset[1], offset[2]);
+    //printf("Offsets are: %f %f %f\n", offset[0], offset[1], offset[2]);
 
     gyroOffset[0] = offset[0];
     gyroOffset[1] = offset[1];
@@ -359,7 +359,7 @@ private:
 std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name)
 {
     if (sensor_name == "mpu") {
-        printf("Selected: MPU9250\n");
+        //printf("Selected: MPU9250\n");
         auto ptr = std::unique_ptr <InertialSensor>{ new MPU9250() };
         return ptr;
     }
