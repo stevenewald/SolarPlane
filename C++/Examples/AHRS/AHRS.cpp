@@ -523,6 +523,8 @@ int main(int argc, char *argv[])
     //-------------------- Setup gyroscope offset -----------------------------
 
     ahrs->setGyroOffset();
+    printf("sleeping now");
+    sleep(10);
     while(1)
         imuLoop(ahrs.get(), sock);
 }
