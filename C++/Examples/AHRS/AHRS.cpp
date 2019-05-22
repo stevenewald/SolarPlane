@@ -470,7 +470,6 @@ void imuLoop(AHRS* ahrs, Socket sock)
         printf("ROLL: %+05.2f PITCH: %+05.2f YAW: %+05.2f PERIOD %.4fs RATE %dHz \n", roll, pitch, yaw * -1, dt, int(1/dt));
 
         // Network output
-        sock.output( ahrs->getW(), ahrs->getX(), ahrs->getY(), ahrs->getZ(), int(1/dt));
 
         dtsumm = 0;
     }
@@ -502,17 +501,6 @@ int main(int argc, char *argv[])
     }
 
     //--------------------------- Network setup -------------------------------
-
-    Socket sock;
-
-    if (argc == 5)
-        sock = Socket(argv[3], argv[4]);
-    else if ( (get_navio_version() == NAVIO) && (argc == 3) )
-            sock = Socket(argv[1], argv[2]);
-        else
-            sock = Socket();
-
-    auto ahrs = std::unique_ptr <AHRS>{new AHRS(move(imu)) };
 
     //-------------------- Setup gyroscope offset -----------------------------
 
