@@ -3,7 +3,7 @@ import sys
 import navio.ms5611
 import navio.util
 import argparse 
-import navio.lsm9ds1
+import navio.mpu9250
 import navio.rcinput
 import math
 import navio.pwm
@@ -13,7 +13,7 @@ import os
 
 navio.util.check_apm()
 
-imu = navio.lsm9ds1.LSM9DS1()
+imu = navio.mpu9250.MPU9250()
 
 if imu.testConnection():
     print("Connection established: True")
@@ -21,8 +21,6 @@ else:
     sys.exit("Connection established: False")
 
 imu.initialize()
-
-#imu.calib_mag()
 
 time.sleep(1)
 
@@ -59,18 +57,12 @@ MAG_MEDIANTABLESIZE = 9    	# Median filter table size for magnetometer. Higher 
 #compass will result in a more accurate heading value.
 #TOD0:
 
-#magXmin =  -3361
-#magYmin =  -36
-#magZmin =  -71
-#magXmax =  55
-#magYmax =  69
-#magZmax =  29
-magXmin =  0
-magYmin =  0
-magZmin =  0
-magXmax =  0
-magYmax =  0
-magZmax =  0
+magXmin =  -3361
+magYmin =  -36
+magZmin =  -71
+magXmax =  55
+magYmax =  69
+magZmax =  29
 
 
 
@@ -181,9 +173,6 @@ oldZAccRawValue = 0
 
 a = datetime.datetime.now()
 
-minmag = 100 #DELETE LATER!!!
-maxmag = -100 #DELETE LATER!!!
-
 
 
 #Setup the tables for the mdeian filter. Fill them all with '1' soe we dont get devide by zero error 
@@ -200,7 +189,6 @@ mag_medianTable2X = [1] * MAG_MEDIANTABLESIZE
 mag_medianTable2Y = [1] * MAG_MEDIANTABLESIZE
 mag_medianTable2Z = [1] * MAG_MEDIANTABLESIZE
 
-tick=0
 
 while True:
 
@@ -213,15 +201,9 @@ while True:
     GYRx = m9g[0]
     GYRy = m9g[1]
     GYRz = m9g[2]
-    MAGx = m9m[2]/0.13963
-    MAGy = m9m[1]/0.13963
-    MAGz = m9m[0]/0.13963
-    if m9m[2] == 0:
-        print("MAG ERROR!!!")
-    if m9m[1] == 0:
-        print("MAG ERROR!!!")
-    if m9m[0] == 0:
-        print("MAG ERROR!!!")
+    MAGx = m9m[0]
+    MAGy = m9m[1]
+    MAGz = m9m[2]
 
 
     #Apply compass calibration    
@@ -400,56 +382,34 @@ while True:
 
 	#Calculate tilt compensated heading
     tiltCompensatedHeading = 180 * math.atan2(magYcomp,magXcomp)/M_PI
-    def wrap(angle):
-        if angle > M_PI:
-            angle -= (2*M_PI)
-        if angle < -M_PI:
-            angle += (2*M_PI)
-        if angle < 0:
-            angle += 2*M_PI
-        return angle
+    #def wrap(angle):
+    #    if angle > M_PI:
+    #        angle -= (2*M_PI)
+    #    if angle < -M_PI:
+    #        angle += (2*M_PI)
+    #    if angle < 0:
+    #        angle += 2*M_PI
+    #    return angle
 
 
-    def mag2tiltcomp(bx, by, bz, phi, theta):
-        #""" Takes in raw magnetometer values, pitch and roll and turns it into a tilt-compensated heading value ranging from -pi to pi (everything in this function should be in radians). """
-        #variation = 4.528986*(pi/180) # magnetic variation for Corpus Christi, should match your bx/by/bz and where they were measured from (a lookup table is beyond the scope of this gist)
-        variation = -0.254236 #for boston
-        Xh = bx * math.cos(theta) + by * math.sin(phi) * math.sin(theta) + bz * math.cos(phi) * math.sin(theta)
-        Yh = by * math.cos(phi) - bz * math.sin(phi)
-        return wrap((math.atan2(-Yh, Xh) + variation))
+    #def mag2tiltcomp(bx, by, bz, phi, theta):
+    #    #""" Takes in raw magnetometer values, pitch and roll and turns it into a tilt-compensated heading value ranging from -pi to pi (everything in this function should be in radians). """
+    #    #variation = 4.528986*(pi/180) # magnetic variation for Corpus Christi, should match your bx/by/bz and where they were measured from (a lookup table is beyond the scope of this gist)
+    #    variation = -0.254236 #for boston
+    #    Xh = bx * math.cos(theta) + by * math.sin(phi) * math.sin(theta) + bz * math.cos(phi) * math.sin(theta)
+    #    Yh = by * math.cos(phi) - bz * math.sin(phi)
+    #    return wrap((math.atan2(-Yh, Xh) + variation))
     
-    #converting mag values to radians
-    inradiansx = m9m[2]*0.13963
-    inradiansy = m9m[1]*0.13963
-    inradiansz = m9m[0]*0.13963
-
-    #tiltCompensatedHeading = mag2tiltcomp(inradiansx, inradiansy, inradiansz, roll, pitch)
-    #tiltCompensatedHeading = (tiltCompensatedHeading)*57.29578 #convert from radians to degrees
+    #tiltCompensatedHeading = mag2tiltcomp(m9m[0], m9m[1], m9m[2], pitch, roll)
 
     if tiltCompensatedHeading < 0:
                 tiltCompensatedHeading += 360
 
-    global minmag
-    global maxmag
-
-    if minmag > m9m[0]:
-        minmag = m9m[0]
-
-    if maxmag < m9m[0]:
-        maxmag = m9m[0]
-
-    if m9m[2] == 0:
-        print("MAG ERROR!!!!")
-
     ############################ END ##################################
 
-    if (tick % 30) == 0:
-        #print("Kalmanx: " + str(m9m[0]))
-        #print("Kalmany: " + str(m9m[1]))
-        print("pitch: " + str(MAGx))
-        print("roll: " + str(MAGy))
-        print("heading adjusted: " + str(MAGz))
+    print(kalmanX)
+    print(kalmanY)
+    print(heading)
 
 
-    tick = tick + 1
     #slow program down a bit, makes the output more readable
