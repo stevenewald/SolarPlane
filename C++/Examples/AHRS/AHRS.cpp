@@ -35,6 +35,7 @@ chrt -f -p 99 PID
 #include <sys/time.h>
 #include <Common/MPU9250.h>
 #include <Navio2/LSM9DS1.h>
+#include<iostream>
 #include <Common/Util.h>
 #include "AHRS.hpp"
 
