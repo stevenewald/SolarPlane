@@ -358,7 +358,7 @@ private:
 
 std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name)
 {
-    if (true) {
+    if (sensor_name == "mpu") {
         printf("Selected: MPU9250\n");
         auto ptr = std::unique_ptr <InertialSensor>{ new MPU9250() };
         return ptr;
@@ -467,12 +467,12 @@ void imuLoop(AHRS* ahrs, Socket sock)
     if(dtsumm > 0.05)
     {
         // Console output
-        //printf("ROLL: %+05.2f PITCH: %+05.2f YAW: %+05.2f PERIOD %.4fs RATE %dHz \n", roll, pitch, yaw * -1, dt, int(1/dt));
-        print(pitch);
-        print(roll);
-        print(yaw * -1);
+        printf(pitch);
+        printf(roll);
+        printf(yaw * -1);
 
-        // Network output#
+        // Network output
+        sock.output( ahrs->getW(), ahrs->getX(), ahrs->getY(), ahrs->getZ(), int(1/dt));
 
         dtsumm = 0;
     }
@@ -504,6 +504,17 @@ int main(int argc, char *argv[])
     }
 
     //--------------------------- Network setup -------------------------------
+
+    Socket sock;
+
+    if (argc == 5)
+        sock = Socket(argv[3], argv[4]);
+    else if ( (get_navio_version() == NAVIO) && (argc == 3) )
+            sock = Socket(argv[1], argv[2]);
+        else
+            sock = Socket();
+
+    auto ahrs = std::unique_ptr <AHRS>{new AHRS(move(imu)) };
 
     //-------------------- Setup gyroscope offset -----------------------------
 
