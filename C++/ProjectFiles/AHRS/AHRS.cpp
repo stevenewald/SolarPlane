@@ -326,7 +326,6 @@ std::string get_sensor_name(int argc, char *argv[])
 
         if (argc < 2) {
             printf("Enter parameter\n");
-            print_help();
             return std::string();
         }
 
@@ -338,7 +337,6 @@ std::string get_sensor_name(int argc, char *argv[])
             switch (parameter) {
             case 'i': return optarg;
             case '?': printf("Wrong parameter.\n");
-                      print_help();
                       return std::string();
             }
         }

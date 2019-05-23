@@ -25,6 +25,21 @@ xaxis = float(0)
 yaxis = float(0)
 zaxis = float(0)
 
+setup = input("First time running program or program has been updated? (Y/N)")
+if setup == "Y":
+    print("Running first-time setup")
+    command1 = '''
+    git pull origin master
+    cd C++/ProjectFiles/AHRS
+    make
+    ./AHRS -i mpu'''
+else:
+    print("Not running first-time setup")
+    command1 = '''
+    cd C++/ProjectFiles/AHRS
+    make
+    .AHRS -i mpu'''
+
 
 #made own class to make it easier to work with instead of raw paramiko data
 class ssh:
@@ -76,11 +91,6 @@ connection = ssh("192.168.43.88", "pi", "raspberry")
 
 #can't send multiple commands without closing channel, so one long one instead
 print("starting command sequence")
-command1='''
-cd C++/ProjectFiles/AHRS
-make
-./AHRS -i mpu
-'''
 base = ShowBase()
 base.disableMouse()
 base.camera.setPos(0, -10, 0)
