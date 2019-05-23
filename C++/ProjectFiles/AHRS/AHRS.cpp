@@ -319,15 +319,6 @@ std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name) /
     }
 }
 
-void print_help()
-{
-    printf("Possible parameters:\nSensor selection: -i [sensor name]\n");
-    printf("Sensors names: mpu is MPU9250, lsm is LSM9DS1\nFor help: -h\n");
-    printf("If you want to visualize IMU data on another machine,\n");
-    printf("add IP address and port number (by default 7000):\n");
-    printf("-i [sensor name] ipaddress portnumber\n");
-
-}
 
 std::string get_sensor_name(int argc, char *argv[])
 {
