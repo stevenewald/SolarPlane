@@ -337,7 +337,6 @@ std::string get_sensor_name(int argc, char *argv[])
         while ((parameter = getopt(argc, argv, "i:h")) != -1) {
             switch (parameter) {
             case 'i': return optarg;
-            case 'h': print_help(); return "";
             case '?': printf("Wrong parameter.\n");
                       print_help();
                       return std::string();
