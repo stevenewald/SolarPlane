@@ -361,7 +361,7 @@ std::string get_sensor_name(int argc, char *argv[])
 
 //============================== Main loop ====================================
 using namespace std;
-void imuLoop(AHRS* ahrs, Socket sock)
+void imuLoop(AHRS* ahrs)
 {
     // Orientation data
 
@@ -453,15 +453,6 @@ int main(int argc, char *argv[])
 
     //--------------------------- Network setup -------------------------------
 
-    Socket sock;
-
-    if (argc == 5)
-        sock = Socket(argv[3], argv[4]);
-    else if ( (get_navio_version() == NAVIO) && (argc == 3) )
-            sock = Socket(argv[1], argv[2]);
-        else
-            sock = Socket();
-
     auto ahrs = std::unique_ptr <AHRS>{new AHRS(move(imu)) };
 
     //-------------------- Setup gyroscope offset -----------------------------
@@ -469,5 +460,5 @@ int main(int argc, char *argv[])
     ahrs->setGyroOffset();
     printf("sleeping now");
     while(1)
-        imuLoop(ahrs.get(), sock);
+        imuLoop(ahrs.get());
 }
