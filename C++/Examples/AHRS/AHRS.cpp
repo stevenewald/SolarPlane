@@ -1,27 +1,7 @@
-/*
-This code is provided under the BSD license.
-Copyright (c) 2014, Emlid Limited. All rights reserved.
-Written by Igor Vereninov and Mikhail Avkhimenia
-twitter.com/emlidtech || www.emlid.com || info@emlid.com
+//I credit berryIMU for the majority of the concepts here (https://github.com/ozzmaker/BerryIMU)
+//Not my IMU but the concepts helped a lot (even if I had to spend double the time on the tilt compensation afterwards, including
+//rewriting in C++ from scratch after 15+ hours of work bc of threading reasons)
 
-Application: Mahory AHRS algorithm supplied with data from MPU9250 and LSM9DS1.
-Outputs roll, pitch and yaw in the console and sends quaternion
-over the network - it can be used with 3D IMU visualizer located in
-Navio/Applications/3D IMU visualizer.
-
-To run this app navigate to the directory containing it and run following commands:
-make
-sudo ./AHRS -i [sensor name] ipaddress portnumber
-Sensors names: mpu is MPU9250, lsm is LSM9DS1.
-If you want to visualize IMU data on another machine pass it's address and port
-For print help:
-./AHRS -h
-
-To achieve stable loop you need to run this application with a high priority
-on a linux kernel with real-time patch. Raspbian distribution with real-time
-kernel is available at emlid.com and priority can be set with chrt command:
-chrt -f -p 99 PID
-*/
 
 #include <stdio.h>
 #include <memory>
@@ -66,28 +46,28 @@ void AHRS::update(float dt)
         sensor->read_magnetometer(&mx, &my, &mz);
 
 
-    // Use IMU algorithm if magnetometer measurement invalid (avoids NaN in magnetometer normalisation)
+    //use IMU algorithm if magnetometer measurement invalid (avoids NAN in magnetometer normalisation)
     if((mx == 0.0f) && (my == 0.0f) && (mz == 0.0f)) {
         updateIMU(dt);
         return;
     }
 
-    // Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalisation)
+    //compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalisation)
     if(!((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f))) {
 
-        // Normalise accelerometer measurement
+        //normalise accelerometer measurement
         recipNorm = invSqrt(ax * ax + ay * ay + az * az);
         ax *= recipNorm;
         ay *= recipNorm;
         az *= recipNorm;
 
-        // Normalise magnetometer measurement
+        //normalise magnetometer measurement
         recipNorm = invSqrt(mx * mx + my * my + mz * mz);
         mx *= recipNorm;
         my *= recipNorm;
         mz *= recipNorm;
 
-        // Auxiliary variables to avoid repeated arithmetic
+        //auxiliary variables to avoid repeated calcs
         q0q0 = q0 * q0;
         q0q1 = q0 * q1;
         q0q2 = q0 * q2;
@@ -99,13 +79,13 @@ void AHRS::update(float dt)
         q2q3 = q2 * q3;
         q3q3 = q3 * q3;
 
-        // Reference direction of Earth's magnetic field
+        //reference direction of Earth's magnetic field
         hx = 2.0f * (mx * (0.5f - q2q2 - q3q3) + my * (q1q2 - q0q3) + mz * (q1q3 + q0q2));
         hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
         bx = sqrt(hx * hx + hy * hy);
         bz = 2.0f * (mx * (q1q3 - q0q2) + my * (q2q3 + q0q1) + mz * (0.5f - q1q1 - q2q2));
 
-        // Estimated direction of gravity and magnetic field
+        //estimated direction of gravity and magnetic field
         halfvx = q1q3 - q0q2;
         halfvy = q0q1 + q2q3;
         halfvz = q0q0 - 0.5f + q3q3;
@@ -113,34 +93,34 @@ void AHRS::update(float dt)
         halfwy = bx * (q1q2 - q0q3) + bz * (q0q1 + q2q3);
         halfwz = bx * (q0q2 + q1q3) + bz * (0.5f - q1q1 - q2q2);
 
-        // Error is sum of cross product between estimated direction and measured direction of field vectors
+        //error is sum of cross product between estimated direction and measured direction of field vectors
         halfex = (ay * halfvz - az * halfvy) + (my * halfwz - mz * halfwy);
         halfey = (az * halfvx - ax * halfvz) + (mz * halfwx - mx * halfwz);
         halfez = (ax * halfvy - ay * halfvx) + (mx * halfwy - my * halfwx);
 
-        // Compute and apply integral feedback if enabled
+        //compute and apply integral feedback if enabled
         if(twoKi > 0.0f) {
-            integralFBx += twoKi * halfex * dt;	// integral error scaled by Ki
+            integralFBx += twoKi * halfex * dt;	//integral error scaled by Ki
             integralFBy += twoKi * halfey * dt;
             integralFBz += twoKi * halfez * dt;
-            gx += integralFBx;	// apply integral feedback
+            gx += integralFBx;	//apply integral feedback
             gy += integralFBy;
             gz += integralFBz;
         }
         else {
-            integralFBx = 0.0f;	// prevent integral windup
+            integralFBx = 0.0f;	//prevent integral windup
             integralFBy = 0.0f;
             integralFBz = 0.0f;
         }
 
-        // Apply proportional feedback
+        //apply proportional feedback
         gx += twoKp * halfex;
         gy += twoKp * halfey;
         gz += twoKp * halfez;
     }
 
-    // Integrate rate of change of quaternion
-    gx *= (0.5f * dt);		// pre-multiply common factors
+    //integrate rate of change of quaternion
+    gx *= (0.5f * dt);		//pre-multiply common factors
     gy *= (0.5f * dt);
     gz *= (0.5f * dt);
     qa = q0;
@@ -151,7 +131,7 @@ void AHRS::update(float dt)
     q2 += (qa * gy - qb * gz + q3 * gx);
     q3 += (qa * gz + qb * gy - qc * gx);
 
-    // Normalise quaternion
+    //normalise quaternion
     recipNorm = invSqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
     q0 *= recipNorm;
     q1 *= recipNorm;
@@ -169,7 +149,7 @@ void AHRS::updateIMU(float dt)
     float ax, ay, az;
     float gx, gy, gz;
 
-    // Accel + gyro.
+    //Accel + gyro.
     sensor->update();
     sensor->read_accelerometer(&ax, &ay, &az);
     sensor->read_gyroscope(&gx, &gy, &gz);
@@ -185,31 +165,31 @@ void AHRS::updateIMU(float dt)
     gy -= gyroOffset[1];
     gz -= gyroOffset[2];
 
-    // Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalisation)
+    //compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalisation)
     if(!((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f))) {
 
-        // Normalise accelerometer measurement
+        //normalise accelerometer measurement
         recipNorm = invSqrt(ax * ax + ay * ay + az * az);
         ax *= recipNorm;
         ay *= recipNorm;
         az *= recipNorm;
 
-        // Estimated direction of gravity and vector perpendicular to magnetic flux
+        //estimated direction of gravity and vector perpendicular to magnetic flux
         halfvx = q1 * q3 - q0 * q2;
         halfvy = q0 * q1 + q2 * q3;
         halfvz = q0 * q0 - 0.5f + q3 * q3;
 
-        // Error is sum of cross product between estimated and measured direction of gravity
+        //error is sum of cross product between estimated and measured direction of gravity
         halfex = (ay * halfvz - az * halfvy);
         halfey = (az * halfvx - ax * halfvz);
         halfez = (ax * halfvy - ay * halfvx);
 
-        // Compute and apply integral feedback if enabled
+        //compute and apply integral feedback if enabled
         if(twoKi > 0.0f) {
-            integralFBx += twoKi * halfex * dt;	// integral error scaled by Ki
+            integralFBx += twoKi * halfex * dt;	//integral error scaled by Ki
             integralFBy += twoKi * halfey * dt;
             integralFBz += twoKi * halfez * dt;
-            gx += integralFBx;	// apply integral feedback
+            gx += integralFBx;	//apply integral feedback
             gy += integralFBy;
             gz += integralFBz;
         }
@@ -219,14 +199,14 @@ void AHRS::updateIMU(float dt)
             integralFBz = 0.0f;
         }
 
-        // Apply proportional feedback
+        //apply proportional feedback
         gx += twoKp * halfex;
         gy += twoKp * halfey;
         gz += twoKp * halfez;
     }
 
-    // Integrate rate of change of quaternion
-    gx *= (0.5f * dt);		// pre-multiply common factors
+    //integrate rate of change of quaternion
+    gx *= (0.5f * dt);		//pre-multiply common factors
     gy *= (0.5f * dt);
     gz *= (0.5f * dt);
     qa = q0;
@@ -237,7 +217,7 @@ void AHRS::updateIMU(float dt)
     q2 += (qa * gy - qb * gz + q3 * gx);
     q3 += (qa * gz + qb * gy - qc * gx);
 
-    // Normalise quaternion
+    //normalise quaternion
     recipNorm = invSqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
     q0 *= recipNorm;
     q1 *= recipNorm;
@@ -247,18 +227,16 @@ void AHRS::updateIMU(float dt)
 
 void AHRS::setGyroOffset()
 {
-    //---------------------- Calculate the offset -----------------------------
+    //Calculate offset
 
     float offset[3] = {0.0, 0.0, 0.0};
     float gx, gy, gz;
 
-    //----------------------- MPU initialization ------------------------------
+    //MPU initialization
 
     sensor->initialize();
 
-    //-------------------------------------------------------------------------
-
-    //printf("Beginning Gyro calibration...\n");
+    //printf("Beginning gyro calibration...\n");
     for(int i = 0; i<100; i++)
     {
         sensor->update();
