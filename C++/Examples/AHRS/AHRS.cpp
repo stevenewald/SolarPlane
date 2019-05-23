@@ -302,7 +302,7 @@ float AHRS::getZ()
 }
 
 
-std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name)
+std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name) //two different 9DOF imu's
 {
     if (sensor_name == "mpu") {
         //printf("Selected: MPU9250\n");
@@ -339,7 +339,7 @@ std::string get_sensor_name(int argc, char *argv[])
             return std::string();
         }
 
-        // prevent the error message
+        //prevent the error message
         opterr = 0;
         int parameter;
 
@@ -353,9 +353,6 @@ std::string get_sensor_name(int argc, char *argv[])
             }
         }
 
-    } else { //sensor on NAVIO+
-
-        return "mpu";
     }
 }
 
@@ -442,7 +439,7 @@ int main(int argc, char *argv[])
     auto imu = get_inertial_sensor(sensor_name);
 
     if (!imu) {
-        printf("Wrong sensor name. Select: mpu or lsm\n");
+        printf("Wrong sensor name. Select: mpu or lsm\n"); //can use both IMUs
         return EXIT_FAILURE;
     }
 
