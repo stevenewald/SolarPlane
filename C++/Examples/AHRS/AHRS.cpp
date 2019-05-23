@@ -302,41 +302,6 @@ float AHRS::getZ()
 }
 
 
-class Socket
-{
-
-public:
-    Socket(char * ip,char * port)
-    {
-        sockfd = socket(AF_INET,SOCK_DGRAM,0);
-        servaddr.sin_family = AF_INET;
-        servaddr.sin_addr.s_addr = inet_addr(ip);
-        servaddr.sin_port = htons(atoi(port));
-    }
-
-    Socket()
-    {
-        sockfd = socket(AF_INET,SOCK_DGRAM,0);
-        servaddr.sin_family = AF_INET;
-        servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-        servaddr.sin_port = htons(7000);
-    }
-
-    void output(float W, float X, float Y, float Z, int Hz)
-    {
-        sprintf(sendline,"%10f %10f %10f %10f %dHz\n", W, X, Y, Z, Hz);
-        sendto(sockfd, sendline, strlen(sendline), 0, (struct sockaddr *)&servaddr, sizeof(servaddr));
-    }
-
-private:
-    int sockfd;
-    struct sockaddr_in servaddr = {0};
-    char sendline[80];
-
-};
-
-
-
 std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name)
 {
     if (sensor_name == "mpu") {
