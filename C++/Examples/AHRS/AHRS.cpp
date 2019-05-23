@@ -360,13 +360,13 @@ std::string get_sensor_name(int argc, char *argv[])
 using namespace std;
 void imuLoop(AHRS* ahrs)
 {
-    // Orientation data
+    //orientation data
 
     float roll, pitch, yaw;
 
     struct timeval tv;
     float dt;
-    // Timing data
+    //timing data
 
     static float maxdt;
     static float mindt = 0.01;
@@ -386,16 +386,16 @@ void imuLoop(AHRS* ahrs)
         currenttime = 1000000 * tv.tv_sec + tv.tv_usec;
 	dt = (currenttime - previoustime) / 1000000.0;
 
-    //-------- Read raw measurements from the MPU and update AHRS --------------
+    //--------read raw measurements from the MPU and update AHRS--------------
 
     ahrs->updateIMU(dt);
 
 
-    //------------------------ Read Euler angles ------------------------------
+    //------------------------read euler angles------------------------------
 
     ahrs->getEuler(&roll, &pitch, &yaw);
 
-    //------------------- Discard the time of the first cycle -----------------
+    //-------------------discard the time of the first cycle-----------------
 
     if (!isFirst)
     {
@@ -404,7 +404,7 @@ void imuLoop(AHRS* ahrs)
     }
     isFirst = 0;
 
-    //------------- Console and network output with a lowered rate ------------
+    //-------------console and network output with a lowered rate------------
 
     dtsumm += dt;
     if(dtsumm > 0.05)
@@ -415,12 +415,12 @@ void imuLoop(AHRS* ahrs)
         cout << pitch << endl;
         cout << (yaw * -1) << endl;
 
-        // Network output
-        //sock.output( ahrs->getW(), ahrs->getX(), ahrs->getY(), ahrs->getZ(), int(1/dt));//#
-
         dtsumm = 0;
     }
-    std::this_thread::sleep_for(std::chrono::milliseconds(20));
+    std::this_thread::sleep_for(std::chrono::milliseconds(20)); //prevent overflow of network (idk, happened in the beginning a bit but maybe due to worse
+    //programming at the time
+    //which of course, was definitely and absolutely fixed by now
+    //but we wont test it anyway)
 }
 
 //=============================================================================
@@ -444,18 +444,17 @@ int main(int argc, char *argv[])
     }
 
     if (!imu->probe()) {
-        printf("Sensor not enable\n");
+        printf("Sensor not enable\n"); //sometimes it doesn't work, idk why but its an imu issue not programming (at least, not MY programming. maybe the imu package made by the imu devs)
         return EXIT_FAILURE;
     }
 
-    //--------------------------- Network setup -------------------------------
+    //---------------------------network setup-------------------------------
 
     auto ahrs = std::unique_ptr <AHRS>{new AHRS(move(imu)) };
 
-    //-------------------- Setup gyroscope offset -----------------------------
+    //--------------------setup gyroscope offset-----------------------------
 
     ahrs->setGyroOffset();
-    printf("sleeping now");
     while(1)
         imuLoop(ahrs.get());
 }
