@@ -1,12 +1,3 @@
-/*
-Mahony AHRS algorithm implemented by Madgwick
-See: http://x-io.co.uk/open-source-imu-and-ahrs-algorithms/
-
-Adapted by Igor Vereninov (igor.vereninov@emlid.com)
-Provided to you by Emlid Ltd (c) 2014.
-twitter.com/emlidtech || www.emlid.com || info@emlid.com
-*/
-
 #ifndef AHRS_HPP
 #define AHRS_HPP
 
