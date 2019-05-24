@@ -12,6 +12,7 @@ private:
 	float gyroOffset[3];
 	float twoKi;
 	float twoKp;
+    int alttiude;
     //float mx, my; //remove
 	float integralFBx, integralFBy, integralFBz;
     std::unique_ptr <InertialSensor> sensor;
@@ -23,6 +24,8 @@ public:
     void setGyroOffset();
     void getEuler(float* roll, float* pitch, float* yaw);
 
+    int HypFormula(int pres, int temp);
+    int getAltitude();
     float invSqrt(float x);
     float getW();
     float getX();

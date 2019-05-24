@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <memory>
 #include <sys/socket.h>
+#include <Common/MS5611.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <stdint.h>
@@ -27,6 +28,8 @@
 
 #define G_SI 9.80665
 #define PI   3.14159
+MS5611 barometer;
+barometer.initialize();
 
 AHRS::AHRS(std::unique_ptr <InertialSensor> imu)
 {
@@ -276,6 +279,42 @@ void AHRS::getEuler(float* roll, float* pitch, float* yaw)
    *yaw = atan2(2*(q0*q3+q1*q2), 1-2*(q2*q2+q3*q3)) * 180.0/M_PI;
 }
 
+int AHRS::HypFormula(int pres, int temp)
+{
+    int PresInitOverCurrentPres;
+    int TempInKelvin;
+
+
+    PresInitOverCurrentPres = 1012.5/pres;
+    TempInKelvin = 273.15+temp;
+
+    return (((PressureInitOverCurrentPres**(1/5.257)-1)*TempinKelvin)/.0065);
+}
+
+
+
+int AHRS::getAltitude()
+{
+    if (check_apm()) {
+        return 1;
+    }
+
+    barometer.refreshPressure();
+    usleep(10000); // Waiting for pressure data ready
+    barometer.readPressure();
+
+    barometer.refreshTemperature();
+    usleep(10000); // Waiting for temperature data ready
+    barometer.readTemperature();
+
+    barometer.calculatePressureAndTemperature();
+
+    return (HypFormula(barometer.getPressure(), barometer.getTemperature()));
+                
+    }
+}
+
+
 float AHRS::invSqrt(float x)
 {
     float halfx = 0.5f * x;
@@ -357,6 +396,7 @@ void imuLoop(AHRS* ahrs)
     //orientation data
 
     float roll, pitch, yaw;
+    int altitudeInFeet
 
     struct timeval tv;
     float dt;
@@ -399,6 +439,9 @@ void imuLoop(AHRS* ahrs)
     isFirst = 0;
 
     //-------------console and network output with a lowered rate------------
+    
+    //Calculate altitude in feet
+    altitudeInFeet = (getAltitude())*3.28084;
 
     dtsumm += dt;
     if(dtsumm > 0.05)
@@ -408,6 +451,7 @@ void imuLoop(AHRS* ahrs)
         cout << roll << endl;
         cout << pitch << endl;
         cout << (yaw * -1) << endl;
+        cout << altitudeInFeet << endl;
 
         dtsumm = 0;
     }
