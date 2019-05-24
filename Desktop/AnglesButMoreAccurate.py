@@ -32,9 +32,9 @@ while True:
     mx = m9m[0]
     my = m9m[1]
     mz = m9m[2]
-    compass = math.atan2(my, mz)
-    compassdegrees = compass*57.29578
-    print(compassdegrees)
+    compass = 180 * math.atan2(my, mz)/3.14159
+    #compassdegrees = compass*57.29578
+    print(compass)
     #print("mx " + str(mx))
     #print("my " + str(my))
     #print("mz " + str(mz))
