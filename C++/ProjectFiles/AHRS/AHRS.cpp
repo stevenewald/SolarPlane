@@ -1,6 +1,7 @@
 //I credit berryIMU for the majority of the concepts here (https://github.com/ozzmaker/BerryIMU)
 //Not my IMU but the concepts helped a lot (even if I had to spend double the time on the tilt compensation afterwards, including
 //rewriting in C++ from scratch after 15+ hours of work bc of threading reasons)
+//AHRS stands for atttitude and heading reference system
 
 
 #include <stdio.h>
