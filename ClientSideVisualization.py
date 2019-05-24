@@ -26,24 +26,6 @@ xaxis = float(0) #establishing axis variables
 yaxis = float(0)
 zaxis = float(0)
 
-#if code has been changed, type Y
-#otherwise type N
-#setup = input("First time running program or program has been updated? (Y/N)")
-setup = "N"
-if setup == "Y":
-    print("Running first-time setup")
-    command1 = '''
-    git pull origin master
-    cd C++/ProjectFiles/AHRS
-    make
-    ./AHRS -i mpu'''
-else:
-    print("Not running first-time setup")
-    command1 = '''
-    cd C++/ProjectFiles/AHRS
-    make
-    ./AHRS -i mpu'''
-
 
 #made own class to make it easier to work with instead of raw paramiko data
 class ssh:
@@ -217,23 +199,14 @@ caliboffset = 0
 def rotatemycube(task):
   global cube
   global caliboffset
-  cube.setHpr((float(xaxis) - caliboffset)*-1, (float(zaxis)), float(yaxis))
+  cube.setHpr((float(xaxis) - float(caliboffset))*-1, (float(zaxis)), float(yaxis))
   return task.again
 
 #sets the offset so that plane will always be at heading 0 when visualization starts
 #issue with AHRS program but this fix works alright
 offsettick = 0
-def offset(task):
-    global offsettick
-    global xaxis
-    if offsettick == 10000:
-        caliboffset = xaxis
-    offsettick = offsettick + 1
 
-
-
-
-
+#Render class
 class MyTapper(DirectObject):
 
     def __init__(self):
@@ -252,15 +225,17 @@ class MyTapper(DirectObject):
         taskMgr.add(rotatemycube)
 
         #adds the offset
-        taskMgr.add(offset)
 
+    #Can't find exit clause so this works
+    #Activates if you press "1"
     def breakProgram(self):
         str = "break"
         return int(str)
 
 ######################### End of renderer ##########################
 
-class TestThread(threading.Thread):
+#Connects to the navio and sends the commands outlined above
+class ConnectionThread(threading.Thread):
 
     def __init__(self):
         threading.Thread.__init__(self)
@@ -269,11 +244,54 @@ class TestThread(threading.Thread):
         connection.sendCommand(command1) #Sends the command and receives the input, changes the global x y and z axis variables as data comes in
         #and the renderer receives this data and renders the cube to the orientation
 
+#Calculates the compass offset so that heading starts at zero
+#Algorithm can't do this currently so this is a temporary fix
+#Could later serve as a changed visualization clause, like "30 seconds in change the orientation to the target orientation"
+class OffsetThread(threading.Thread):
+
+    def __init__(self):
+        threading.Thread.__init__(self)
+
+    def run(self):
+        OffsetCalculatedYet = True
+        while OffsetCalculatedYet:
+            global offsettick
+            global xaxis
+            global caliboffset
+            if offsettick == 20:
+                caliboffset = xaxis
+                OffsetCalculatedYet = False
+            offsettick = offsettick + 1
+            time.sleep(1)
+
+
 #t2 = thread(connection.sendCommand(command1))
 #connection.sendCommand(command1)
 
-thread = TestThread()
+
+#if code has been changed, type Y
+#otherwise type N
+#setup = input("First time running program or program has been updated? (Y/N)")
+setup = "N"
+if setup == "Y":
+    print("Running first-time setup")
+    command1 = '''
+    git pull origin master
+    cd C++/ProjectFiles/AHRS
+    make
+    ./AHRS -i mpu'''
+else:
+    print("Not running first-time setup")
+    command1 = '''
+    cd C++/ProjectFiles/AHRS
+    make
+    ./AHRS -i mpu'''
+
+thread = ConnectionThread()
 thread.start()
+
+offsetThreadd = OffsetThread()
+offsetThreadd.start()
 #runs the SSH connection send/receive thread
 
 #runs the renderer
