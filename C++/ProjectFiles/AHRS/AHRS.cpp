@@ -274,7 +274,7 @@ void AHRS::getEuler(float* roll, float* pitch, float* yaw)
    *roll = atan2(2*(q0*q1+q2*q3), 1-2*(q1*q1+q2*q2)) * 180.0/M_PI;
    *pitch = asin(2*(q0*q2-q3*q1)) * 180.0/M_PI;
    //*yaw = atan2(2*(q0*q3+q1*q2), 1-2*(q2*q2+q3*q3)) * 180.0/M_PI;
-   *yaw = atan2(my,mx)
+   *yaw = atan2(my,mx);
 }
 
 float AHRS::invSqrt(float x)
