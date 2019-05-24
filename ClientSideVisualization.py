@@ -17,7 +17,7 @@ from panda3d.core import LVector3
 from direct.task import Task
 from panda3d.core import loadPrcFileData 
 
-loadPrcFileData('', 'win-size 3840 2160') 
+loadPrcFileData('', 'win-size 3840 2160') #sets the window size as fullscreen borderless
 import sys
 import os
 from direct.stdpy import threading
@@ -26,6 +26,8 @@ xaxis = float(0) #establishing axis variables
 yaxis = float(0)
 zaxis = float(0)
 
+#if code has been changed, type Y
+#otherwise type N
 #setup = input("First time running program or program has been updated? (Y/N)")
 setup = "N"
 if setup == "Y":
@@ -47,6 +49,7 @@ else:
 class ssh:
     client = None
  
+    #connects to the ssh server
     def __init__(self, address, username, password):
         print("Connecting to server.")
         self.client = client.SSHClient()
@@ -54,6 +57,7 @@ class ssh:
         self.client.set_missing_host_key_policy(client.AutoAddPolicy())
         self.client.connect(address, username=username, password=password, look_for_keys=False)
  
+    #continually sends and receives the datastream in the form of yaxis, xaxis, zaxis and appends the data to it
     def sendCommand(self, command):
         if(self.client):
             print("now sending")
@@ -81,7 +85,7 @@ class ssh:
                     print("ERROR!")
                     break
                 iteration = iteration + 1
-                if (iteration % 30) == 0:
+                if (iteration % 30) == 0: #prevent overflow by limiting stdout
                     print("XAXIS, YAXIS, ZAXIS: " + str(xaxis) + " " + str(yaxis) + " " + str(zaxis))
             else:
                 print("Connection not opened.") #error clause
@@ -95,41 +99,25 @@ connection = ssh("192.168.43.88", "pi", "raspberry") #will change if network is 
 #can't send multiple commands without closing channel, so one long one instead
 
 ########################## Start of renderer ######################################
+#sets up the renderer
 base = ShowBase()
 base.disableMouse()
+
+#this position and orientation puts the camera at the back of the plane, facing the plane
 base.camera.setPos(0, 9000, 800)
 base.camera.setHpr(180, 0, 0)
 
-class MyRenderer(ShowBase):
-    def __init__(self):
-        ShowBase.__init__(self)
- 
-        # Load the environment model.
-        self.scene = self.loader.loadModel("models/environment")
-        # Reparent the model to render.
-        self.scene.reparentTo(self.render)
-        # Apply scale and position transforms on the model.
-        self.scene.setScale(0.25, 0.25, 0.25)
-        self.scene.setPos(-8, 42, 0)
- 
-        # Add the spinCameraTask procedure to the task manager.
-        self.taskMgr.add(self.spinCameraTask, "SpinCameraTask")
- 
-        # Load and transform the panda actor.
-        self.pandaActor = Actor("models/panda-model",
-                                {"walk": "models/panda-walk4"})
-        self.pandaActor.setScale(0.005, 0.005, 0.005)
-        self.pandaActor.reparentTo(self.render)
-        # Loop its animation.
-        self.pandaActor.loop("walk")
-
+#"testingmats2.x" is the plane model
+#its named like that because I had to try many times before I got the mats to work with the .mtl file
+#it was originally named cube because it was an actual cube, and now theres no point in changing it
 cube = loader.loadModel("Testingmats2.x")
-#tex = loader.loadTexture("maps/planetex.png")
-#cube.setTexture(tex, 1)
+#setscale is self explanatory
 cube.setScale(1)
+#attaches the plane to the renderer
 cube.reparentTo(base.render)
 
 
+#shows the "plane visualizer" text onscreen
 title = OnscreenText(text="Plane Visualizer",
                      style=1, fg=(1, 1, 1, 1), pos=(-0.1, 0.1), scale=.07,
                      parent=base.a2dBottomRight, align=TextNode.ARight)
@@ -142,6 +130,8 @@ def normalized(*args):
     return myVec
 
 #helper function to make a square given the lower left hand and upper right hand corners
+#because I now use the plane, this function is a bit useless
+#but I won't delete it because it shows how the cube was made
 def makeSquare(x1, y1, z1, x2, y2, z2):
     format = GeomVertexFormat.getV3n3cpt2()
     vdata = GeomVertexData('square', format, Geom.UHDynamic)
@@ -223,18 +213,20 @@ cube.setTwoSided(True)
 
 caliboffset = 0
 #when this is called, it changes the orientation of the cube to the global x y and z axes
+#caliboffset is the offset to make sure that the heading will always be 0 at the start heading of the navio
 def rotatemycube(task):
   global cube
   global caliboffset
   cube.setHpr((float(xaxis) - caliboffset)*-1, (float(zaxis)), float(yaxis))
   return task.again
 
-
+#sets the offset so that plane will always be at heading 0 when visualization starts
+#issue with AHRS program but this fix works alright
 offsettick = 0
 def offset(task):
     global offsettick
     global xaxis
-    if offsettick == 20:
+    if offsettick == 1000:
         caliboffset = xaxis
     offsettick = offsettick + 1
 
@@ -245,20 +237,25 @@ def offset(task):
 class MyTapper(DirectObject):
 
     def __init__(self):
-        self.testTexture = loader.loadTexture("maps/envir-reeds.png")
         self.accept("1", self.breakProgram)
 
-        slight = Spotlight('slight')
+        #lighting
+        slight = Spotlight('slight') 
         slight.setColor((1, 1, 1, 1))
         lens = PerspectiveLens()
         slight.setLens(lens)
+        #attaching lighting
         self.slnp = render.attachNewNode(slight)
         self.slnp1 = render.attachNewNode(slight)
+
+        #runs as a thread to change the HPR of the plane
         taskMgr.add(rotatemycube)
+
+        #adds the offset
         taskMgr.add(offset)
 
     def breakProgram(self):
-        str = "test"
+        str = "break"
         return int(str)
 
 ######################### End of renderer ##########################
@@ -277,12 +274,9 @@ class TestThread(threading.Thread):
 
 thread = TestThread()
 thread.start()
-#thread.join()
+#runs the SSH connection send/receive thread
 
-time.sleep(1) #the make command messes it up
+#runs the renderer
 t = MyTapper()
 base.run()
-#base.run()
-
-#time.sleep(5)
 
