@@ -28,6 +28,7 @@
 
 #define G_SI 9.80665
 #define PI   3.14159
+
 MS5611 barometer;
 barometer.initialize();
 
@@ -288,7 +289,7 @@ int AHRS::HypFormula(int pres, int temp)
     PresInitOverCurrentPres = 1012.5/pres;
     TempInKelvin = 273.15+temp;
 
-    return (((PressureInitOverCurrentPres**(1/5.257)-1)*TempinKelvin)/.0065);
+    return (((pow(PresInitOverCurrentPres, ((1/5.257)-1))*TempInKelvin)/.0065);
 }
 
 
