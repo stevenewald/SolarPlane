@@ -30,7 +30,7 @@
 #define PI   3.14159
 
 MS5611 barometer;
-barometer.MS5611.initialize();
+barometer.initialize();
 
 AHRS::AHRS(std::unique_ptr <InertialSensor> imu)
 {
