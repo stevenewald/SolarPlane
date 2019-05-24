@@ -423,7 +423,7 @@ void imuLoop(AHRS* ahrs)
 
     barometer.calculatePressureAndTemperature();
 
-    altitudeInFeet = (ahrs->HypFormula(int barometer.getPressure(), int barometer.getTemperature()))*3.28084;
+    altitudeInFeet = (ahrs->HypFormula(barometer.getPressure(), barometer.getTemperature()))*3.28084;
     //--------read raw measurements from the MPU and update AHRS--------------
 
     ahrs->updateIMU(dt);
