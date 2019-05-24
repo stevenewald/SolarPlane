@@ -51,6 +51,9 @@ void AHRS::update(float dt)
         sensor->read_gyroscope(&gx, &gy, &gz);
         sensor->read_magnetometer(&mx, &my, &mz);
 
+        mx = *mx
+        my = *my
+
 
     //use IMU algorithm if magnetometer measurement invalid (avoids NAN in magnetometer normalisation)
     if((mx == 0.0f) && (my == 0.0f) && (mz == 0.0f)) {
