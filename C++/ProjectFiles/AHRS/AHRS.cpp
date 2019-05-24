@@ -30,7 +30,7 @@
 #define PI   3.14159
 
 MS5611 barometer;
-barometer.initialize();
+barometer.MS5611.initialize();
 
 AHRS::AHRS(std::unique_ptr <InertialSensor> imu)
 {
@@ -397,7 +397,7 @@ void imuLoop(AHRS* ahrs)
     //orientation data
 
     float roll, pitch, yaw;
-    int altitudeInFeet
+    int altitudeInFeet;
 
     struct timeval tv;
     float dt;
