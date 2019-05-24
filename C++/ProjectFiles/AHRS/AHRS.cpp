@@ -30,9 +30,12 @@
 #define PI   3.14159
 
 MS5611 barometer;
-while(check_apm()) {
-    usleep(10000);
+void Loop() {
+    while(check_apm()) {
+        usleep(10000);
+    }
 }
+Loop()
 barometer.initialize();
 
 AHRS::AHRS(std::unique_ptr <InertialSensor> imu)
