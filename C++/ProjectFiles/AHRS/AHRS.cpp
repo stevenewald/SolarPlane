@@ -30,7 +30,7 @@
 #define PI   3.14159
 
 MS5611 barometer;
-while (check_apm()) {
+while(check_apm()) {
     usleep(10000);
 }
 barometer.initialize();
