@@ -295,30 +295,7 @@ int AHRS::HypFormula(int pres, int temp)
     PresInitOverCurrentPres = 1012.5/pres;
     TempInKelvin = 273.15+temp;
 
-    return ((pow(PresInitOverCurrentPres, ((1/5.257))-1)*TempInKelvin)/.0065);
-}
-
-
-
-int AHRS::getAltitude()
-{
-    if (check_apm()) {
-        return 1;
-    }
-
-    barometer.refreshPressure();
-    usleep(10000); // Waiting for pressure data ready
-    barometer.readPressure();
-
-    barometer.refreshTemperature();
-    usleep(10000); // Waiting for temperature data ready
-    barometer.readTemperature();
-
-    barometer.calculatePressureAndTemperature();
-
-    return (HypFormula(barometer.getPressure(), barometer.getTemperature()));
-                
-    
+    return ((pow(PresInitOverCurrentPres, ((1/5.257))-1)*TempInKelvin)/.0065)*3.28084;
 }
 
 
@@ -427,6 +404,18 @@ void imuLoop(AHRS* ahrs)
         currenttime = 1000000 * tv.tv_sec + tv.tv_usec;
 	dt = (currenttime - previoustime) / 1000000.0;
 
+    //--------barometer measurements/altitude --------------------------------
+    barometer.refreshPressure();
+    usleep(10000); // Waiting for pressure data ready
+    barometer.readPressure();
+
+    barometer.refreshTemperature();
+    usleep(10000); // Waiting for temperature data ready
+    barometer.readTemperature();
+
+    barometer.calculatePressureAndTemperature();
+
+    altitudeInFeet = (ahrs->HypFormula(int barometer.getPressure(), int barometer.getTemperature()))*3.28084;
     //--------read raw measurements from the MPU and update AHRS--------------
 
     ahrs->updateIMU(dt);
@@ -448,7 +437,7 @@ void imuLoop(AHRS* ahrs)
     //-------------console and network output with a lowered rate------------
     
     //Calculate altitude in feet
-    altitudeInFeet = (ahrs->getAltitude())*3.28084;
+    
 
     dtsumm += dt;
     if(dtsumm > 0.05)
