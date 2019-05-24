@@ -30,6 +30,9 @@
 #define PI   3.14159
 
 MS5611 barometer;
+while (check_apm()) {
+    usleep(10000);
+}
 barometer.initialize();
 
 AHRS::AHRS(std::unique_ptr <InertialSensor> imu)
@@ -442,7 +445,7 @@ void imuLoop(AHRS* ahrs)
     //-------------console and network output with a lowered rate------------
     
     //Calculate altitude in feet
-    altitudeInFeet = (getAltitude())*3.28084;
+    altitudeInFeet = (ahrs->getAltitude())*3.28084;
 
     dtsumm += dt;
     if(dtsumm > 0.05)
