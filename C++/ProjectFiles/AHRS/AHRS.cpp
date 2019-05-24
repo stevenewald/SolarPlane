@@ -312,7 +312,7 @@ int AHRS::getAltitude()
 
     return (HypFormula(barometer.getPressure(), barometer.getTemperature()));
                 
-    }
+    
 }
 
 
