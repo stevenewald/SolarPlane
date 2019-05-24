@@ -29,8 +29,14 @@
 #define G_SI 9.80665
 #define PI   3.14159
 
-MS5611 barometer;
-barometer.initialize();
+
+/*void Loop() {
+    while(check_apm()) {
+        usleep(10000);
+    }
+}
+Loop()*/
+
 
 AHRS::AHRS(std::unique_ptr <InertialSensor> imu)
 {
@@ -465,10 +471,12 @@ void imuLoop(AHRS* ahrs)
 //=============================================================================
 using namespace std;
 int main(int argc, char *argv[])
-{
+{   
+    MS5611 barometer;
     if (check_apm()) {
         return 1;
     }
+    barometer.initialize();
 
     auto sensor_name = get_sensor_name(argc, argv);
 
