@@ -37,3 +37,4 @@ while True:
     print(compassdegrees)
     print("mx " + str(mx))
     print("my " + str(my))
+    print("mz " + str(mz))
