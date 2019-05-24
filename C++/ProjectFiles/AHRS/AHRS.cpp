@@ -422,7 +422,9 @@ void imuLoop(AHRS* ahrs)
     barometer.readTemperature();
 
     barometer.calculatePressureAndTemperature();
-    printf(dtostrf(barometer.getPressure()))
+    char thepres;
+    std:to_string(barometer.getPressure());
+    printf(thepres);
 
     altitudeInFeet = (ahrs->HypFormula(barometer.getPressure(), barometer.getTemperature()))*3.28084;
     //--------read raw measurements from the MPU and update AHRS--------------
