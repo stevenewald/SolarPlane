@@ -97,8 +97,8 @@ connection = ssh("192.168.43.88", "pi", "raspberry") #will change if network is 
 ########################## Start of renderer ######################################
 base = ShowBase()
 base.disableMouse()
-base.camera.setPos(0, 500, -9000)
-base.camera.setHpr(0, 90, 180)
+base.camera.setPos(0, 9000, 800)
+base.camera.setHpr(180, 0, 0)
 
 class MyRenderer(ShowBase):
     def __init__(self):
@@ -123,7 +123,7 @@ class MyRenderer(ShowBase):
         # Loop its animation.
         self.pandaActor.loop("walk")
 
-cube = loader.loadModel("Testingmats.x")
+cube = loader.loadModel("Testingmats2.x")
 #tex = loader.loadTexture("maps/planetex.png")
 #cube.setTexture(tex, 1)
 cube.setScale(1)
@@ -220,11 +220,24 @@ rotation = cube.setHpr(0, 0, 0) #does nothing
 #opengl by default only draws front faces (polygons whose vertices are specified ccw)
 cube.setTwoSided(True)
 
+
+caliboffset = 0
 #when this is called, it changes the orientation of the cube to the global x y and z axes
 def rotatemycube(task):
   global cube
-  cube.setHpr(float(yaxis), (float(zaxis))*-1, float(xaxis)*-1)
+  global caliboffset
+  cube.setHpr((float(xaxis) - caliboffset)*-1, (float(zaxis)), float(yaxis))
   return task.again
+
+
+offsettick = 0
+def offset(task):
+    global offsettick
+    global xaxis
+    if offsettick == 20:
+        caliboffset = xaxis
+    offsettick = offsettick + 1
+
 
 
 
@@ -242,6 +255,7 @@ class MyTapper(DirectObject):
         self.slnp = render.attachNewNode(slight)
         self.slnp1 = render.attachNewNode(slight)
         taskMgr.add(rotatemycube)
+        taskMgr.add(offset)
 
     def breakProgram(self):
         str = "test"
