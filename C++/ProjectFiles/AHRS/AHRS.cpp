@@ -35,7 +35,7 @@ void Loop() {
         usleep(10000);
     }
 }
-Loop()
+Loop();
 barometer.initialize();
 
 AHRS::AHRS(std::unique_ptr <InertialSensor> imu)
