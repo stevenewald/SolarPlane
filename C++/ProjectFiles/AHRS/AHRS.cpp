@@ -381,6 +381,10 @@ void imuLoop(AHRS* ahrs)
     //orientation data
     MS5611 barometer;
 
+    if (check_apm()) {
+        return 1;
+    }
+    
     if(firstTimeRunningAlt){
         barometer.initialize();
         firstTimeRunningAlt = false;
