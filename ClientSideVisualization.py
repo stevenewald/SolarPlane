@@ -104,7 +104,7 @@ base = ShowBase()
 base.disableMouse()
 
 #this position and orientation puts the camera at the back of the plane, facing the plane
-base.camera.setPos(0, 9000, 800)
+base.camera.setPos(0, 11000, 800)
 base.camera.setHpr(180, 0, 0)
 
 #"testingmats2.x" is the plane model
@@ -226,7 +226,7 @@ offsettick = 0
 def offset(task):
     global offsettick
     global xaxis
-    if offsettick == 1000:
+    if offsettick == 10000:
         caliboffset = xaxis
     offsettick = offsettick + 1
 
