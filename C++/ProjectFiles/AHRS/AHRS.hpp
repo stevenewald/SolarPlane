@@ -12,7 +12,7 @@ private:
 	float gyroOffset[3];
 	float twoKi;
 	float twoKp;
-    float mx, my; //remove
+    //float mx, my; //remove
 	float integralFBx, integralFBy, integralFBz;
     std::unique_ptr <InertialSensor> sensor;
 public:
