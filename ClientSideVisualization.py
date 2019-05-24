@@ -62,12 +62,12 @@ class ssh:
         if(self.client):
             print("now sending")
             stdin, stdout, stderr = self.client.exec_command(command) #creates channel plus stdin, stdout, stderr
-            stdin.close()
+            stdin.close() #doesnt take in any more commands
             global xaxis #program prints xaxis, then yaxis, then zaxis in sequential lines, so this function sets them
             global yaxis 
             global zaxis
             global cube
-            which = 1
+            which = 1 #assigns each stdout to the x, y, or z axis
             iteration = 0 #basically a tick function to prevent the xaxis yaxis and zaxis from printing every tick
             for line in iter(lambda: stdout.readline(2048), ""): #please dont fail me for this, it works and thats all that matters
                 if not((line[0] == "0") or (line[0] == "1") or (line[0] == "2") or (line[0] == "3") or (line[0] == "4") or (line[0] == "5") or (line[0] == "6") or (line[0] == "7") or (line[0] == "8") or (line[0] == "9") or (line[0] == "-") or (line[0] == "+")):

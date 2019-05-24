@@ -4,6 +4,11 @@
 //AHRS stands for atttitude and heading reference system
 
 
+
+//TODO:
+//Heading is consistant (changes by correct amount) but doesn't start at the correct heading
+
+
 #include <stdio.h>
 #include <memory>
 #include <sys/socket.h>
@@ -406,7 +411,7 @@ void imuLoop(AHRS* ahrs)
 
         dtsumm = 0;
     }
-    std::this_thread::sleep_for(std::chrono::milliseconds(20)); //prevent overflow of network (idk, happened in the beginning a bit but maybe due to worse
+    //std::this_thread::sleep_for(std::chrono::milliseconds(20)); //prevent overflow of network (idk, happened in the beginning a bit but maybe due to worse
     //programming at the time
     //which of course, was definitely and absolutely fixed by now
     //but we wont test it anyway)
