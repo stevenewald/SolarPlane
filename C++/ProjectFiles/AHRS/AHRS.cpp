@@ -269,12 +269,11 @@ void AHRS::setGyroOffset()
     gyroOffset[2] = offset[2];
 }
 
-void AHRS::getEuler(float* roll, float* pitch, float* yaw, float* realheading)
+void AHRS::getEuler(float* roll, float* pitch, float* yaw)
 {
    *roll = atan2(2*(q0*q1+q2*q3), 1-2*(q1*q1+q2*q2)) * 180.0/M_PI;
    *pitch = asin(2*(q0*q2-q3*q1)) * 180.0/M_PI;
    *yaw = atan2(2*(q0*q3+q1*q2), 1-2*(q2*q2+q3*q3)) * 180.0/M_PI;
-   *realheading = atan2(my,mx)
 }
 
 float AHRS::invSqrt(float x)
@@ -357,7 +356,7 @@ void imuLoop(AHRS* ahrs)
 {
     //orientation data
 
-    float roll, pitch, yaw, realheading;
+    float roll, pitch, yaw;
 
     struct timeval tv;
     float dt;
@@ -388,7 +387,7 @@ void imuLoop(AHRS* ahrs)
 
     //------------------------read euler angles------------------------------
 
-    ahrs->getEuler(&roll, &pitch, &yaw, &realheading);
+    ahrs->getEuler(&roll, &pitch, &yaw);
 
     //-------------------discard the time of the first cycle-----------------
 
@@ -400,6 +399,7 @@ void imuLoop(AHRS* ahrs)
     isFirst = 0;
 
     //-------------console and network output with a lowered rate------------
+
     dtsumm += dt;
     if(dtsumm > 0.05)
     {
@@ -408,7 +408,6 @@ void imuLoop(AHRS* ahrs)
         cout << roll << endl;
         cout << pitch << endl;
         cout << (yaw * -1) << endl;
-        cout << (str(realheading) + " realheading") << endl;
 
         dtsumm = 0;
     }
