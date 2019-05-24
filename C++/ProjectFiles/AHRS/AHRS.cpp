@@ -377,8 +377,16 @@ std::string get_sensor_name(int argc, char *argv[])
 using namespace std;
 void imuLoop(AHRS* ahrs)
 {
+    int firstTimeRunningAlt;
     //orientation data
+    MS5611 barometer;
 
+    if(firstTimeRunningAlt){
+        barometer.initialize();
+        firstTimeRunningAlt = false;
+    }
+    
+    
     float roll, pitch, yaw;
     int altitudeInFeet;
 
@@ -461,11 +469,12 @@ void imuLoop(AHRS* ahrs)
 using namespace std;
 int main(int argc, char *argv[])
 {   
-    MS5611 barometer;
+    int firstTimeRunningAlt;
+    firstTimeRunningAlt = true;
     if (check_apm()) {
         return 1;
     }
-    barometer.initialize();
+    
 
     auto sensor_name = get_sensor_name(argc, argv);
 
