@@ -25,7 +25,7 @@ public:
     void setGyroOffset();
     void getEuler(float* roll, float* pitch, float* yaw);
 
-    int HypFormula(float pres, floats temp);
+    int HypFormula(float pres, float temp);
     float invSqrt(float x);
     float getW();
     float getX();

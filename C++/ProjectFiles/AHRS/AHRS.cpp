@@ -286,10 +286,10 @@ void AHRS::getEuler(float* roll, float* pitch, float* yaw)
    *yaw = atan2(2*(q0*q3+q1*q2), 1-2*(q2*q2+q3*q3)) * 180.0/M_PI;
 }
 
-int AHRS::HypFormula(int pres, int temp)
+int AHRS::HypFormula(float pres, float temp)
 {
-    int PresInitOverCurrentPres;
-    int TempInKelvin;
+    float PresInitOverCurrentPres;
+    float TempInKelvin;
 
 
     PresInitOverCurrentPres = 1012.5/pres;
@@ -422,8 +422,6 @@ void imuLoop(AHRS* ahrs)
     barometer.readTemperature();
 
     barometer.calculatePressureAndTemperature();
-
-    sprintf(barometer.getPressure());
 
     altitudeInFeet = (ahrs->HypFormula(barometer.getPressure(), barometer.getTemperature()))*3.28084;
     //--------read raw measurements from the MPU and update AHRS--------------
