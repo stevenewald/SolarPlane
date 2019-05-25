@@ -456,7 +456,7 @@ void imuLoop(AHRS* ahrs)
         cout << roll << endl;
         cout << pitch << endl;
         cout << (yaw * -1) << endl;
-        cout << altitudeInFeet << endl;
+        //cout << altitudeInFeet << endl;
 
         dtsumm = 0;
     }
