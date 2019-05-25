@@ -295,7 +295,8 @@ int AHRS::HypFormula(float pres, float temp)
     PresInitOverCurrentPres = 1012.5/pres;
     TempInKelvin = 273.15+temp;
 
-    return (((pow(PresInitOverCurrentPres, ((1/5.257)))-1)*TempInKelvin)/.0065)*3.28084;
+    //return (((pow(PresInitOverCurrentPres, ((1/5.257)))-1)*TempInKelvin)/.0065)*3.28084;
+    return pres;
 }
 
 
