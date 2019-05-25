@@ -10,6 +10,7 @@ class AHRS{
 private:
 	float q0, q1, q2, q3;
 	float gyroOffset[3];
+    int firstTimeRunningAlt;
 	float twoKi;
 	float twoKp;
     int alttiude;
@@ -24,8 +25,7 @@ public:
     void setGyroOffset();
     void getEuler(float* roll, float* pitch, float* yaw);
 
-    int HypFormula(int pres, int temp);
-    int getAltitude();
+    int HypFormula(float pres, floats temp);
     float invSqrt(float x);
     float getW();
     float getX();

@@ -388,7 +388,7 @@ void imuLoop(AHRS* ahrs)
     
     
     float roll, pitch, yaw;
-    int altitudeInFeet;
+    float altitudeInFeet;
 
     struct timeval tv;
     float dt;
