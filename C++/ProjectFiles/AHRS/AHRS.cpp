@@ -478,13 +478,13 @@ void imuLoop(AHRS* ahrs)
     inputElev = rcin->read(2);
     inputSpoilers = rcin->read(5);
 
-    printf("inputelev:");
-    cout << inputRudd;
+    //printf("inputelev:");
+    //cout << inputRudd;
     //manualoverride = rcin->read(3)
 
     //apply input to servos
     pwm->set_duty_cycle(2, inputElev);
-    pwm->set_duty_cycle(3, inputRudd);
+    pwm->set_duty_cycle(4, inputRudd);
     //pwm->set_duty_cycle(4, inputSpoilers);
 
 
