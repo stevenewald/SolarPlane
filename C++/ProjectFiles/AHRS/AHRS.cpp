@@ -10,10 +10,10 @@
 
 
 #include "Navio2/PWM.h"
-#include "Navio+/RCOutput_Navio.h"
+//#include "Navio+/RCOutput_Navio.h"
 #include "Navio2/RCOutput_Navio2.h"
 #include <Navio2/RCInput_Navio2.h>
-#include <Navio+/RCInput_Navio.h>
+//#include <Navio+/RCInput_Navio.h>
 #include <stdio.h>
 #include <memory>
 #include <sys/socket.h>
