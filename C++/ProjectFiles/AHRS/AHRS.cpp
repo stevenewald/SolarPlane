@@ -479,7 +479,7 @@ void imuLoop(AHRS* ahrs)
     inputSpoilers = rcin->read(5);
 
     printf("inputelev:");
-    printf(inputElev);
+    cout << inputElev;
     //manualoverride = rcin->read(3)
 
     //apply input to servos
