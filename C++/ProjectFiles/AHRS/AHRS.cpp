@@ -483,9 +483,9 @@ void imuLoop(AHRS* ahrs)
     //manualoverride = rcin->read(3)
 
     //apply input to servos
-    pwm->set_duty_cycle(2, inputElev/100);
-    pwm->set_duty_cycle(3, inputRudd/100);
-    pwm->set_duty_cycle(4, inputSpoilers/100);
+    pwm->set_duty_cycle(2, inputElev);
+    pwm->set_duty_cycle(3, inputRudd);
+    pwm->set_duty_cycle(4, inputSpoilers);
 
 
 
