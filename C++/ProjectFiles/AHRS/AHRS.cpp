@@ -392,8 +392,6 @@ void imuLoop(AHRS* ahrs)
     int inputRudd;
     int inputThrott;
     int inputSpoilers;
-    auto rcin;
-    auto pwm;
     auto rcin = std::unique_ptr <RCInput>{ new RCInput_Navio2() };
     auto pwm = std::unique_ptr <RCOutput>{ new RCOutput_Navio2() };
     //orientation data
