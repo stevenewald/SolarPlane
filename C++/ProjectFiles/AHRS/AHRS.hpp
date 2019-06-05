@@ -19,6 +19,8 @@ private:
     float inputRudd;
     float inputThrott;
     float inputSpoilers;
+    auto rcin;
+    auto pwm;
     //float mx, my; //remove
 	float integralFBx, integralFBy, integralFBz;
     std::unique_ptr <InertialSensor> sensor;
