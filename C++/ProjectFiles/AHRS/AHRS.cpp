@@ -484,7 +484,7 @@ void imuLoop(AHRS* ahrs)
 
     //apply input to servos
     pwm->set_duty_cycle(2, inputElev);
-    pwm->set_duty_cycle(4, inputRudd);
+    pwm->set_duty_cycle(3, 1.8);
     //pwm->set_duty_cycle(4, inputSpoilers);
 
 
