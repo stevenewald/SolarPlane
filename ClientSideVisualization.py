@@ -199,7 +199,7 @@ caliboffset = 0
 def rotatemycube(task):
   global cube
   global caliboffset
-  cube.setHpr((float(xaxis) - float(caliboffset))*-1, (float(zaxis)), float(yaxis))
+  cube.setHpr((float(xaxis) - float(caliboffset))*-1, (float(zaxis))*-1, float(yaxis)*-1)
   return task.again
 
 #sets the offset so that plane will always be at heading 0 when visualization starts

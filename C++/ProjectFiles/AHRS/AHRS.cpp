@@ -9,6 +9,11 @@
 //Heading is consistant (changes by correct amount) but doesn't start at the correct heading
 
 
+#include "Navio2/PWM.h"
+#include "Navio+/RCOutput_Navio.h"
+#include "Navio2/RCOutput_Navio2.h"
+#include <Navio2/RCInput_Navio2.h>
+#include <Navio+/RCInput_Navio.h>
 #include <stdio.h>
 #include <memory>
 #include <sys/socket.h>
@@ -36,6 +41,25 @@
     }
 }
 Loop()*/
+
+//for the rcinput
+#define READ_FAILED -1
+
+using namespace Navio;
+
+std::unique_ptr <RCOutput> get_rcout()
+{
+    if (get_navio_version() == NAVIO2)
+    {
+        auto ptr = std::unique_ptr <RCOutput>{ new RCOutput_Navio2() };
+        return ptr;
+    } else
+    {
+        auto ptr = std::unique_ptr <RCOutput>{ new RCOutput_Navio() };
+        return ptr;
+    }
+
+}
 
 
 AHRS::AHRS(std::unique_ptr <InertialSensor> imu)
@@ -241,6 +265,20 @@ void AHRS::updateIMU(float dt)
     q3 *= recipNorm;
 }
 
+std::unique_ptr <RCInput> get_rcin()
+{
+    if (get_navio_version() == NAVIO2)
+    {
+        auto ptr = std::unique_ptr <RCInput>{ new RCInput_Navio2() };
+        return ptr;
+    } else
+    {
+        auto ptr = std::unique_ptr <RCInput>{ new RCInput_Navio() };
+        return ptr;
+    }
+
+}
+
 void AHRS::setGyroOffset()
 {
     //Calculate offset
@@ -379,12 +417,33 @@ using namespace std;
 void imuLoop(AHRS* ahrs)
 {
     int firstTimeRunningAlt;
+    int firstTimeRunningRcinput;
+    int inputElev;
+    int inputRudd;
+    int inputThrott;
+    int inputSpoilers;
+    auto rcin = get_rcin();
+    auto pwm = get_rcout();
     //orientation data
     MS5611 barometer;
 
     if(firstTimeRunningAlt){
         barometer.initialize();
         firstTimeRunningAlt = false;
+    }
+
+    if(firstTimeRunningRcinput){
+        rcin->initialize();
+        //pwm->initialize(1);//throttle
+        pwm->initialize(2);//elevator
+        pwm->initialize(3);//rudder
+        pwm->initialize(4);//spoiler
+        //pwm->set_frequency(1, 50);
+        pwm->set_frequency(2, 50);
+        pwm->set_frequency(3, 50);
+        pwm->set_frequency(4, 50);
+        
+        firstTimeRunningRcinput = false;
     }
     
     
@@ -443,6 +502,29 @@ void imuLoop(AHRS* ahrs)
     }
     isFirst = 0;
 
+    //---------------- RCInput ----------------------------------------------
+
+    inputRudd = rcin->read(1);
+    inputElev = rcin->read(2);
+    inputSpoilers = rcin->read(5);
+    //manualoverride = rcin->read(3)
+
+
+
+    //apply input to servos
+    pwm->set_duty_cycle(2, inputElev);
+    pwm->set_duty_cycle(3, inputRudd;
+    pwm->set_duty_cycle(4, inputSpoilers);
+
+
+
+
+
+
+
+
+
+
     //-------------console and network output with a lowered rate------------
     
     //Calculate altitude in feet
@@ -472,6 +554,9 @@ int main(int argc, char *argv[])
 {   
     int firstTimeRunningAlt;
     firstTimeRunningAlt = true;
+
+    int firstTimeRunningRcinput;
+    firstTimeRunningRcinput = true;
     if (check_apm()) {
         return 1;
     }
@@ -499,6 +584,7 @@ int main(int argc, char *argv[])
     auto ahrs = std::unique_ptr <AHRS>{new AHRS(move(imu)) };
 
     //--------------------setup gyroscope offset-----------------------------
+
 
     ahrs->setGyroOffset();
     while(1)

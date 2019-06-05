@@ -11,9 +11,14 @@ private:
 	float q0, q1, q2, q3;
 	float gyroOffset[3];
     int firstTimeRunningAlt;
+    int firstTimeRunningRcinput;
 	float twoKi;
 	float twoKp;
     int alttiude;
+    float inputElev;
+    float inputRudd;
+    float inputThrott;
+    float inputSpoilers;
     //float mx, my; //remove
 	float integralFBx, integralFBy, integralFBz;
     std::unique_ptr <InertialSensor> sensor;
@@ -24,6 +29,7 @@ public:
     void updateIMU(float dt);
     void setGyroOffset();
     void getEuler(float* roll, float* pitch, float* yaw);
+    //void updateServos(float Elev, float Rudd, float Thrott, float Spoilers);
 
     int HypFormula(float pres, float temp);
     float invSqrt(float x);
