@@ -404,11 +404,11 @@ void imuLoop(AHRS* ahrs)
 
     if(firstTimeRunningRcinput){
         rcin->initialize();
-        //pwm->initialize(1);//throttle
+        pwm->initialize(1);//throttle
         pwm->initialize(2);//elevator
         pwm->initialize(3);//rudder
         pwm->initialize(4);//spoiler
-        //pwm->set_frequency(1, 50);
+        pwm->set_frequency(1, 50);
         pwm->set_frequency(2, 50);
         pwm->set_frequency(3, 50);
         pwm->set_frequency(4, 50);
@@ -484,7 +484,7 @@ void imuLoop(AHRS* ahrs)
 
     //apply input to servos
     pwm->set_duty_cycle(2, inputElev);
-    pwm->set_duty_cycle(3, inputRudd);
+    pwm->set_duty_cycle(1, inputRudd);
     //pwm->set_duty_cycle(4, inputSpoilers);
 
 
