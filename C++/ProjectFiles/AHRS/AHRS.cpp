@@ -405,6 +405,13 @@ void imuLoop(AHRS* ahrs)
     if(firstTimeRunningRcinput){
         rcin->initialize();
         //pwm->initialize(1);//throttle
+        //pwm->initialize(2);//elevator
+        //pwm->initialize(3);//rudder
+        //pwm->initialize(4);//spoiler
+        //pwm->set_frequency(1, 50);
+        pwm->set_frequency(2, 50);
+        pwm->set_frequency(3, 50);
+        pwm->set_frequency(4, 50);
         
         firstTimeRunningRcinput = false;
     }
@@ -524,17 +531,6 @@ int main(int argc, char *argv[])
     if (check_apm()) {
         return 1;
     }
-
-    auto rcin = std::unique_ptr <RCInput>{ new RCInput_Navio2() };
-    auto pwm = std::unique_ptr <RCOutput>{ new RCOutput_Navio2() };
-
-    pwm->initialize(2);//elevator
-    pwm->initialize(3);//rudder
-    pwm->initialize(4);//spoiler
-    //pwm->set_frequency(1, 50);
-    pwm->set_frequency(2, 50);
-    pwm->set_frequency(3, 50);
-    pwm->set_frequency(4, 50);
     
 
     auto sensor_name = get_sensor_name(argc, argv);
