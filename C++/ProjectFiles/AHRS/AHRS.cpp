@@ -401,9 +401,6 @@ void imuLoop(AHRS* ahrs)
         barometer.initialize();
         firstTimeRunningAlt = false;
     }
-    if (getuid()) {
-        fprintf(stderr, "Not root. Please launch like this: sudo %s\n", argv[0]);
-    }
 
     if(firstTimeRunningRcinput){
         rcin->initialize();
