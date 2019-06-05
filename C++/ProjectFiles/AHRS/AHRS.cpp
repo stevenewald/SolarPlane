@@ -477,9 +477,14 @@ void imuLoop(AHRS* ahrs)
     inputRudd = rcin->read(1);
     inputElev = rcin->read(2);
     inputSpoilers = rcin->read(5);
+
+    printf("inputelev:");
+    printf(inputElev);
     //manualoverride = rcin->read(3)
 
-
+    if ( !(pwm->enable(PWM_OUTPUT)) ) {
+	    return 1;
+	}
 
     //apply input to servos
     pwm->set_duty_cycle(2, inputElev);
