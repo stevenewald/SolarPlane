@@ -392,6 +392,7 @@ void imuLoop(AHRS* ahrs)
     int inputRudd;
     int inputThrott;
     int inputSpoilers;
+    int phaseOfFlight;
     auto rcin = std::unique_ptr <RCInput>{ new RCInput_Navio2() };
     auto pwm = std::unique_ptr <RCOutput>{ new RCOutput_Navio2() };
     //orientation data
@@ -483,11 +484,32 @@ void imuLoop(AHRS* ahrs)
     //manualoverride = rcin->read(3)
 
     //apply input to servos
-    pwm->set_duty_cycle(2, inputElev);
-    pwm->set_duty_cycle(3, inputRudd);
+    //pwm->set_duty_cycle(2, inputElev);
+    //pwm->set_duty_cycle(3, inputRudd);
     //pwm->set_duty_cycle(4, inputSpoilers);
 
+    //--------------Compensation/servoupdates-----------------------
 
+    if(phaseOfFlight==1){
+        pwm->set_duty_cycle(2, 1);
+        pwm->set_duty_cycle(3, 1);
+        usleep(500000);
+        pwm->set_duty_cycle(2, 2);
+        pwm->set_duty_cycle(3, 2);
+        usleep(500000);
+        pwm->set_duty_cycle(2, 1);
+        pwm->set_duty_cycle(3, 1);
+        usleep(500000);
+        pwm->set_duty_cycle(2, 2);
+        pwm->set_duty_cycle(3, 2);
+        usleep(500000);
+        phaseOfFlight = 2;
+    }
+
+    if(phaseOfFlight==2){
+        pwm->set_duty_cycle(2, inputElev);
+        pwn->set_duty_cycle(3, inputRudd);
+    }
 
 
 
@@ -523,6 +545,7 @@ void imuLoop(AHRS* ahrs)
 using namespace std;
 int main(int argc, char *argv[])
 {   
+    int phaseOfFlight;
     int firstTimeRunningAlt;
     firstTimeRunningAlt = true;
 
@@ -531,6 +554,8 @@ int main(int argc, char *argv[])
     if (check_apm()) {
         return 1;
     }
+
+    phaseOfFlight = 1;
     
 
     auto sensor_name = get_sensor_name(argc, argv);
