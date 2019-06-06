@@ -383,9 +383,8 @@ std::string get_sensor_name(int argc, char *argv[])
 
 //============================== Main loop ====================================
 using namespace std;
-void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
+void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
 {
-    int firstTimeRunningRcinput;
     int inputElev;
     int inputRudd;
     int inputThrott;
@@ -395,7 +394,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
     //orientation data
     MS5611 barometer;
     Ublox gps;
-    if(firstTimeRunningRcinput){
+    if(*firstTimeRunningRcinput){
         barometer.initialize();
         rcin->initialize();
         //pwm->initialize(1);//throttle
@@ -407,7 +406,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
         pwm->set_frequency(3, 50);
         pwm->set_frequency(4, 50);
         
-        firstTimeRunningRcinput = false;
+        *firstTimeRunningRcinput = false;
     }
     
     
@@ -590,13 +589,10 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
 using namespace std;
 int main(int argc, char *argv[])
 {   
-    int firstTimeRunningAlt;
-    firstTimeRunningAlt = true;
 
     int phaseOfFlightVal;
 
     int firstTimeRunningRcinput;
-    firstTimeRunningRcinput = true;
     if (check_apm()) {
         return 1;
     }
@@ -626,8 +622,8 @@ int main(int argc, char *argv[])
 
     //--------------------setup gyroscope offset-----------------------------
 
-
+    firstTimeRunningRcinput = true;
     ahrs->setGyroOffset();
     while(1)
-        imuLoop(ahrs.get(), &phaseOfFlightVal);
+        imuLoop(ahrs.get(), &phaseOfFlightVal, &firstTimeRunningRcinput);
 }
