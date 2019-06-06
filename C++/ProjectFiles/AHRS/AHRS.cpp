@@ -384,7 +384,7 @@ std::string get_sensor_name(int argc, char *argv[])
 
 //============================== Main loop ====================================
 using namespace std;
-void imuLoop(AHRS* ahrs, int phaseOfFlightVal)
+void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
 {
     int firstTimeRunningAlt;
     int firstTimeRunningRcinput;
@@ -413,7 +413,7 @@ void imuLoop(AHRS* ahrs, int phaseOfFlightVal)
         pwm->set_frequency(3, 50);
         pwm->set_frequency(4, 50);
         
-        firstTimeRunningRcinput = false;
+        &firstTimeRunningRcinput = false;
     }
     
     
@@ -590,5 +590,5 @@ int main(int argc, char *argv[])
 
     ahrs->setGyroOffset();
     while(1)
-        imuLoop(ahrs.get(), phaseOfFlightVal);
+        imuLoop(ahrs.get(), &phaseOfFlightVal);
 }
