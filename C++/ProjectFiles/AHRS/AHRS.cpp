@@ -487,16 +487,28 @@ void imuLoop(AHRS* ahrs, int phaseOfFlightVal)
     {
     pwm->set_duty_cycle(2, 1250);
     pwm->set_duty_cycle(3, 1250);
-    usleep(500000);
+    usleep(250000);
     pwm->set_duty_cycle(2, 1750);
     pwm->set_duty_cycle(3, 1750);
-    usleep(500000);
+    usleep(250000);
     pwm->set_duty_cycle(2, 1250);
     pwm->set_duty_cycle(3, 1250);
-    usleep(500000);
+    usleep(250000);
     pwm->set_duty_cycle(2, 1750);
     pwm->set_duty_cycle(3, 1750);
-    usleep(500000);
+    usleep(250000);
+    pwm->set_duty_cycle(2, 1250);
+    pwm->set_duty_cycle(3, 1250);
+    usleep(250000);
+    pwm->set_duty_cycle(2, 1750);
+    pwm->set_duty_cycle(3, 1750);
+    usleep(250000);
+    pwm->set_duty_cycle(2, 1250);
+    pwm->set_duty_cycle(3, 1250);
+    usleep(250000);
+    pwm->set_duty_cycle(2, 1750);
+    pwm->set_duty_cycle(3, 1750);
+    phaseOfFlightVal = 2;
     }
     //pwm->set_duty_cycle(4, inputSpoilers);
 
