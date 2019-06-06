@@ -369,7 +369,7 @@ void AHRS::phaseOfFlight()
     inputElev = rcin->read(2);
     inputSpoilers = rcin->read(5); 
 
-    cout << inputElev << endl;
+    //cout << inputElev << endl;
 
     //remove later
     //apply input to servos
