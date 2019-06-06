@@ -32,7 +32,6 @@ public:
     void updateIMU(float dt);
     void setGyroOffset();
     void getEuler(float* roll, float* pitch, float* yaw);
-    void phaseOfFlight();
     //void updateServos(float Elev, float Rudd, float Thrott, float Spoilers);
 
     int HypFormula(float pres, float temp);
