@@ -582,5 +582,5 @@ int main(int argc, char *argv[])
     ahrs->setGyroOffset();
     while(1)
         imuLoop(ahrs.get());
-        ahrs.phaseOfFlight(); //TODO
+        phaseOfFlight(); //TODO
 }
