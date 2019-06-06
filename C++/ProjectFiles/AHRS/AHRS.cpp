@@ -483,7 +483,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
     //manualoverride = rcin->read(3)
 
     //apply input to servos
-    if(phaseOfFlightVal==1)
+    if(*phaseOfFlightVal==1)
     {
     pwm->set_duty_cycle(2, 1250);
     pwm->set_duty_cycle(3, 1250);
