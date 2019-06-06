@@ -482,6 +482,10 @@ void imuLoop(AHRS* ahrs)
     }
     isFirst = 0;
 
+
+
+    ahrs->phaseOfFlight();
+
     //---------------- RCInput ----------------------------------------------
 
     
@@ -588,6 +592,5 @@ int main(int argc, char *argv[])
     firstTimeRunningRcinput = true;
     ahrs->setGyroOffset();
     while(1)
-        imuLoop(ahrs.get());
-        ahrs->phaseOfFlight(); //TODO
+        imuLoop(ahrs.get()); //TODO
 }
