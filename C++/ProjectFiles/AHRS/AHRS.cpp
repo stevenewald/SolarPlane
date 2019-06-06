@@ -343,6 +343,9 @@ void AHRS::phaseOfFlight()
 {
     int firstTimeRunningRcinput;
     int phaseOfFlightVal;
+    int inputElev;
+    int inputRudd;
+    int inputSpoilers;
     auto rcin = std::unique_ptr <RCInput>{ new RCInput_Navio2() };
     auto pwm = std::unique_ptr <RCOutput>{ new RCOutput_Navio2() };
 
@@ -366,7 +369,7 @@ void AHRS::phaseOfFlight()
     inputElev = rcin->read(2);
     inputSpoilers = rcin->read(5); 
 
-    cout << inputElev;
+    cout << inputElev << endl;
 
     //remove later
     //apply input to servos
