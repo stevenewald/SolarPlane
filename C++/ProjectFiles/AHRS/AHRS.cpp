@@ -385,7 +385,6 @@ std::string get_sensor_name(int argc, char *argv[])
 using namespace std;
 void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
 {
-    int firstTimeRunningAlt;
     int firstTimeRunningRcinput;
     int inputElev;
     int inputRudd;
@@ -397,12 +396,8 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
     MS5611 barometer;
     std::vector<double> pos_data;
     Ublox gps;
-    if(firstTimeRunningAlt){
-        barometer.initialize();
-        firstTimeRunningAlt = false;
-    }
-
     if(firstTimeRunningRcinput){
+        barometer.initialize();
         rcin->initialize();
         //pwm->initialize(1);//throttle
         pwm->initialize(2);//elevator
