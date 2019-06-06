@@ -478,7 +478,6 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     int gpsaccuracy;
     longitude = 1;
     latitude = 1;
-    gpsaccuracy = 1000000;
     
     std::vector<double> pos_data;
     if (gps.testConnection()){
