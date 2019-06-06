@@ -536,7 +536,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
         cout << roll << endl;
         cout << pitch << endl;
         cout << (yaw * -1) << endl;
-        cout << phaseOfFlightVal << endl;
+        cout << *phaseOfFlightVal << endl;
         //cout << altitudeInFeet << endl;
 
         dtsumm = 0;
