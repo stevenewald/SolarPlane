@@ -480,6 +480,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
     longitude = 1;
     latitude = 1;
     gpsaccuracy = 1000000;
+    /*
     std::vector<double> pos_data;
     if (gps.testConnection()){
     if (gps.decodeSingleMessage(Ublox::NAV_POSLLH, pos_data) == 1)
@@ -500,6 +501,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
         // to increase internal receiver frequency
     }
     }
+    */
 
     auto led = std::unique_ptr <Led>{ new Led_Navio2() };
 
