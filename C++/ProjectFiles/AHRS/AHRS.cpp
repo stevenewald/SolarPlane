@@ -381,6 +381,10 @@ std::string get_sensor_name(int argc, char *argv[])
     }
 }
 
+float longitude;
+float latitude;
+int gpsaccuracy;
+
 //============================== Main loop ====================================
 using namespace std;
 void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
@@ -471,13 +475,6 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     inputRudd = rcin->read(1);
     inputElev = rcin->read(2);
     inputSpoilers = rcin->read(5);
-
-
-    float longitude;
-    float latitude;
-    int gpsaccuracy;
-    longitude = 1;
-    latitude = 1;
     
     std::vector<double> pos_data;
     if (gps.testConnection()){
