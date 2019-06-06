@@ -510,6 +510,12 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
     pwm->set_duty_cycle(3, 1500);
     *phaseOfFlightVal = 2;
     }
+
+    if(*phaseOfFlightVal==2)
+    {
+        pwm->set_duty_cycle(2, inputElev);
+        pwm->set_duty_cycle(3, inputRudd);
+    }
     //pwm->set_duty_cycle(4, inputSpoilers);
 
     //--------------Compensation/servoupdates-----------------------
