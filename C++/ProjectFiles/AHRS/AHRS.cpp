@@ -525,6 +525,7 @@ void imuLoop(AHRS* ahrs)
         cout << roll << endl;
         cout << pitch << endl;
         cout << (yaw * -1) << endl;
+        cout << phaseOfFlightVal << endl;
         //cout << altitudeInFeet << endl;
 
         dtsumm = 0;
@@ -543,7 +544,7 @@ int main(int argc, char *argv[])
     firstTimeRunningAlt = true;
 
     int phaseOfFlightVal;
-    
+
     int firstTimeRunningRcinput;
     firstTimeRunningRcinput = true;
     if (check_apm()) {
