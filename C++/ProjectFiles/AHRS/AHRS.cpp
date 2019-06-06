@@ -478,6 +478,15 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
     float longitude;
     float latitude;
     int gpsaccuracy;
+    if(longitude == NULL){
+        longitude = 1;
+    }
+    if(latitude == NULL){
+        latitude = 1;
+    }
+    if(gpsaccuracy == NULL){
+        gpsaccuracy = 10000000;
+    }
     if (gps.decodeSingleMessage(Ublox::NAV_POSLLH, pos_data) == 1)
     {
         // after desired message is successfully decoded, we can use the information stored in pos_data vector
