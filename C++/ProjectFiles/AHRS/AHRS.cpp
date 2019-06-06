@@ -507,7 +507,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     //cout << inputRudd;
     //manualoverride = rcin->read(3)
 
-    //apply input to servos
+    //startup sequence
     if(*phaseOfFlightVal==1)
     {
     pwm->set_duty_cycle(2, 1250);
@@ -536,21 +536,23 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     *phaseOfFlightVal = 2;
     }
 
+
+    //if gps is accurate, flashes green
     if(*phaseOfFlightVal==2)
     {
         if(gpsaccuracy<7){
             led->setColor(Colors::Green);
-            usleep(100000);
+            usleep(1000000);
             led->setColor(Colors::Black);
-            usleep(100000);
+            usleep(1000000);
             led->setColor(Colors::Green);
-            usleep(100000);
+            usleep(1000000);
             led->setColor(Colors::Black);
-            usleep(100000);
+            usleep(1000000);
             led->setColor(Colors::Green);
-            usleep(100000);
+            usleep(1000000);
             led->setColor(Colors::Black);
-            usleep(100000);
+            usleep(1000000);
             *phaseOfFlightVal = 3;
         } else {
             led->setColor(Colors::Red);
@@ -585,10 +587,9 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     {
         // Console output
         //printf("ROLL: %+05.2f PITCH: %+05.2f YAW: %+05.2f PERIOD %.4fs RATE %dHz \n", roll, pitch, yaw * -1, dt, int(1/dt));
-        //cout << roll << endl;
-        //cout << pitch << endl;
-        //cout << (yaw * -1) << endl;
-        //cout << gpsaccuracy << endl;
+        cout << roll << endl;
+        cout << pitch << endl;
+        cout << (yaw * -1) << endl;
         //cout << altitudeInFeet << endl;
 
         dtsumm = 0;
