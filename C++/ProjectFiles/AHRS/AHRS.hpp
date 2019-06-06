@@ -32,6 +32,8 @@ public:
     void setGyroOffset();
     void getEuler(float* roll, float* pitch, float* yaw);
     int phaseOfFlightVal;
+    float longitude;
+    float latitude;
     //void updateServos(float Elev, float Rudd, float Thrott, float Spoilers);
 
     int HypFormula(float pres, float temp);

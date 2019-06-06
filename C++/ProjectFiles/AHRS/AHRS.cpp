@@ -8,12 +8,11 @@
 //TODO:
 //Heading is consistant (changes by correct amount) but doesn't start at the correct heading
 
-
+#include <Common/Ublox.h>
 #include "Navio2/PWM.h"
-//#include "Navio+/RCOutput_Navio.h"
+#include <Navio2/Led_Navio2.h>
 #include "Navio2/RCOutput_Navio2.h"
 #include <Navio2/RCInput_Navio2.h>
-//#include <Navio+/RCInput_Navio.h>
 #include <stdio.h>
 #include <memory>
 #include <sys/socket.h>
@@ -396,7 +395,8 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
     auto pwm = std::unique_ptr <RCOutput>{ new RCOutput_Navio2() };
     //orientation data
     MS5611 barometer;
-
+    std::vector<double> pos_data;
+    Ublox gps;
     if(firstTimeRunningAlt){
         barometer.initialize();
         firstTimeRunningAlt = false;
@@ -429,6 +429,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
     static float dtsumm = 0;
     static int isFirst = 1;
     static unsigned long previoustime, currenttime;
+    
 
 
     //----------------------- Calculate delta time ----------------------------
@@ -478,6 +479,30 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
     inputElev = rcin->read(2);
     inputSpoilers = rcin->read(5);
 
+
+    float longitude;
+    float latitude;
+    int gpsaccuracy;
+    if (gps.decodeSingleMessage(Ublox::NAV_POSLLH, pos_data) == 1)
+    {
+        // after desired message is successfully decoded, we can use the information stored in pos_data vector
+        // right here, or we can do something with it from inside decodeSingleMessage() function(see ublox.h).
+        // the way, data is stored in pos_data vector is specified in decodeMessage() function of class UBXParser(see ublox.h)
+        //printf("GPS Millisecond Time of Week: %.0lf s\n", pos_data[0]/1000);
+        longitude = pos_data[1]/10000000;
+        latitude = pos_data[2]/10000000);
+        //printf("Height above Ellipsoid: %.3lf m\n", pos_data[3]/1000);
+        //printf("Height above mean sea level: %.3lf m\n", pos_data[4]/1000);
+        gpsaccuracy = pos_data[5]/1000;
+        //printf("Vertical Accuracy Estateimate: %.3lf m\n", pos_data[6]/1000);
+        // printf("Message not captured\n");
+        // use this to see, how often you get the right messages
+        // to increase the frequency you can turn off the undesired messages or tweak ublox settings
+        // to increase internal receiver frequency
+    }
+
+    auto led = std::unique_ptr <Led>{ new Led_Navio2() };
+
     //printf("inputelev:");
     //cout << inputRudd;
     //manualoverride = rcin->read(3)
@@ -515,6 +540,12 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
     {
         pwm->set_duty_cycle(2, inputElev);
         pwm->set_duty_cycle(3, inputRudd);
+        if(gpsaccuracy<100){
+            led->setColor(Colors::Green);
+            *phaseOfFlightVal = 3;
+        } else {
+            led->setColor(Colors::Red);
+        }
     }
     //pwm->set_duty_cycle(4, inputSpoilers);
 
@@ -542,7 +573,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
         cout << roll << endl;
         cout << pitch << endl;
         cout << (yaw * -1) << endl;
-        cout << *phaseOfFlightVal << endl;
+        cout << gpsaccuracy << endl;
         //cout << altitudeInFeet << endl;
 
         dtsumm = 0;
