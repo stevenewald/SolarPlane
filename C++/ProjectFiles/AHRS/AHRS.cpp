@@ -503,7 +503,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
     }
     */
 
-    auto led = std::unique_ptr <Led>{ new Led_Navio2() };
+    //auto led = std::unique_ptr <Led>{ new Led_Navio2() };
 
     //printf("inputelev:");
     //cout << inputRudd;
@@ -543,10 +543,10 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
         pwm->set_duty_cycle(2, inputElev);
         pwm->set_duty_cycle(3, inputRudd);
         if(gpsaccuracy<100){
-            led->setColor(Colors::Green);
+            //led->setColor(Colors::Green);
             *phaseOfFlightVal = 3;
         } else {
-            led->setColor(Colors::Red);
+            //led->setColor(Colors::Red);
         }
     }
     //pwm->set_duty_cycle(4, inputSpoilers);
