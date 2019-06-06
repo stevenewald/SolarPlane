@@ -392,6 +392,7 @@ void imuLoop(AHRS* ahrs)
     int inputRudd;
     int inputThrott;
     int inputSpoilers;
+    int phaseOfFlightVal;
     auto rcin = std::unique_ptr <RCInput>{ new RCInput_Navio2() };
     auto pwm = std::unique_ptr <RCOutput>{ new RCOutput_Navio2() };
     //orientation data
@@ -483,6 +484,8 @@ void imuLoop(AHRS* ahrs)
     //manualoverride = rcin->read(3)
 
     //apply input to servos
+    if(phaseOfFlightVal==1)
+    {
     pwm->set_duty_cycle(2, 1250);
     pwm->set_duty_cycle(3, 1250);
     usleep(500000);
@@ -495,6 +498,7 @@ void imuLoop(AHRS* ahrs)
     pwm->set_duty_cycle(2, 1750);
     pwm->set_duty_cycle(3, 1750);
     usleep(500000);
+    }
     //pwm->set_duty_cycle(4, inputSpoilers);
 
     //--------------Compensation/servoupdates-----------------------
@@ -538,6 +542,8 @@ int main(int argc, char *argv[])
     int firstTimeRunningAlt;
     firstTimeRunningAlt = true;
 
+    int phaseOfFlightVal;
+    
     int firstTimeRunningRcinput;
     firstTimeRunningRcinput = true;
     if (check_apm()) {
@@ -561,6 +567,7 @@ int main(int argc, char *argv[])
         printf("Sensor not enable\n"); //sometimes it doesn't work, idk why but its an imu issue not programming (at least, not MY programming. maybe the imu package made by the imu devs)
         return EXIT_FAILURE;
     }
+    phaseOfFlightVal = 1;
 
     //---------------------------network setup-------------------------------
 
