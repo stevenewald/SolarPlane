@@ -339,6 +339,40 @@ float AHRS::getZ()
     return  q3;
 }
 
+void AHRS::phaseOfFlight()
+{
+    int firstTimeRunningRcinput;
+    int phaseOfFlightVal;
+    auto rcin = std::unique_ptr <RCInput>{ new RCInput_Navio2() };
+    auto pwm = std::unique_ptr <RCOutput>{ new RCOutput_Navio2() };
+
+    if(firstTimeRunningRcinput){
+        rcin->initialize();
+        
+        //pwm->initialize(1);//throttle
+        pwm->initialize(2);//elevator
+        pwm->initialize(3);//rudder
+        pwm->initialize(4);//spoiler
+        //pwm->set_frequency(1, 50);
+        pwm->set_frequency(2, 50);
+        pwm->set_frequency(3, 50);
+        pwm->set_frequency(4, 50);
+        
+        
+        firstTimeRunningRcinput = false;
+    }
+
+    inputRudd = rcin->read(1);
+    inputElev = rcin->read(2);
+    inputSpoilers = rcin->read(5); 
+
+    //remove later
+    //apply input to servos
+    pwm->set_duty_cycle(2, inputElev);
+    pwm->set_duty_cycle(3, inputRudd);
+    pwm->set_duty_cycle(4, inputSpoilers);
+}
+
 
 std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name) //two different 9DOF imu's
 {
@@ -392,29 +426,14 @@ void imuLoop(AHRS* ahrs)
     int inputRudd;
     int inputThrott;
     int inputSpoilers;
-    auto rcin = std::unique_ptr <RCInput>{ new RCInput_Navio2() };
-    auto pwm = std::unique_ptr <RCOutput>{ new RCOutput_Navio2() };
     //orientation data
     MS5611 barometer;
-
+    /*
     if(firstTimeRunningAlt){
         barometer.initialize();
         firstTimeRunningAlt = false;
-    }
+    }*/
 
-    if(firstTimeRunningRcinput){
-        rcin->initialize();
-        //pwm->initialize(1);//throttle
-        pwm->initialize(2);//elevator
-        pwm->initialize(3);//rudder
-        pwm->initialize(4);//spoiler
-        //pwm->set_frequency(1, 50);
-        pwm->set_frequency(2, 50);
-        pwm->set_frequency(3, 50);
-        pwm->set_frequency(4, 50);
-        
-        firstTimeRunningRcinput = false;
-    }
     
     
     float roll, pitch, yaw;
@@ -443,6 +462,7 @@ void imuLoop(AHRS* ahrs)
 	dt = (currenttime - previoustime) / 1000000.0;
 
     //--------barometer measurements/altitude --------------------------------
+    /*
     barometer.refreshPressure();
     usleep(10000); // Waiting for pressure data ready
     barometer.readPressure();
@@ -454,6 +474,7 @@ void imuLoop(AHRS* ahrs)
     barometer.calculatePressureAndTemperature();
 
     altitudeInFeet = (ahrs->HypFormula(barometer.getPressure(), barometer.getTemperature()));
+    */
     //--------read raw measurements from the MPU and update AHRS--------------
 
     ahrs->updateIMU(dt);
@@ -474,17 +495,16 @@ void imuLoop(AHRS* ahrs)
 
     //---------------- RCInput ----------------------------------------------
 
-    inputRudd = rcin->read(1);
-    inputElev = rcin->read(2);
-    inputSpoilers = rcin->read(5);
+    
+    
 
     //printf("inputelev:");
     //cout << inputRudd;
     //manualoverride = rcin->read(3)
 
     //apply input to servos
-    pwm->set_duty_cycle(2, inputElev);
-    pwm->set_duty_cycle(3, inputRudd);
+    //pwm->set_duty_cycle(2, inputElev);
+    //pwm->set_duty_cycle(3, inputRudd);
     //pwm->set_duty_cycle(4, inputSpoilers);
 
     //--------------Compensation/servoupdates-----------------------
@@ -562,4 +582,5 @@ int main(int argc, char *argv[])
     ahrs->setGyroOffset();
     while(1)
         imuLoop(ahrs.get());
+        ahrs.phaseOfFlight(); //TODO
 }
