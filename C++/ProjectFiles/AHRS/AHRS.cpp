@@ -538,14 +538,29 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
 
     if(*phaseOfFlightVal==2)
     {
-        pwm->set_duty_cycle(2, inputElev);
-        pwm->set_duty_cycle(3, inputRudd);
         if(gpsaccuracy<7){
             led->setColor(Colors::Green);
+            usleep(100000);
+            led->setColor(Colors::Black);
+            usleep(100000);
+            led->setColor(Colors::Green);
+            usleep(100000);
+            led->setColor(Colors::Black);
+            usleep(100000);
+            led->setColor(Colors::Green);
+            usleep(100000);
+            led->setColor(Colors::Black);
+            usleep(100000);
             *phaseOfFlightVal = 3;
         } else {
             led->setColor(Colors::Red);
         }
+    }
+
+    if(*phaseOfFlightVal==3)
+    {
+        pwm->set_duty_cycle(2, inputElev);
+        pwm->set_duty_cycle(3, inputRudd);
     }
     //pwm->set_duty_cycle(4, inputSpoilers);
 
