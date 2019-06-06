@@ -508,7 +508,7 @@ void imuLoop(AHRS* ahrs)
 
     if(phaseOfFlight==2){
         pwm->set_duty_cycle(2, inputElev);
-        pwn->set_duty_cycle(3, inputRudd);
+        pwm->set_duty_cycle(3, inputRudd);
     }
 
 
