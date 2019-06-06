@@ -384,7 +384,7 @@ std::string get_sensor_name(int argc, char *argv[])
 
 //============================== Main loop ====================================
 using namespace std;
-void imuLoop(AHRS* ahrs)
+void imuLoop(AHRS* ahrs, int phaseOfFlightVal)
 {
     int firstTimeRunningAlt;
     int firstTimeRunningRcinput;
@@ -392,7 +392,6 @@ void imuLoop(AHRS* ahrs)
     int inputRudd;
     int inputThrott;
     int inputSpoilers;
-    int phaseOfFlightVal;
     auto rcin = std::unique_ptr <RCInput>{ new RCInput_Navio2() };
     auto pwm = std::unique_ptr <RCOutput>{ new RCOutput_Navio2() };
     //orientation data
@@ -579,5 +578,5 @@ int main(int argc, char *argv[])
 
     ahrs->setGyroOffset();
     while(1)
-        imuLoop(ahrs.get());
+        imuLoop(ahrs.get(), phaseOfFlightVal);
 }
