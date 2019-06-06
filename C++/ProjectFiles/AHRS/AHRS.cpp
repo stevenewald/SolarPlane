@@ -413,7 +413,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
         pwm->set_frequency(3, 50);
         pwm->set_frequency(4, 50);
         
-        *firstTimeRunningRcinput = false;
+        firstTimeRunningRcinput = false;
     }
     
     
@@ -508,7 +508,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
     usleep(250000);
     pwm->set_duty_cycle(2, 1750);
     pwm->set_duty_cycle(3, 1750);
-    phaseOfFlightVal = 2;
+    *phaseOfFlightVal = 2;
     }
     //pwm->set_duty_cycle(4, inputSpoilers);
 
