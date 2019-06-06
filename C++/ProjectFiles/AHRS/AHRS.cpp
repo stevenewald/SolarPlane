@@ -394,7 +394,6 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
     auto pwm = std::unique_ptr <RCOutput>{ new RCOutput_Navio2() };
     //orientation data
     MS5611 barometer;
-    std::vector<double> pos_data;
     Ublox gps;
     if(firstTimeRunningRcinput){
         barometer.initialize();
@@ -478,15 +477,11 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
     float longitude;
     float latitude;
     int gpsaccuracy;
-    if(longitude == NULL){
-        longitude = 1;
-    }
-    if(latitude == NULL){
-        latitude = 1;
-    }
-    if(gpsaccuracy == NULL){
-        gpsaccuracy = 10000000;
-    }
+    longitude = 1;
+    latitude = 1;
+    gpsaccuracy = 1000000;
+    std::vector<double> pos_data;
+    if (gps.testConnection()){
     if (gps.decodeSingleMessage(Ublox::NAV_POSLLH, pos_data) == 1)
     {
         // after desired message is successfully decoded, we can use the information stored in pos_data vector
@@ -503,6 +498,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
         // use this to see, how often you get the right messages
         // to increase the frequency you can turn off the undesired messages or tweak ublox settings
         // to increase internal receiver frequency
+    }
     }
 
     auto led = std::unique_ptr <Led>{ new Led_Navio2() };
