@@ -490,7 +490,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal)
         // the way, data is stored in pos_data vector is specified in decodeMessage() function of class UBXParser(see ublox.h)
         //printf("GPS Millisecond Time of Week: %.0lf s\n", pos_data[0]/1000);
         longitude = pos_data[1]/10000000;
-        latitude = pos_data[2]/10000000);
+        latitude = pos_data[2]/10000000;
         //printf("Height above Ellipsoid: %.3lf m\n", pos_data[3]/1000);
         //printf("Height above mean sea level: %.3lf m\n", pos_data[4]/1000);
         gpsaccuracy = pos_data[5]/1000;
