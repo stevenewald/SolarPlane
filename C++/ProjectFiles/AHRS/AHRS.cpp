@@ -585,10 +585,10 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     {
         // Console output
         //printf("ROLL: %+05.2f PITCH: %+05.2f YAW: %+05.2f PERIOD %.4fs RATE %dHz \n", roll, pitch, yaw * -1, dt, int(1/dt));
-        cout << roll << endl;
-        cout << pitch << endl;
-        cout << (yaw * -1) << endl;
-        cout << gpsaccuracy << endl;
+        //cout << roll << endl;
+        //cout << pitch << endl;
+        //cout << (yaw * -1) << endl;
+        //cout << gpsaccuracy << endl;
         //cout << altitudeInFeet << endl;
 
         dtsumm = 0;
