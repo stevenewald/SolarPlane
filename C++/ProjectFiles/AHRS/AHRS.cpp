@@ -381,6 +381,15 @@ std::string get_sensor_name(int argc, char *argv[])
     }
 }
 
+/*
+//takes in current pitch and target pitch and returns corrected elevator servo
+int AHRS::ElevatorCorrection(float pitch, float targetPitch)
+{
+    int newPitch;
+    newPitch = pitch
+}
+*/
+
 float longitude;
 float latitude;
 int gpsaccuracy;
@@ -478,6 +487,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
 
     inputRudd = rcin->read(1);
     inputElev = rcin->read(2);
+    inputThrott = rcin->read(3)
     inputSpoilers = rcin->read(5);
     
     std::vector<double> pos_data;
@@ -563,6 +573,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     {
         pwm->set_duty_cycle(2, inputElev);
         pwm->set_duty_cycle(3, inputRudd);
+        pwm->set_duty_cycle(1, inputThrott)
     }
     //pwm->set_duty_cycle(4, inputSpoilers);
 
