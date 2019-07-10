@@ -487,8 +487,8 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
 
     inputRudd = rcin->read(1);
     inputElev = rcin->read(2);
-    inputThrott = rcin->read(3);
-    inputSpoilers = rcin->read(5);
+    inputSpoilers = rcin->read(3);
+    inputThrott = rcin->read(4);
     
     std::vector<double> pos_data;
     if (gps.testConnection()){
