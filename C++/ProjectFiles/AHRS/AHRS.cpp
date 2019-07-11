@@ -580,10 +580,10 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     }
  
     float elevatorComp;
-    elevatorComp = (1.5+(pow(abs(roll*-1), 1.2))/221);
+    elevatorComp = (1.5+(pow(abs(roll*-1), 1.2))/221)*1000;
     if(*phaseOfFlightVal==4) 
     {
-        pwm->set_duty_cycle(2, elevatorComp*10);
+        pwm->set_duty_cycle(2, elevatorComp);
         //pwm->set_duty_cycle(3, inputRudd);
 
     }
@@ -612,7 +612,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
 
         //cout << roll << endl;
         cout << (roll) << endl;
-        cout << inputElev << endl;
+        cout << elevatorComp << endl;
         cout << (yaw * -1) << endl;
 
         dtsumm = 0;
