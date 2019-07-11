@@ -572,7 +572,8 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     //calibrate gyro
     if(*phaseOfFlightVal==3) 
     {
-        int gyrocalib
+        int gyrocalib;
+        gyrocalib = 1;
         *phaseOfFlightVal = 4;
         
 
