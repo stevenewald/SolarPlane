@@ -569,12 +569,20 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
             led->setColor(Colors::Red);
         }
     }
- 
-    float elevatorComp;
-    elevatorComp = (1.5+(pow(abs(roll-180), 1.2))/221);
+//calibrate gyro
     if(*phaseOfFlightVal==3) 
     {
-        pwm->set_duty_cycle(2, 1);
+        int gyrocalib
+        *phaseOfFlightVal = 4;
+        
+
+    }
+ 
+    float elevatorComp;
+    elevatorComp = (1.5+(pow(abs(roll), 1.2))/221);
+    if(*phaseOfFlightVal==4) 
+    {
+        pwm->set_duty_cycle(2, inputElev);
         //pwm->set_duty_cycle(3, inputRudd);
 
     }
@@ -602,7 +610,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
         // Console output
 
         //cout << roll << endl;
-        cout << abs(roll-180) << endl;
+        cout << (roll) << endl;
         cout << pitch << endl;
         cout << (yaw * -1) << endl;
 
