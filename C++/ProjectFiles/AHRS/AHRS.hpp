@@ -19,7 +19,6 @@ private:
     float inputRudd;
     float inputThrott;
     float inputSpoilers;
-    PIDImpl *pimpl;
     //auto rcin;
    // auto pwm;
     //float mx, my; //remove
@@ -27,9 +26,6 @@ private:
     std::unique_ptr <InertialSensor> sensor;
 public:
     AHRS( std::unique_ptr <InertialSensor> imu);
-    PID( double dt, double max, double min, double Kp, double Kd, double Ki );
-    double calculate( double setpoint, double pv );
-    ~PID();
 
     void update(float dt);
     void updateIMU(float dt);
