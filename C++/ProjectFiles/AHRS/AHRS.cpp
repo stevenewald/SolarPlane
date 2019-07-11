@@ -571,9 +571,9 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     }
 
     int elevatorCompensation;
+    elevatorCompensation = (1.5+(pow(pitch, 1.2))/221);
     if(*phaseOfFlightVal==3)
     {
-        elevatorCompensation = (1.5+(pow(pitch, 1.2))/221);
         pwm->set_duty_cycle(2, elevatorCompensation);
         //pwm->set_duty_cycle(3, inputRudd);
 
