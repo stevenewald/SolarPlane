@@ -570,7 +570,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
         }
     }
 
-    int elevatorCompensation;
+    float elevatorCompensation;
     elevatorCompensation = (1.5+(pow(pitch, 1.2))/221);
     if(*phaseOfFlightVal==3)
     {
