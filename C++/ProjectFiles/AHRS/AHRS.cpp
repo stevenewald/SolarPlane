@@ -612,7 +612,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
 
         //cout << roll << endl;
         cout << (roll) << endl;
-        cout << pitch << endl;
+        cout << elevatorComp << endl;
         cout << (yaw * -1) << endl;
 
         dtsumm = 0;
