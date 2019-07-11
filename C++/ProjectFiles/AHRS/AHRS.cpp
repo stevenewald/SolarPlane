@@ -544,7 +544,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     usleep(250000);
     pwm->set_duty_cycle(2, 1500);
     pwm->set_duty_cycle(3, 1500);
-    *phaseOfFlightVal = 2;
+    *phaseOfFlightVal = 3; //CHANGE
     }
 
 
@@ -612,7 +612,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
 
         //cout << roll << endl;
         cout << (roll) << endl;
-        cout << elevatorComp << endl;
+        cout << inputElev << endl;
         cout << (yaw * -1) << endl;
 
         dtsumm = 0;
