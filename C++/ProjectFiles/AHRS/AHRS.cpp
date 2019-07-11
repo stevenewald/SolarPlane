@@ -570,12 +570,12 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
         }
     }
  
-    float elevatorCompensation;
-    elevatorCompensation = (1.5+(pow(roll, 1.2))/221);
+    float elevatorComp;
+    elevatorComp = (1.5+(pow(roll, 1.2))/221);
     if(*phaseOfFlightVal==3) 
     {
-        pwm->set_duty_cycle(2, elevatorCompensation);
-        //pwm->set_duty_cycle(3, inputRudd);
+        //pwm->set_duty_cycle(2, elevatorComp);
+        pwm->set_duty_cycle(3, inputRudd);
 
     }
     //pwm->set_duty_cycle(4, inputSpoilers);
@@ -602,8 +602,8 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
         // Console output
 
         //cout << roll << endl;
-        cout << elevatorCompensation << endl;
-        cout << pitch << endl;
+        cout << roll << endl;
+        cout << elevatorComp << endl;
         cout << (yaw * -1) << endl;
 
         dtsumm = 0;
