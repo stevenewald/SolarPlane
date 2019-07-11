@@ -569,7 +569,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
             led->setColor(Colors::Red);
         }
     }
-
+ 
     float elevatorCompensation;
     elevatorCompensation = (1.5+(pow(roll, 1.2))/221);
     if(*phaseOfFlightVal==3)
