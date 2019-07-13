@@ -595,7 +595,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
         pwm->set_duty_cycle(2, elevatorComp);
         //pwm->set_duty_cycle(3, inputRudd);
 
-    }
+    } 
     //pwm->set_duty_cycle(4, inputSpoilers);
 
     //--------------Compensation/servoupdates-----------------------
