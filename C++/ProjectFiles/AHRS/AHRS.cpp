@@ -415,7 +415,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
         rcin->initialize();
         led->initialize();
         //pwm->initialize(1);//throttle
-        pwm->initialize(1);
+        pwm->initialize(0);
         pwm->initialize(2);//elevator
         pwm->initialize(3);//rudder
         pwm->initialize(4);//spoiler
@@ -599,7 +599,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
         } else {
             pwm->set_duty_cycle(2, inputElev);
             pwm->set_duty_cycle(3, inputRudd);
-            pwm->set_duty_cycle(1, inputThrott);
+            pwm->set_duty_cycle(0, inputThrott);
         }
         //pwm->set_duty_cycle(3, inputRudd);
 
