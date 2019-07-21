@@ -569,7 +569,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
             led->setColor(Colors::Red);
         }
     }
-    //calibrate gyro
+    //calibrate gyro, finish later
     if(*phaseOfFlightVal==3) 
     {
         int gyrocalib;
@@ -592,7 +592,12 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     
     if(*phaseOfFlightVal==4) 
     {
+        if(inputSpoilers>1500)
+        {
         pwm->set_duty_cycle(2, elevatorComp);
+        } else {
+            pwm->set_duty_cycle(2, inputElev);
+        }
         //pwm->set_duty_cycle(3, inputRudd);
 
     } 
