@@ -420,10 +420,12 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
         pwm->initialize(2);//elevator
         pwm->initialize(3);//rudder
         pwm->initialize(4);//spoiler
+        pwm->initialize(5);//spoiler
         pwm->set_frequency(0, 50);
         pwm->set_frequency(2, 50);
         pwm->set_frequency(3, 50);
         pwm->set_frequency(4, 50);
+        pwm->set_frequency(5, 50);
         
         
         *firstTimeRunningRcinput = false;
@@ -600,12 +602,12 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
             pwm->set_duty_cycle(2, elevatorComp);
             pwm->set_duty_cycle(3, inputRudd);
             pwm->set_duty_cycle(0, inputThrott);
-            pwm->set_duty_cycle(4, inputRealSpoilers);
+            pwm->set_duty_cycle(5, inputRealSpoilers);
         } else {
             pwm->set_duty_cycle(2, inputElev);
             pwm->set_duty_cycle(3, inputRudd);
             pwm->set_duty_cycle(0, inputThrott);
-            pwm->set_duty_cycle(4, inputRealSpoilers);
+            pwm->set_duty_cycle(5, inputRealSpoilers);
         }
         //pwm->set_duty_cycle(3, inputRudd);
 
