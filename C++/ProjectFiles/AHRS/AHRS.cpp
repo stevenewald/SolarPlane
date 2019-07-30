@@ -405,6 +405,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     int inputRudd;
     int inputThrott;
     int inputSpoilers;
+    int inputRealSpoilers;
     auto rcin = std::unique_ptr <RCInput>{ new RCInput_Navio2() };
     auto pwm = std::unique_ptr <RCOutput>{ new RCOutput_Navio2() };
     //orientation data
@@ -490,6 +491,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     inputRudd = rcin->read(1);
     inputElev = rcin->read(2);
     inputSpoilers = rcin->read(3);
+    inputRealSpoilers = rcin->read(4);
     inputThrott = rcin->read(0);
     
     std::vector<double> pos_data;
@@ -598,10 +600,12 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
             pwm->set_duty_cycle(2, elevatorComp);
             pwm->set_duty_cycle(3, inputRudd);
             pwm->set_duty_cycle(0, inputThrott);
+            pwm->set_duty_cycle(4, inputRealSpoilers);
         } else {
             pwm->set_duty_cycle(2, inputElev);
             pwm->set_duty_cycle(3, inputRudd);
             pwm->set_duty_cycle(0, inputThrott);
+            pwm->set_duty_cycle(4, inputRealSpoilers);
         }
         //pwm->set_duty_cycle(3, inputRudd);
 
