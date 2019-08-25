@@ -633,7 +633,6 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     if(dtsumm > 0.05)
     {
         //REMOVE LATER!!!
-        time(&timer);
         // Console output
 
         //cout << roll << endl;
