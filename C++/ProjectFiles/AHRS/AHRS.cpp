@@ -642,7 +642,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
         // Console output
 
         //cout << roll << endl;
-        cout << *printcounter << endl;
+        cout << (roll) << endl;
         cout << pitch << endl;
         cout << (yaw * -1) << endl;
 
