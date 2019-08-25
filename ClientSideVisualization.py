@@ -74,7 +74,7 @@ class ssh:
 
 
 print("connecting to server")
-connection = ssh("192.168.43.88", "pi", "raspberry") #will change if network is changed but is static on my hotspot
+connection = ssh("10.0.0.60", "pi", "raspberry") #will change if network is changed but is static on my hotspot
 #so not changing it for now
 
 
@@ -279,13 +279,13 @@ if setup == "Y":
     git pull origin master
     cd C++/ProjectFiles/AHRS
     make
-    ./AHRS -i mpu'''
+    sudo ./AHRS -i mpu'''
 else:
     print("Not running first-time setup")
     command1 = '''
     cd C++/ProjectFiles/AHRS
     make
-    ./AHRS -i mpu'''
+    sudo ./AHRS -i mpu'''
 
 thread = ConnectionThread()
 thread.start()
