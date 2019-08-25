@@ -459,6 +459,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
 	dt = (currenttime - previoustime) / 1000000.0;
 
     //--------barometer measurements/altitude --------------------------------
+    /*
     barometer.refreshPressure();
     usleep(10000); // Waiting for pressure data ready
     barometer.readPressure();
@@ -473,6 +474,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     //--------read raw measurements from the MPU and update AHRS--------------
 
     ahrs->updateIMU(dt);
+    */
 
 
     //------------------------read euler angles------------------------------
