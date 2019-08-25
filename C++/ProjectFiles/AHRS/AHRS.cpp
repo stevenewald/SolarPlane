@@ -449,6 +449,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
 
     //----------------------- Calculate delta time ----------------------------
 
+    /*
 	gettimeofday(&tv,NULL);
 	previoustime = currenttime;
 	currenttime = 1000000 * tv.tv_sec + tv.tv_usec;
@@ -456,7 +457,8 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
 	if(dt < 1/1300.0) usleep((1/1300.0-dt)*1000000);
         gettimeofday(&tv,NULL);
         currenttime = 1000000 * tv.tv_sec + tv.tv_usec;
-	dt = (currenttime - previoustime) / 1000000.0;
+	dt = (currenttime - previoustime) / 1000000.0;\
+    */
 
     //--------barometer measurements/altitude --------------------------------
     /*
@@ -474,13 +476,13 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     //--------read raw measurements from the MPU and update AHRS--------------
 
     */
-    //ahrs->updateIMU(dt);
+    ahrs->updateIMU(dt);
     
 
 
     //------------------------read euler angles------------------------------
 
-    //ahrs->getEuler(&roll, &pitch, &yaw);
+    ahrs->getEuler(&roll, &pitch, &yaw);
 
     //-------------------discard the time of the first cycle-----------------
 
