@@ -629,7 +629,6 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     
     //Calculate altitude in feet
     
-    time_t timer;
     dtsumm += dt;
     if(dtsumm > 0.05)
     {
@@ -638,7 +637,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
         // Console output
 
         //cout << roll << endl;
-        cout << timer << endl;
+        cout << tv.tv_usec << endl;
         cout << pitch << endl;
         cout << (yaw * -1) << endl;
 
