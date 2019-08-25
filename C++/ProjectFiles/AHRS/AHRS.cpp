@@ -632,18 +632,15 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     
     //Calculate altitude in feet
     
-    time_t timer;
     dtsumm += dt;
     //if(dtsumm > 0.05)
     *printcounter = *printcounter + 1;
     if(remainder(*printcounter, 20) == 0)
     {
-        //REMOVE LATER!!!
-        time(&timer);
         // Console output
 
         //cout << roll << endl;
-        cout << timer << endl;
+        cout << *printcounter << endl;
         cout << pitch << endl;
         cout << (yaw * -1) << endl;
 
