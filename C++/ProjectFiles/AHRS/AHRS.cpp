@@ -474,13 +474,13 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     //--------read raw measurements from the MPU and update AHRS--------------
 
     */
-    ahrs->updateIMU(dt);
+    //ahrs->updateIMU(dt);
     
 
 
     //------------------------read euler angles------------------------------
 
-    ahrs->getEuler(&roll, &pitch, &yaw);
+    //ahrs->getEuler(&roll, &pitch, &yaw);
 
     //-------------------discard the time of the first cycle-----------------
 
