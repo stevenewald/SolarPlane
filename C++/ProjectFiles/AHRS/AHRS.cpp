@@ -449,7 +449,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
 
     //----------------------- Calculate delta time ----------------------------
 
-    /*
+    
 	gettimeofday(&tv,NULL);
 	previoustime = currenttime;
 	currenttime = 1000000 * tv.tv_sec + tv.tv_usec;
@@ -457,8 +457,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
 	if(dt < 1/1300.0) usleep((1/1300.0-dt)*1000000);
         gettimeofday(&tv,NULL);
         currenttime = 1000000 * tv.tv_sec + tv.tv_usec;
-	dt = (currenttime - previoustime) / 1000000.0;\
-    */
+	dt = (currenttime - previoustime) / 1000000.0;
 
     //--------barometer measurements/altitude --------------------------------
     /*
@@ -501,6 +500,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     inputSpoilers = rcin->read(3);
     inputRealSpoilers = rcin->read(7);
     
+    /*
     std::vector<double> pos_data;
     if (gps.testConnection()){
     if (gps.decodeSingleMessage(Ublox::NAV_POSLLH, pos_data) == 1)
@@ -521,7 +521,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
         // to increase internal receiver frequency
     }
     }
-    
+    */
 
 
     //printf("inputelev:");
