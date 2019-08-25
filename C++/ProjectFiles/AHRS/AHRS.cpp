@@ -399,7 +399,7 @@ auto led = std::unique_ptr <Led>{ new Led_Navio2() };
 
 //============================== Main loop ====================================
 using namespace std;
-void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
+void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, int* printcounter)
 {
     int inputElev;
     int inputRudd;
@@ -662,6 +662,9 @@ int main(int argc, char *argv[])
 {   
 
     int phaseOfFlightVal;
+    int printcounter;
+    
+    printcounter = 0;
 
     int firstTimeRunningRcinput;
     if (check_apm()) {
@@ -696,5 +699,5 @@ int main(int argc, char *argv[])
     firstTimeRunningRcinput = true;
     ahrs->setGyroOffset();
     while(1)
-        imuLoop(ahrs.get(), &phaseOfFlightVal, &firstTimeRunningRcinput);
+        imuLoop(ahrs.get(), &phaseOfFlightVal, &firstTimeRunningRcinput, &printcounter);
 }
