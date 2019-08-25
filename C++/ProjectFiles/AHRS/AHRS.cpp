@@ -636,7 +636,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     time_t timer;
     dtsumm += dt;
     //if(dtsumm > 0.05)
-    &printcounter = *printcounter + 1;
+    *printcounter = *printcounter + 1;
     if(remainder(*printcounter, 20) == 0)
     {
         //REMOVE LATER!!!
