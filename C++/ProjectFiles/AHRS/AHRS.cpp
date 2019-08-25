@@ -408,7 +408,6 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     int inputRealSpoilers;
     auto rcin = std::unique_ptr <RCInput>{ new RCInput_Navio2() };
     auto pwm = std::unique_ptr <RCOutput>{ new RCOutput_Navio2() };
-    int printcounter;
     //orientation data
     MS5611 barometer;
     Ublox gps;
