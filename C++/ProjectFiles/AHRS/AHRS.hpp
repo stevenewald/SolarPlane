@@ -19,6 +19,7 @@ private:
     float inputRudd;
     float inputThrott;
     float inputSpoilers;
+    int printcounter;
     //auto rcin;
    // auto pwm;
     //float mx, my; //remove

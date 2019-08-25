@@ -408,6 +408,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     int inputRealSpoilers;
     auto rcin = std::unique_ptr <RCInput>{ new RCInput_Navio2() };
     auto pwm = std::unique_ptr <RCOutput>{ new RCOutput_Navio2() };
+    int printcounter;
     //orientation data
     MS5611 barometer;
     Ublox gps;
@@ -473,8 +474,9 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     altitudeInFeet = (ahrs->HypFormula(barometer.getPressure(), barometer.getTemperature()));
     //--------read raw measurements from the MPU and update AHRS--------------
 
-    ahrs->updateIMU(dt);
     */
+    ahrs->updateIMU(dt);
+    
 
 
     //------------------------read euler angles------------------------------
@@ -633,7 +635,9 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput)
     
     time_t timer;
     dtsumm += dt;
-    if(dtsumm > 0.05)
+    //if(dtsumm > 0.05)
+    &printcounter = *printcounter + 1;
+    if(remainder(*printcounter, 20) == 0)
     {
         //REMOVE LATER!!!
         time(&timer);
