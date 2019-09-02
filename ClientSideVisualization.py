@@ -74,7 +74,7 @@ class ssh:
 
 
 print("connecting to server")
-connection = ssh("10.0.0.60", "pi", "raspberry") #will change if network is changed but is static on my hotspot
+connection = ssh("192.168.43.88", "pi", "raspberry") #will change if network is changed but is static on my hotspot
 #so not changing it for now
 
 
