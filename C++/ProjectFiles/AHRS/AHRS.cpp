@@ -634,8 +634,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     dtsumm += dt;
     //if(dtsumm > 0.05)
     *printcounter = *printcounter + 1;
-    //if(remainder(*printcounter, 200) == 0)
-    if(false)
+    if(remainder(*printcounter, 200) == 0)
     {
         // Console output
 
