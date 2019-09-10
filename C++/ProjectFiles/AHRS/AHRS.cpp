@@ -528,6 +528,11 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
         currenttime = 1000000 * tv.tv_sec + tv.tv_usec;
 	dt = (currenttime - previoustime) / 1000000.0;
 
+
+    //--------PID Setup-------------------------------------------------------
+    pid_ctrl_t pid;
+    pid_init(&pid);
+
     //--------barometer measurements/altitude --------------------------------
     /*
     barometer.refreshPressure();
@@ -659,14 +664,16 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     }
  
     float elevatorComp;
-    elevatorComp = (pow(abs(roll), 1.2));
-    if(roll > 0) 
+    //elevatorComp = (pow(abs(roll), 1.2));
+    pid_set_gains(&pid, 2., 0.01, 0.001);
+    elevatorComp = pid_process(&pid, abs(roll));
+    if(roll > 0)  //this is for the non-pid controller, is redundant with it
     {
-        //elevatorComp = ((1.5+(elevatorComp)/100)*1000);
+        elevatorComp = ((1.5+(elevatorComp)/100)*1000);
     }
     else
     {
-        //elevatorComp = ((1.5-(elevatorComp)/100)*1000); //221 original
+        elevatorComp = ((1.5-(elevatorComp)/100)*1000); //221 original
     }
     
     if(*phaseOfFlightVal==4) 
