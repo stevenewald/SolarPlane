@@ -470,6 +470,7 @@ float pid_get_frequency(const pid_ctrl_t *pid)
 using namespace std;
 void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, int* printcounter)
 {
+    *printcounter = *printcounter + 1;
     int inputElev;
     int inputRudd;
     int inputThrott;
@@ -573,6 +574,12 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     inputElev = rcin->read(2);
     inputSpoilers = rcin->read(3);
     inputRealSpoilers = rcin->read(7);
+
+    float gyroCalibElev;
+    //Gyro calibration-------------------------------------------------------------
+    if (*printcounter==10000){
+        gyroCalibElev = roll;
+    }
     
     /*
     std::vector<double> pos_data;
@@ -666,7 +673,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     float elevatorComp;
     //elevatorComp = (pow(abs(roll), 1.2));
     pid_set_gains(&pid, 2., 0.01, 0.001);
-    elevatorComp = pid_process(&pid, abs(-roll));
+    elevatorComp = pid_process(&pid, abs(-roll+gyroCalibElev));
     if(roll > 0)  //this is for the non-pid controller, is redundant with it
     {
         elevatorComp = ((1.5+(elevatorComp)/100)*1000);
@@ -712,14 +719,13 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     
     dtsumm += dt;
     //if(dtsumm > 0.05)
-    *printcounter = *printcounter + 1;
     if(remainder(*printcounter, 30) == 0)
     {
         // Console output
 
         //cout << roll << endl; 
         cout << (roll) << endl;
-        cout << elevatorComp << endl;
+        cout << printcounter << endl;
         cout << (yaw * -1) << endl;
  
         dtsumm = 0;
