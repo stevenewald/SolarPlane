@@ -588,7 +588,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
  
     float elevatorComp;
     elevatorComp = (pow(abs(roll), 1.2));
-    if(roll > 0)
+    if(roll > 0) 
     {
         elevatorComp = ((1.5+(elevatorComp)/100)*1000);
     }
