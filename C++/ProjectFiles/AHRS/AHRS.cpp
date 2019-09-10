@@ -774,7 +774,7 @@ int main(int argc, char *argv[])
     auto ahrs = std::unique_ptr <AHRS>{new AHRS(move(imu)) };
 
     //--------------------setup gyroscope offset-----------------------------
-    float gyroCalibElev;
+    int gyroCalibElev;
     firstTimeRunningRcinput = true;
     ahrs->setGyroOffset();
     while(1)
