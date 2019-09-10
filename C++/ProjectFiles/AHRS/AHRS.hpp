@@ -20,6 +20,7 @@ private:
     float inputThrott;
     float inputSpoilers;
     int printcounter;
+    float gyroCalibElev;
     //auto rcin;
    // auto pwm;
     //float mx, my; //remove

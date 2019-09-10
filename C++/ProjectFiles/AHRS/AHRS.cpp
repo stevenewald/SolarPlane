@@ -468,7 +468,7 @@ float pid_get_frequency(const pid_ctrl_t *pid)
 
 //============================== Main loop ====================================
 using namespace std;
-void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, int* printcounter)
+void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, int* printcounter, int* gyroCalibElev)
 {
     *printcounter = *printcounter + 1;
     int inputElev;
@@ -575,10 +575,9 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     inputSpoilers = rcin->read(3);
     inputRealSpoilers = rcin->read(7);
 
-    float gyroCalibElev;
     //Gyro calibration-------------------------------------------------------------
     if (*printcounter==10000){
-        gyroCalibElev = roll;
+        *gyroCalibElev = roll;
     }
     
     /*
@@ -775,9 +774,9 @@ int main(int argc, char *argv[])
     auto ahrs = std::unique_ptr <AHRS>{new AHRS(move(imu)) };
 
     //--------------------setup gyroscope offset-----------------------------
-
+    float gyroCalibElev;
     firstTimeRunningRcinput = true;
     ahrs->setGyroOffset();
     while(1)
-        imuLoop(ahrs.get(), &phaseOfFlightVal, &firstTimeRunningRcinput, &printcounter);
+        imuLoop(ahrs.get(), &phaseOfFlightVal, &firstTimeRunningRcinput, &printcounter, &gyroCalibElev);
 }
