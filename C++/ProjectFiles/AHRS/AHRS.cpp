@@ -672,14 +672,15 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     float elevatorComp;
     //elevatorComp = (pow(abs(roll), 1.2));
     pid_set_gains(&pid, 2., 0.01, 0.001);
-    elevatorComp = pid_process(&pid, abs(-1*roll+*gyroCalibElev));
+    elevatorComp = pid_process(&pid, (-1*roll+*gyroCalibElev));
     if(roll > 0)  //this is for the non-pid controller, is redundant with it
     {
         elevatorComp = ((1.5+(elevatorComp)/100)*1000);
     }
     else
     {
-        elevatorComp = ((1.5-(elevatorComp)/100)*1000); //221 original
+        //elevatorComp = ((1.5-(elevatorComp)/100)*1000); //221 original
+        elevatorComp = ((1.5+(elevatorComp)/100)*1000); //for PID
     }
     
     if(*phaseOfFlightVal==4) 
