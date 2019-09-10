@@ -725,7 +725,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
 
         //cout << roll << endl; 
         cout << (roll) << endl;
-        cout << printcounter << endl;
+        cout << *printcounter << endl;
         cout << (yaw * -1) << endl;
  
         dtsumm = 0;
