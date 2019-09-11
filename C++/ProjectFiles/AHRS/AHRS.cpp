@@ -576,8 +576,8 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     inputRealSpoilers = rcin->read(7);
 
     //Gyro calibration-------------------------------------------------------------
-    if (*printcounter==10000){
-        *gyroCalibElev = roll;
+    if (*printcounter==10000){ //at 10000 ticks the gyro = 0
+        *gyroCalibElev = roll; //bad fix for system but I don't have a much better option
     }
     
     /*
@@ -659,15 +659,6 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
             led->setColor(Colors::Red);
         }
     }
-    //calibrate gyro, finish later
-    if(*phaseOfFlightVal==3) 
-    {
-        int gyrocalib;
-        gyrocalib = 1;
-        *phaseOfFlightVal = 4;
-        
-
-    }
  
     float elevatorComp;
     //elevatorComp = (pow(abs(roll), 1.2));
@@ -675,7 +666,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     elevatorComp = pid_process(&pid, (-1*roll+*gyroCalibElev));
     if(roll > 0)  //this is for the non-pid controller, is redundant with it
     {
-        elevatorComp = ((1.5+(elevatorComp)/100)*1000);
+        elevatorComp = ((1.5+(elevatorComp)/100)*1000); //formatting for servo duty cycle
     }
     else
     {
@@ -683,7 +674,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
         elevatorComp = ((1.5+(elevatorComp)/100)*1000); //for PID
     }
     
-    if(*phaseOfFlightVal==4) 
+    if(*phaseOfFlightVal==3) 
     {
         if(inputSpoilers>1500)
         {
