@@ -4,13 +4,13 @@
 
 //TODO:
 //Heading is consistant (changes by correct amount) but doesn't start at the correct heading
-
 #include <Common/Ublox.h>
 #include "Navio2/PWM.h"
 #include <Navio2/Led_Navio2.h>
 #include "Navio2/RCOutput_Navio2.h"
 #include <Navio2/RCInput_Navio2.h>
 #include <stdio.h>
+#include <cstdio>
 #include <memory>
 #include <sys/socket.h>
 #include <Common/MS5611.h>
@@ -726,6 +726,8 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     //which of course, was definitely and absolutely fixed by now
     //but we wont test it anyway)
 }
+//-------------------------- Logging data -------------------------------------
+
 
 //=============================================================================
 using namespace std;
@@ -768,6 +770,7 @@ int main(int argc, char *argv[])
     //--------------------setup gyroscope offset-----------------------------
     float gyroCalibElev;
     firstTimeRunningRcinput = true;
+    freopen( "output.txt", "w", stdout ); //logging file
     ahrs->setGyroOffset();
     while(1)
         imuLoop(ahrs.get(), &phaseOfFlightVal, &firstTimeRunningRcinput, &printcounter, &gyroCalibElev);
