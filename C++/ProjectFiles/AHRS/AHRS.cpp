@@ -723,7 +723,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
 
         //File output
         ifstream inFile("input.txt");
-        ofstream outFile(“output.txt”);
+        ofstream outFile("output.txt");
         inFile.tie(&outFile);
 
         using namespace std::chrono;
