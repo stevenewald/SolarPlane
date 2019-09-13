@@ -471,7 +471,7 @@ float pid_get_frequency(const pid_ctrl_t *pid)
 //============================== Main loop ====================================
 using namespace std;
 template <typename File>
-void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, int* printcounter, float* gyroCalibElev, auto* t1, File* outputFile)
+void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, int* printcounter, float* gyroCalibElev, File* t1, File* outputFile)
 {
     *printcounter = *printcounter + 1;
     int inputElev;
