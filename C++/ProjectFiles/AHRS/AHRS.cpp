@@ -13,6 +13,7 @@
 #include <ratio>
 #include <fstream>
 #include <cstdio>
+#include <typeinfo>
 #include <memory>
 #include <sys/socket.h>
 #include <Common/MS5611.h>
@@ -792,6 +793,9 @@ int main(int argc, char *argv[])
     ofstream outputFile("output.txt");
     outputFile.open("output.txt");
     inputFile.tie(&outputFile);
+
+    ///bruh
+    cout << typeid(outputFile).name() << endl;
 
     //--------------------setup gyroscope offset-----------------------------
     float gyroCalibElev;
