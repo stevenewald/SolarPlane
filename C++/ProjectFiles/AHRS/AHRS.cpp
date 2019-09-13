@@ -788,9 +788,9 @@ int main(int argc, char *argv[])
     using namespace std;
 
     //File output
-    ifstream inFile("input.txt");
+    ifstream inputFile("input.txt");
     inputFile.open("input.txt");
-    ofstream *outFile("output.txt");
+    ofstream outputFile("output.txt");
     outputFile.open("output.txt");
     inFile.tie(&outFile);
 
