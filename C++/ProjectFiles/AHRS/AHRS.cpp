@@ -472,7 +472,7 @@ float pid_get_frequency(const pid_ctrl_t *pid)
 
 //============================== Main loop ====================================
 using namespace std;
-void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, int* printcounter, float* gyroCalibElev, File* t1, File* outputFile)
+void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, int* printcounter, float* gyroCalibElev, high_resolution_clock* t1, ifstream* outputFile)
 {
     *printcounter = *printcounter + 1;
     int inputElev;
@@ -793,9 +793,6 @@ int main(int argc, char *argv[])
     ofstream outputFile("output.txt");
     outputFile.open("output.txt");
     inputFile.tie(&outputFile);
-
-    ///bruh
-    cout << typeid(outputFile).name() << endl;
 
     //--------------------setup gyroscope offset-----------------------------
     float gyroCalibElev;
