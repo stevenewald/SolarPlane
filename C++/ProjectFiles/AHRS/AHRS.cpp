@@ -32,6 +32,8 @@
 #define G_SI 9.80665
 #define PI   3.14159
 
+template <typename File>
+
 
 /*void Loop() {
     while(check_apm()) {
@@ -786,7 +788,6 @@ int main(int argc, char *argv[])
     high_resolution_clock::time_point *t1 = high_resolution_clock::now(); //starting time
 
     //File output
-    template <typename File>
     ifstream inFile(inputFile);
     inputFile.open("input.txt");
     ofstream *outFile(outputFile);
