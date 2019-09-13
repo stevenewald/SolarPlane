@@ -788,10 +788,10 @@ int main(int argc, char *argv[])
     using namespace std;
 
     //File output
-    ifstream inFile(inputFile);
+    ifstream inFile("input.txt");
     inputFile.open("input.txt");
-    ofstream *outFile(outputFile);
-    *outputFile.open("output.txt");
+    ofstream *outFile("output.txt");
+    outputFile.open("output.txt");
     inFile.tie(&outFile);
 
     //--------------------setup gyroscope offset-----------------------------
