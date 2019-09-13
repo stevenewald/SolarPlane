@@ -32,8 +32,6 @@
 #define G_SI 9.80665
 #define PI   3.14159
 
-template <typename File>
-
 
 /*void Loop() {
     while(check_apm()) {
@@ -472,6 +470,7 @@ float pid_get_frequency(const pid_ctrl_t *pid)
 
 //============================== Main loop ====================================
 using namespace std;
+template <typename File>
 void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, int* printcounter, float* gyroCalibElev, auto* t1, File* outputFile)
 {
     *printcounter = *printcounter + 1;
