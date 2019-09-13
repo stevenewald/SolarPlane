@@ -740,7 +740,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
         using namespace std;
         outputFile << time_span.count() << endl;
         outputFile << roll << endl;
-        outputFile << elevatorComp << endl;
+        outputFile << elevatorComp;
         outputFile.close();
     }
     dtsumm = 0;
