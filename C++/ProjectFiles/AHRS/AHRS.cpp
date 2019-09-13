@@ -18,6 +18,7 @@
 #include <arpa/inet.h>
 #include <stdint.h>
 #include <unistd.h>
+#include <ctime>   
 #include <chrono>
 #include <thread>
 #include <sys/time.h>
@@ -468,7 +469,7 @@ float pid_get_frequency(const pid_ctrl_t *pid)
 
 //============================== Main loop ====================================
 using namespace std;
-void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, int* printcounter, float* gyroCalibElev)
+void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, int* printcounter, float* gyroCalibElev, auto* t1)
 {
     *printcounter = *printcounter + 1;
     int inputElev;
@@ -707,17 +708,36 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     //-------------console and network output with a lowered rate------------
     
     //Calculate altitude in feet
-    
+    auto coutTime = std::chrono::system_clock::now(); //time in seconds
+    std::time_t end_time = std::chrono::system_clock::to_time_t(coutTime);
+
+
     dtsumm += dt;
     //if(dtsumm > 0.05)
-    if(remainder(*printcounter, 30) == 0)
+    if(remainder(*printcounter, 200) == 0)
     {
         // Console output
-
-        //cout << roll << endl; 
         cout << (roll) << endl;
         cout << pitch << endl;
         cout << (yaw * -1) << endl;
+
+        //File output
+        ifstream inFile("input.txt");
+        ofstream outFile(“output.txt”);
+        inFile.tie(&outFile);
+
+        using namespace std::chrono;
+
+        high_resolution_clock::time_point t2 = high_resolution_clock::now();
+
+        duration<double, std::milli> time_span = t2 - *t1;
+
+        std::outFile << time_span.count() << endl;
+
+        using namespace std;
+
+        outFile << roll << endl;
+        outFile << elevatorComp << endl;
  
         dtsumm = 0;
     }
@@ -767,11 +787,13 @@ int main(int argc, char *argv[])
 
     auto ahrs = std::unique_ptr <AHRS>{new AHRS(move(imu)) };
 
+    high_resolution_clock::time_point *t1 = high_resolution_clock::now(); //starting time
+
     //--------------------setup gyroscope offset-----------------------------
     float gyroCalibElev;
     firstTimeRunningRcinput = true;
     freopen( "output.txt", "w", stdout ); //logging file
     ahrs->setGyroOffset();
     while(1)
-        imuLoop(ahrs.get(), &phaseOfFlightVal, &firstTimeRunningRcinput, &printcounter, &gyroCalibElev);
+        imuLoop(ahrs.get(), &phaseOfFlightVal, &firstTimeRunningRcinput, &printcounter, &gyroCalibElev, &t1);
 }
