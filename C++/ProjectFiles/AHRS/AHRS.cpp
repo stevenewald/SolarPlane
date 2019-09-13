@@ -664,18 +664,19 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
         }
     }
  
-    float elevatorComp;
+    float elevatorCompPID;
+    float elevatorComp
     //elevatorComp = (pow(abs(roll), 1.2));
     pid_set_gains(&pid, 2., 0.01, 0.001);
-    elevatorComp = pid_process(&pid, (-1*roll+*gyroCalibElev));
+    elevatorCompPID = pid_process(&pid, (-1*roll+*gyroCalibElev));
     if(roll > 0)  //this is for the non-pid controller, is redundant with it
     {
-        elevatorComp = ((1.5+(elevatorComp)/100)*1000); //formatting for servo duty cycle
+        elevatorComp = ((1.5+(elevatorCompPID)/100)*1000); //formatting for servo duty cycle
     }
     else
     {
         //elevatorComp = ((1.5-(elevatorComp)/100)*1000); //221 original
-        elevatorComp = ((1.5+(elevatorComp)/100)*1000); //for PID
+        elevatorComp = ((1.5+(elevatorCompPID)/100)*1000); //for PID
     }
     
     if(*phaseOfFlightVal==3) 
@@ -747,7 +748,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
         using namespace std;
         outputFile << time_span.count() << endl;
         outputFile << roll << endl;
-        outputFile << elevatorComp << endl;
+        outputFile << elevatorCompPID << endl;
         outputFile << manualMode << endl;
         outputFile << "endoftick" << endl;
         outputFile.close();
