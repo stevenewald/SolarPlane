@@ -741,7 +741,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
         outputFile << time_span.count() << endl;
         outputFile << roll << endl;
         outputFile << elevatorComp << endl;
-        outputFile.close()
+        outputFile.close();
     }
     dtsumm = 0;
     //std::this_thread::sleep_for(std::chrono::milliseconds(20)); //prevent overflow of network (idk, happened in the beginning a bit but maybe due to worse
