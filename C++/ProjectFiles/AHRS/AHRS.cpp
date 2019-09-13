@@ -784,10 +784,8 @@ int main(int argc, char *argv[])
     auto ahrs = std::unique_ptr <AHRS>{new AHRS(move(imu)) };
 
     using namespace std::chrono;
-    high_resolution_clock::time_point tz = high_resolution_clock::now(); //starting time
+    high_resolution_clock::time_point t1 = high_resolution_clock::now(); //starting time
     using namespace std;
-
-    auto *t1 = tz;
 
     //File output
     ifstream inFile(inputFile);
