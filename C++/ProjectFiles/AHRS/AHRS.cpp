@@ -731,6 +731,13 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
         cout << pitch << endl;
         cout << (yaw * -1) << endl;
 
+        string manualMode;
+        if(inputSpoilers>1500) {
+            manualMode = "auto";
+        } else {
+            manualMode = "manual";
+        }
+
         using namespace std::chrono;
 
         high_resolution_clock::time_point t2 = high_resolution_clock::now();
@@ -741,6 +748,8 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
         outputFile << time_span.count() << endl;
         outputFile << roll << endl;
         outputFile << elevatorComp << endl;
+        outputFile << manualMode << endl;
+        outputFile << "endoftick" << endl;
         outputFile.close();
     }
     dtsumm = 0;
