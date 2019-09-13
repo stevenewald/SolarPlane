@@ -717,7 +717,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     //File output
     //ifstream inputFile("input.txt");
     //inputFile.open("input.txt");
-    ofstream outputFile("output.txt");
+    ofstream::app outputFile("output.txt");
     //outputFile.open("output.txt");
     //inputFile.tie(&outputFile);
 
