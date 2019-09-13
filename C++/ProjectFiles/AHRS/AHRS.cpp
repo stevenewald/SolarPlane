@@ -783,7 +783,7 @@ int main(int argc, char *argv[])
 
     auto ahrs = std::unique_ptr <AHRS>{new AHRS(move(imu)) };
 
-    high_resolution_clock::time_point *t1 = high_resolution_clock::now(); //starting time
+    chrono::high_resolution_clock::time_point *t1 = high_resolution_clock::now(); //starting time
 
     //File output
     ifstream inFile(inputFile);
