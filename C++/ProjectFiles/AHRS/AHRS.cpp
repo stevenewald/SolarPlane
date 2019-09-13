@@ -470,7 +470,7 @@ float pid_get_frequency(const pid_ctrl_t *pid)
 
 //============================== Main loop ====================================
 using namespace std;
-void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, int* printcounter, float* gyroCalibElev, auto* t1)
+void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, int* printcounter, float* gyroCalibElev, auto* t1, File* outputFile)
 {
     *printcounter = *printcounter + 1;
     int inputElev;
@@ -722,13 +722,6 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
         cout << pitch << endl;
         cout << (yaw * -1) << endl;
 
-        //File output
-        ifstream inFile(inputFile);
-        inputFile.open("input.txt");
-        ofstream outFile(outputFile);
-        outputFile.open("output.txt");
-        inFile.tie(&outFile);
-
         using namespace std::chrono;
 
         high_resolution_clock::time_point t2 = high_resolution_clock::now();
@@ -739,8 +732,8 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
 
         using namespace std;
 
-        outFile << roll << endl;
-        outFile << elevatorComp << endl;
+        *outFile << roll << endl;
+        *outFile << elevatorComp << endl;
  
         dtsumm = 0;
     }
@@ -792,11 +785,18 @@ int main(int argc, char *argv[])
 
     high_resolution_clock::time_point *t1 = high_resolution_clock::now(); //starting time
 
+    //File output
+    template <typename File>
+    ifstream inFile(inputFile);
+    inputFile.open("input.txt");
+    ofstream *outFile(outputFile);
+    *outputFile.open("output.txt");
+    inFile.tie(&outFile);
+
     //--------------------setup gyroscope offset-----------------------------
     float gyroCalibElev;
     firstTimeRunningRcinput = true;
-    freopen( "output.txt", "w", stdout ); //logging file
     ahrs->setGyroOffset();
     while(1)
-        imuLoop(ahrs.get(), &phaseOfFlightVal, &firstTimeRunningRcinput, &printcounter, &gyroCalibElev, &t1);
+        imuLoop(ahrs.get(), &phaseOfFlightVal, &firstTimeRunningRcinput, &printcounter, &gyroCalibElev, &t1, &outputFile);
 }
