@@ -665,7 +665,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     }
  
     float elevatorCompPID;
-    float elevatorComp
+    float elevatorComp;
     //elevatorComp = (pow(abs(roll), 1.2));
     pid_set_gains(&pid, 2., 0.01, 0.001);
     elevatorCompPID = pid_process(&pid, (-1*roll+*gyroCalibElev));
