@@ -715,11 +715,11 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     std::time_t end_time = std::chrono::system_clock::to_time_t(coutTime);
 
     //File output
-    ifstream inputFile("input.txt");
-    inputFile.open("input.txt");
+    //ifstream inputFile("input.txt");
+    //inputFile.open("input.txt");
     ofstream outputFile("output.txt");
-    outputFile.open("output.txt");
-    inputFile.tie(&outputFile);
+    //outputFile.open("output.txt");
+    //inputFile.tie(&outputFile);
 
 
     dtsumm += dt;
