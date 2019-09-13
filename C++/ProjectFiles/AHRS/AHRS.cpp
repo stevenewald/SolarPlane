@@ -792,7 +792,7 @@ int main(int argc, char *argv[])
     inputFile.open("input.txt");
     ofstream outputFile("output.txt");
     outputFile.open("output.txt");
-    inFile.tie(&outFile);
+    inputFile.tie(&outputFile);
 
     //--------------------setup gyroscope offset-----------------------------
     float gyroCalibElev;
