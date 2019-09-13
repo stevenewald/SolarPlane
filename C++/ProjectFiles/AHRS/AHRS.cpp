@@ -472,7 +472,7 @@ float pid_get_frequency(const pid_ctrl_t *pid)
 
 //============================== Main loop ====================================
 using namespace std;
-void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, int* printcounter, float* gyroCalibElev, std::chrono::high_resolution_clock::time_point t1, std::ofstream& outputFile)
+void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, int* printcounter, float* gyroCalibElev, std::chrono::high_resolution_clock::time_point t1)
 {
     *printcounter = *printcounter + 1;
     int inputElev;
@@ -714,6 +714,13 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     auto coutTime = std::chrono::system_clock::now(); //time in seconds
     std::time_t end_time = std::chrono::system_clock::to_time_t(coutTime);
 
+    //File output
+    ifstream inputFile("input.txt");
+    inputFile.open("input.txt");
+    ofstream outputFile("output.txt");
+    outputFile.open("output.txt");
+    inputFile.tie(&outputFile);
+
 
     dtsumm += dt;
     //if(dtsumm > 0.05)
@@ -734,9 +741,9 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
         outputFile << time_span.count() << endl;
         outputFile << roll << endl;
         outputFile << elevatorComp << endl;
- 
-        dtsumm = 0;
+        outputFile.close();
     }
+    dtsumm = 0;
     //std::this_thread::sleep_for(std::chrono::milliseconds(20)); //prevent overflow of network (idk, happened in the beginning a bit but maybe due to worse
     //programming at the time
     //which of course, was definitely and absolutely fixed by now
@@ -787,17 +794,10 @@ int main(int argc, char *argv[])
     high_resolution_clock::time_point t1 = high_resolution_clock::now(); //starting time
     using namespace std;
 
-    //File output
-    ifstream inputFile("input.txt");
-    inputFile.open("input.txt");
-    ofstream outputFile("output.txt");
-    outputFile.open("output.txt");
-    inputFile.tie(&outputFile);
-
     //--------------------setup gyroscope offset-----------------------------
     float gyroCalibElev;
     firstTimeRunningRcinput = true;
     ahrs->setGyroOffset();
     while(1)
-        imuLoop(ahrs.get(), &phaseOfFlightVal, &firstTimeRunningRcinput, &printcounter, &gyroCalibElev, t1, outputFile);
+        imuLoop(ahrs.get(), &phaseOfFlightVal, &firstTimeRunningRcinput, &printcounter, &gyroCalibElev, t1);
 }
