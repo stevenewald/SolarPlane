@@ -729,7 +729,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
 
         duration<double, std::milli> time_span = t2 - *t1;
 
-        outFile << time_span.count() << endl;
+        *outFile << time_span.count() << endl;
 
         using namespace std;
 
