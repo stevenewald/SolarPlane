@@ -717,7 +717,9 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     //File output
     //ifstream inputFile("input.txt");
     //inputFile.open("input.txt");
-    ofstream outputFile("output.txt");
+    
+    //ofstream outputFile("output.txt");
+    
     //outputFile.open("output.txt");
     //inputFile.tie(&outputFile);
 
@@ -738,10 +740,10 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
         duration<double, std::milli> time_span = t2 - t1;
 
         using namespace std;
-        outputFile << time_span.count() << endl;
-        outputFile << roll << endl;
-        outputFile << elevatorComp;
-        outputFile.close();
+        //outputFile << time_span.count() << endl;
+        //outputFile << roll << endl;
+        //outputFile << elevatorComp;
+        //outputFile.close();
     }
     dtsumm = 0;
     //std::this_thread::sleep_for(std::chrono::milliseconds(20)); //prevent overflow of network (idk, happened in the beginning a bit but maybe due to worse
@@ -793,6 +795,10 @@ int main(int argc, char *argv[])
     using namespace std::chrono;
     high_resolution_clock::time_point t1 = high_resolution_clock::now(); //starting time
     using namespace std;
+
+    ofstream outputFile("output.txt");
+    outputFile << "test";
+    outputFile.close();
 
     //--------------------setup gyroscope offset-----------------------------
     float gyroCalibElev;
