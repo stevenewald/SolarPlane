@@ -472,7 +472,7 @@ float pid_get_frequency(const pid_ctrl_t *pid)
 
 //============================== Main loop ====================================
 using namespace std;
-void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, int* printcounter, float* gyroCalibElev, std::chrono::high_resolution_clock::time_point* t1, ifstream* outputFile)
+void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, int* printcounter, float* gyroCalibElev, std::chrono::high_resolution_clock::time_point t1, ifstream outputFile)
 {
     *printcounter = *printcounter + 1;
     int inputElev;
@@ -728,12 +728,12 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
 
         high_resolution_clock::time_point t2 = high_resolution_clock::now();
 
-        duration<double, std::milli> time_span = t2 - *t1;
+        duration<double, std::milli> time_span = t2 - t1;
 
         using namespace std;
-        *outputFile << roll << endl;
-        *outputFile << time_span.count() << endl;
-        *outputFile << elevatorComp << endl;
+        outputFile << time_span.count() << endl;
+        outputFile << roll << endl;
+        outputFile << elevatorComp << endl;
  
         dtsumm = 0;
     }
@@ -799,5 +799,5 @@ int main(int argc, char *argv[])
     firstTimeRunningRcinput = true;
     ahrs->setGyroOffset();
     while(1)
-        imuLoop(ahrs.get(), &phaseOfFlightVal, &firstTimeRunningRcinput, &printcounter, &gyroCalibElev, &t1, &outputFile);
+        imuLoop(ahrs.get(), &phaseOfFlightVal, &firstTimeRunningRcinput, &printcounter, &gyroCalibElev, t1, outputFile);
 }
