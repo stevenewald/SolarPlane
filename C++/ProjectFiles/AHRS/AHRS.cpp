@@ -754,6 +754,7 @@ int main(int argc, char *argv[])
         return 1;
     }
     auto imu = get_inertial_sensor("mpu");
+    imu.initialize();
 
     if (!imu) {
         printf("Wrong sensor name. Select: mpu or lsm\n"); //can use both IMUs
@@ -761,7 +762,7 @@ int main(int argc, char *argv[])
     }
 
     if (!imu->probe()) {
-        printf("Sensor not enable\n"); //sometimes it doesn't work, idk why but its an imu issue not programming (at least, not MY programming. maybe the imu package made by the imu devs)
+        printf("Sensor not enable\n"); //sometimes it doesn't work, idk why but its an imu issue not programming
         return EXIT_FAILURE;
     }
     phaseOfFlightVal = 1;
