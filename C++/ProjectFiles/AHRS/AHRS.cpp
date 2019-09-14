@@ -357,6 +357,31 @@ std::unique_ptr <InertialSensor> get_inertial_sensor( std::string sensor_name) /
     }
 }
 
+
+std::string get_sensor_name(int argc, char *argv[])
+{
+    if (get_navio_version() == NAVIO2) {
+
+        if (argc < 2) {
+            printf("Enter parameter\n");
+            return std::string();
+        }
+
+        //prevent the error message
+        opterr = 0;
+        int parameter;
+
+        while ((parameter = getopt(argc, argv, "i:h")) != -1) {
+            switch (parameter) {
+            case 'i': return optarg;
+            case '?': printf("Wrong parameter.\n");
+                      return std::string();
+            }
+        }
+
+    }
+}
+
 /*
 //takes in current pitch and target pitch and returns corrected elevator servo
 int AHRS::ElevatorCorrection(float pitch, float targetPitch)
@@ -752,13 +777,29 @@ int main(int argc, char *argv[])
         return 1;
     }
     
-    MPU9250 imu;
-    //imu.initialize();
+
+    auto sensor_name = get_sensor_name(argc, argv);
+
+    if (sensor_name.empty())
+        return EXIT_FAILURE;
+
+    auto imu = get_inertial_sensor(sensor_name);
+    imu.initialize();
+
+    if (!imu) {
+        printf("Wrong sensor name. Select: mpu or lsm\n"); //can use both IMUs
+        return EXIT_FAILURE;
+    }
+
+    if (!imu->probe()) {
+        printf("Sensor not enable\n"); //sometimes it doesn't work, idk why but its an imu issue not programming (at least, not MY programming. maybe the imu package made by the imu devs)
+        return EXIT_FAILURE;
+    }
     phaseOfFlightVal = 1;
 
     //---------------------------network setup-------------------------------
 
-    auto ahrs = std::unique_ptr <AHRS>{new AHRS(move("mpu")) };
+    auto ahrs = std::unique_ptr <AHRS>{new AHRS(move(imu)) };
 
     using namespace std::chrono;
     high_resolution_clock::time_point t1 = high_resolution_clock::now(); //starting time
