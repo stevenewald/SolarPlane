@@ -272,7 +272,7 @@ void AHRS::setGyroOffset()
 
         offset[0] += gx*0.0175;
         offset[1] += gy*0.0175;
-        offset[2] += gz*0.0175;
+        offset[2] += gz*0.0175; 
 
         usleep(10000);
     }
