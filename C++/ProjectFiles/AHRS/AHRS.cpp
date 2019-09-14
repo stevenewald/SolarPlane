@@ -408,7 +408,7 @@ void pid_init(pid_ctrl_t *pid)
 void pid_set_gains(pid_ctrl_t *pid, float kp, float ki, float kd)
 {
     pid->kp = kp;
-    pid->ki = ki;
+    pid->ki = ki; 
     pid->kd = kd;
 }
 
@@ -721,12 +721,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     std::time_t end_time = std::chrono::system_clock::to_time_t(coutTime);
 
     //File output
-    //ifstream inputFile("input.txt");
-    //inputFile.open("input.txt");
     ofstream outputFile("output.txt", std::fstream::app);
-    //outputFile.open("output.txt");
-    //inputFile.tie(&outputFile);
-
 
     dtsumm += dt;
     //if(dtsumm > 0.05)
