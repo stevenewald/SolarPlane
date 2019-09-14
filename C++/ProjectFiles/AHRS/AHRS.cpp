@@ -758,8 +758,6 @@ int main(int argc, char *argv[])
 
     //---------------------------network setup-------------------------------
 
-    auto ahrs = std::unique_ptr <AHRS>{new AHRS(move(imu)) };
-
     using namespace std::chrono;
     high_resolution_clock::time_point t1 = high_resolution_clock::now(); //starting time
     using namespace std;
@@ -769,5 +767,5 @@ int main(int argc, char *argv[])
     firstTimeRunningRcinput = true;
     ahrs->setGyroOffset();
     while(1)
-        imuLoop(ahrs.get(), &phaseOfFlightVal, &firstTimeRunningRcinput, &printcounter, &gyroCalibElev, t1);
+        imuLoop(imu.get(), &phaseOfFlightVal, &firstTimeRunningRcinput, &printcounter, &gyroCalibElev, t1);
 }
