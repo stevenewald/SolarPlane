@@ -753,10 +753,6 @@ int main(int argc, char *argv[])
     if (check_apm()) {
         return 1;
     }
-
-    if (sensor_name.empty())
-        return EXIT_FAILURE;
-
     auto imu = get_inertial_sensor("mpu");
 
     if (!imu) {
