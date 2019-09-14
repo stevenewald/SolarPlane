@@ -552,7 +552,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
 
     inputThrott = rcin->read(0);
     inputRudd = rcin->read(1);
-    inputElev = (rcin->read(2))*1.1;
+    inputElev = (rcin->read(2))*1.5;
     inputSpoilers = rcin->read(3);
     inputRealSpoilers = rcin->read(7);
 
