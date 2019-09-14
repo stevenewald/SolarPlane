@@ -408,7 +408,7 @@ void pid_init(pid_ctrl_t *pid)
 void pid_set_gains(pid_ctrl_t *pid, float kp, float ki, float kd)
 {
     pid->kp = kp;
-    pid->ki = ki; 
+    pid->ki = ki;
     pid->kd = kd;
 }
 
@@ -784,6 +784,7 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
 
     auto imu = get_inertial_sensor(sensor_name);
+    imu.initialize();
 
     if (!imu) {
         printf("Wrong sensor name. Select: mpu or lsm\n"); //can use both IMUs
