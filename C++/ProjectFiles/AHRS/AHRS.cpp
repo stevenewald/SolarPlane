@@ -668,8 +668,8 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     //elevatorComp = (pow(abs(roll), 1.2));
     pid_set_gains(&pid, 2., 0.01, 0.001);
     elevatorComp = pid_process(&pid, (-1*roll+*gyroCalibElev));
-    elevatorComp = max(elevatorComp, -0.5);
-    elevatorComp = min(elevatorComp, 0.5);
+    elevatorComp = std::max(elevatorComp, -0.5);
+    elevatorComp = std::min(elevatorComp, 0.5);
     if(roll > 0)  //this is for the non-pid controller, is redundant with it
     {
         elevatorComp = ((1.5+(elevatorComp)/100)*1000); //formatting for servo duty cycle
