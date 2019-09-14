@@ -758,7 +758,7 @@ int main(int argc, char *argv[])
 
     //---------------------------network setup-------------------------------
 
-    auto ahrs = imu;
+    auto ahrs = std::unique_ptr <AHRS>{new AHRS(move("mpu")) };
 
     using namespace std::chrono;
     high_resolution_clock::time_point t1 = high_resolution_clock::now(); //starting time
