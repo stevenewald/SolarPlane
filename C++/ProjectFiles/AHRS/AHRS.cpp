@@ -553,6 +553,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     inputThrott = rcin->read(0);
     inputRudd = rcin->read(1);
     inputElev = rcin->read(2);
+    inputElev = 1500+(inputElev-1500)*(5/4);
     inputSpoilers = rcin->read(3);
     inputRealSpoilers = rcin->read(7);
 
@@ -706,7 +707,7 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
     {
         // Console output
         cout << (roll) << endl;
-        cout << inputElev << endl;
+        cout << pitch << endl;
         cout << (yaw * -1) << endl;
 
         string manualMode;
