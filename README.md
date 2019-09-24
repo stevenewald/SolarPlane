@@ -1,9 +1,10 @@
 # Autonomous solar plane
-Description is a bit outdated, now using C++ based stabilization and using GCS rather than python/c++ multithreading airplane visualization
+Description is a bit outdated, now using C++ based stabilization and using GCS rather than python/c++ multithreading airplane visualization. I added the SSH server reliant orientation renderer/visualization on the GCS because I had to do a final CS project for school and didn't want to stop working on this project. This description is mainly relevant for the renderer, rather than the actual plane pathfinding algorithms for that reason.
+I have tested the stabilization, and it worked perfectly. It worked for about 6 minutes (the planned time) but the code stopped running because I forgot to use TMUX to stop the SSH disconnection from causing shell termination so the plane hit the trees but since the code worked and I was switching to an alternate plane model anyway (this one didn't have ailerons and was a prototype), no progress was lost. I also got the flight data logs over an FTP connection while the plane was in the trees, lmao
 
 ## Introduction
 
-> I am making a solar rc plane (~8.5ft wingspan, 7lbs, electric) and am using a navio2 and raspberry pi 3 B to have it fly autonomously. This involves taking the Euler angles (pitch, roll, heading) to stabilize the plane as well as change the heading, altitude, and throttle to navigate between waypoints. The point of this project was to create a visualization for the orientation of the plane. Because the solar plane will go 10-50 miles away at any time, it is useful to be able to see the orientation of the plane. Right now the visualization is just a cube, but it will be a plane once I model it (which isn't programming).
+> I am making a solar rc plane (~8.5ft wingspan, 7lbs, electric) and am using a navio2 and raspberry pi 3 B+ to have it fly autonomously. This involves taking the Euler angles (pitch, roll, heading) to stabilize the plane as well as change the heading, altitude, and throttle to navigate between waypoints. The point of this project was to create a visualization for the orientation of the plane. Because the solar plane will go 10-50 miles away at any time, it is useful to be able to see the orientation of the plane. Right now the visualization is just a cube, but it will be a plane once I model it (which isn't programming).
 
 ## Project summary
 ### 1. Calculating Euler angles from the raw accelerometer, gyroscope, and magnetometer data
