@@ -1,4 +1,5 @@
-# Autonomous solar plane - a bit outdated, now using C++ based stabilization and using GCS rather than python/c++ multithreading airplane visualization
+# Autonomous solar plane
+Description is a bit outdated, now using C++ based stabilization and using GCS rather than python/c++ multithreading airplane visualization
 
 ## Introduction
 
