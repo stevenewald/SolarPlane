@@ -1,11 +1,10 @@
-# 3D Airplane Visualizer
+# Autonomous solar plane - a bit outdated, now using C++ based and using GCS rather than python/c++ multithreading airplane visualization
 
 ## Introduction
 
 > I am making a solar rc plane (~8.5ft wingspan, 7lbs, electric) and am using a navio2 and raspberry pi 3 B to have it fly autonomously. This involves taking the Euler angles (pitch, roll, heading) to stabilize the plane as well as change the heading, altitude, and throttle to navigate between waypoints. The point of this project was to create a visualization for the orientation of the plane. Because the solar plane will go 10-50 miles away at any time, it is useful to be able to see the orientation of the plane. Right now the visualization is just a cube, but it will be a plane once I model it (which isn't programming).
 
 ## Project summary
- > While I don't include stabilization code (it's written in Python for right now, switching over soon), the code I do include does the following:
 ### 1. Calculating Euler angles from the raw accelerometer, gyroscope, and magnetometer data
 >> I had to rewrite this three times, twice in Python and once in C++, to get it to work correctly. This involves a lot of extremely complicated math and geometry that would definitely require a math degree to actually understand, so I just implemented berryIMU's code (different IMU so I had to change a lot, including translating it into C++).
 
