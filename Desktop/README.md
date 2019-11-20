@@ -1,3 +1,1 @@
-# Navio python drivers
-
-Drivers for devices on Navio 2 board
+# Python code and ground station visualization
