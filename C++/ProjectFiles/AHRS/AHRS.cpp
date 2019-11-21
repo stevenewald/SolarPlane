@@ -740,6 +740,13 @@ void imuLoop(AHRS* ahrs, int* phaseOfFlightVal, int* firstTimeRunningRcinput, in
 //-------------------------- Logging data -------------------------------------
 
 
+
+
+
+
+
+
+
 //=============================================================================
 using namespace std;
 int main(int argc, char *argv[])
@@ -781,5 +788,5 @@ int main(int argc, char *argv[])
     firstTimeRunningRcinput = true;
     ahrs->setGyroOffset();
     while(1)
-        imuLoop(ahrs.get(), &phaseOfFlightVal, &firstTimeRunningRcinput, &printcounter, &gyroCalibElev, t1);
+        imuLoop(ahrs.get(), &phaseOfFlightVal, &firstTimeRunningRcinput, &printcounter, &gyroCalibElev, t1); //fix garbage at some point
 }
