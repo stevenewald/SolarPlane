@@ -1,3 +1,5 @@
+# Main AHRS code at C++/ProjectFiles/AHRS
+Designed to run on Rasbian with a modded kernal to change the priority of commands, basically turning a microprocessor into a microcontroller
 # Autonomous solar plane
 Description is a bit outdated, now using C++ based stabilization and using GCS rather than python/c++ multithreading airplane visualization. I added the SSH server reliant orientation renderer/visualization on the GCS because I had to do a final CS project for school and didn't want to stop working on this project. This description is mainly relevant for the renderer, rather than the actual plane pathfinding algorithms for that reason.
 I have tested the stabilization, and it worked perfectly. It worked for about 6 minutes (the planned time) but the code stopped running because I forgot to use TMUX to stop the SSH disconnection from causing shell termination so the plane hit the trees but since the code worked and I was switching to an alternate plane model anyway (this one didn't have ailerons and was a prototype), no progress was lost. I also got the flight data logs over an FTP connection while the plane was in the trees, lmao
